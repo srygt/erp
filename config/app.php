@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Onrslu\HtEfatura\HtEfaturaServiceProvider::class,
 
         /*
          * Application Service Providers...
