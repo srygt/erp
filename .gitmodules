@@ -1,3 +1,3 @@
-[submodule "packages\\onrslu\\ht-efatura"]
-	path = packages\\onrslu\\ht-efatura
+[submodule "packages/onrslu/ht-efatura"]
+	path = packages/onrslu/ht-efatura
 	url = https://github.com/onuruslu/ht-efatura.git
