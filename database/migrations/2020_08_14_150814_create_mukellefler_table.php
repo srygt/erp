@@ -18,8 +18,7 @@ class CreateMukelleflerTable extends Migration
             $table->id();
             $table->char(Mukellef::COLUMN_VERGI_NO,10)->nullable();
             $table->char(Mukellef::COLUMN_TC_KIMLIK_NO,11)->nullable();
-            $table->string(Mukellef::COLUMN_UNVAN)->nullable();
-            $table->string(Mukellef::COLUMN_AD_SOYAD)->nullable();
+            $table->string(Mukellef::COLUMN_UNVAN);
             $table->string(Mukellef::COLUMN_VERGI_DAIRESI_SEHIR);
             $table->string(Mukellef::COLUMN_VERGI_DAIRESI_ISMI);
             $table->string(Mukellef::COLUMN_EMAIL);
