@@ -1,9 +1,9 @@
 @extends('layout.master')
-@section('parentPageTitle', 'Mükellef İşlemleri')
+@section('parentPageTitle', 'Abone İşlemleri')
 @if(isset($abone->id))
-    @section('title', 'Mükellef Güncelle')
+    @section('title', 'Abone Güncelle')
 @else
-    @section('title', 'Mükellef Ekle')
+    @section('title', 'Abone Ekle')
 @endif
 @section('content')
     <div class="row clearfix">
@@ -27,63 +27,78 @@
         @endif
         <div class="col-md-12">
             <div class="card text-white bg-info">
-                <div class="card-header">Mükellef Bilgileri</div>
+                <div class="card-header">Abone Bilgileri</div>
                 <div class="card-body">
-                    <form action="{{route("mukellef.ekle.post")}}" method="post">
+                    <form action="{{route("abone.ekle.post")}}" method="post">
                         @csrf
-                        @if(isset($mukellef->id))
-                            <input type="hidden" name="id" value="{{ $mukellef->id }}">
-                        @endif
                         <div class="row">
+                            @if(isset($abone->id))
+                                <input type="hidden" name="id" value="{{ $abone->id }}">
+                            @endif
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>VKN/TCKN<span class="text-danger">*</span></label>
-                                    <input
-                                        class="form-control"
-                                        name="vkntckn"
-                                        type="text"
-                                        value="{{
-                                            old(
-                                                'vkntckn',
-                                                implode(
-                                                    '',
-                                                    $mukellef->only(\App\Models\Mukellef::COLUMN_VERGI_NO, \App\Models\Mukellef::COLUMN_TC_KIMLIK_NO)
-                                                )
-                                            )
-                                        }}">
+                                    <label>Abonelik Türü<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="tur">
+                                        <option value="">Seçin...</option>
+                                        @foreach(\App\Models\Abone::TUR_LIST as $slug => $title)
+                                            <option
+                                                value="{{ $slug }}"
+                                                @if(old('tur', $abone->tur) === $slug)
+                                                    selected
+                                                @endif
+                                            >{{ $title }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-8 col-sm-12">
                                 <div class="form-group">
-                                    <label>Ünvan<span class="text-danger">*</span></label>
-                                    <input class="form-control" name="unvan" value="{{ old('unvan', $mukellef->unvan) }}" type="text">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label>Vergi Dairesi Şehir<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="vdil" name="vergi_dairesi_sehir">
-                                        <option value="">Seçin...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label>Vergi Dairesi<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="vd" name="vergi_dairesi">
-                                        <option value="">Seçin...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label>Urn<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="urn" placeholder="urn:mail:aaa@bbb.com" value="{{ old('urn', $mukellef->urn) }}">
+                                    <label>Mükellef<span class="text-danger">*</span></label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <select class="form-control" name="mukellef_id" id="mukellef_id">
+                                                <option value="">Seçin...</option>
+                                                @foreach($mukellefler as $mukellef)
+                                                    <option
+                                                        value="{{ $mukellef->id }}"
+                                                        @if(old('mukellef_id', $abone->mukellef_id) === $mukellef->id)
+                                                            selected
+                                                        @endif
+                                                    >{{ $mukellef->unvan }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button type="button" class="btn btn-primary" id="contactFetch" onclick="fillContactInfo($('#mukellef_id').val())">
+                                                <i class="fa fa-refresh"></i> <span>İletişim Bilgilerini Çek</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border bg-info col-md-12 mb-3" ></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Abonelik Adı<span class="text-danger">*</span></label>
+                                    <input class="form-control" name="baslik" placeholder="Merkez Şube" value="{{ old('baslik', $abone->baslik) }}" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Abone No<span class="text-danger">*</span></label>
+                                    <input class="form-control" name="abone_no" value="{{ old('abone_no', $abone->abone_no) }}" type="number">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Sayaç No<span class="text-danger">*</span></label>
+                                    <input class="form-control" name="sayac_no" value="{{ old('sayac_no', $abone->sayac_no) }}" type="number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border bg-info col-md-12 mb-3" ></div>
+                        <div class="row">
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label>E-Posta <span class="text-danger">*</span></label>
@@ -91,14 +106,14 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="icon-envelope"></i></span>
                                         </div>
-                                        <input class="form-control" value="{{ old('email', $mukellef->email) }}" name="email" type="email">
+                                        <input class="form-control" value="{{ old('email', $abone->email) }}" name="email" id="email" type="email">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label>Telefon Numarası<span class="text-danger">*</span></label>
-                                    <input class="form-control" value="{{ old('telefon', $mukellef->telefon) ?? '90' }}" name="telefon" placeholder="905001112233" type="tel">
+                                    <input class="form-control" value="{{ old('telefon', $abone->telefon) }}" name="telefon" id="telefon" placeholder="905001112233" type="tel">
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
@@ -108,13 +123,13 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="icon-globe"></i></span>
                                         </div>
-                                        <input type="text" class="form-control" name="website" placeholder="http://" value="{{ old('website', $mukellef->website) }}">
+                                        <input type="text" class="form-control" name="website" id="website" placeholder="http://" value="{{ old('website', $abone->website) }}">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Ülke<span class="text-danger">*</span></label>
                                     <select class="form-control" name="ulke">
@@ -122,7 +137,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>İl<span class="text-danger">*</span></label>
                                     <select class="form-control" id="il"  name="il">
@@ -130,7 +145,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-6 col-lg-4">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>İlçe<span class="text-danger">*</span></label>
                                     <select class="form-control" id="ilce" name="ilce">
@@ -140,10 +155,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Urn<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="urn" id="urn" placeholder="urn:mail:aaa@bbb.com" value="{{ old('urn', $abone->urn) }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-8">
                                 <div class="form-group">
                                     <label>Adres<span class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="adres" id="adres" rows="3">{{ old('adres', $mukellef->adres) }}</textarea>
+                                    <textarea class="form-control" name="adres" id="adres" rows="3">{{ old('adres', $abone->adres) }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -194,54 +217,11 @@
                     });
                 });
 
-                /*Vd*/
-                $.getJSON("{{ asset('js/json/il-bolge.json') }}",function (sonuc) {
-                    $.each(sonuc, function(index, value){
-                        var row="";
-                        row +='<option value="'+value.il+'">'+value.il+'</option>';
-                        $("#vdil").append(row);
-                    })
-
-                    $("#vdil").trigger('optionsLoaded');
-                })
-
-                $("#vdil").on("change", function(){
-                    var il=$(this).val();
-                    $("#vd").attr("disabled", false).html("<option value='0'>Seçin..</option>");
-                    $.getJSON("{{ asset('js/json/vergidaireleri.json') }}", function(sonuc){
-                        $.each(sonuc,function(index,value){
-                            if (value.il==il){
-                                $.each(value.vd, function(index, value){
-
-                                    var row = "";
-
-                                    row += '<option value="' + value.ad+ '">' + value.ad + '</option>';
-                                    $("#vd").append(row);
-                                });
-                            }
-                        });
-
-                        $("#vd").trigger('optionsLoaded');
-                    });
-                });
-
                 // update
-                var selectedVergiDairesiSehir = "{{ old('vergi_dairesi_sehir', $mukellef->vergi_dairesi_sehir) }}";
-                var selectedVergiDairesi = "{{ old('vergi_dairesi', $mukellef->vergi_dairesi) }}";
-                var selectedIl = "{{ old('il', $mukellef->il) }}";
-                var selectedIlce = "{{ old('ilce', $mukellef->ilce) }}";
+                var selectedIl = "{{ old('il', $abone->il) }}";
+                var selectedIlce = "{{ old('ilce', $abone->ilce) }}";
 
                 var selectedOptions = [
-                    {
-                        'selector': '#vdil',
-                        'value': selectedVergiDairesiSehir,
-                        'counter': 0,
-                    },
-                    {
-                        'selector': '#vd',
-                        'value': selectedVergiDairesi,
-                        'counter': 0,
-                    },
                     {
                         'selector': '#il',
                         'value': selectedIl,
@@ -264,7 +244,34 @@
                     });
                 });
 
+                $('#mukellef_id').on('change', function(){
+                    $('#contactFetch').prop('disabled', !$(this).val());
+                }).trigger('change');
 
+                function fillContactInfo(mukellefId) {
+                    var url = '{{ route('mukellef.detay', ['id' => ':id']) }}';
+
+                    $.get(url.replace(':id', mukellefId), function( mukellef )
+                    {
+                        $('#email').val(mukellef.email);
+                        $('#telefon').val(mukellef.telefon);
+                        $('#website').val(mukellef.website);
+                        $('#ulke').val(mukellef.ulke);
+                        $('#il').val(mukellef.il).trigger('change');
+
+                        var counter = 0;
+                        $('#ilce').on('optionsLoaded', function(){
+                            if (counter === 0) {
+                                $('#ilce').val(mukellef.ilce).trigger('change');
+                            }
+
+                            counter++;
+                        });
+
+                        $('#urn').val(mukellef.urn);
+                        $('#adres').val(mukellef.adres);
+                    });
+                }
 
             </script>
 

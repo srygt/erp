@@ -27,7 +27,7 @@
                     <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Abone İşlemleri</span></a>
                     <ul>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('aboneler.abonelistesi')}}">Aboneler</a></li>
-                        <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('aboneler.aboneekle')}}">Abone Ekle</a></li>
+                        <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('abone.ekle.get')}}">Abone Ekle</a></li>
                     </ul>
                 </li>
                 <li class="{{ Request::segment(1) === 'mypage' ? 'active open' : null }}">
