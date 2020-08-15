@@ -14,13 +14,13 @@
     @stack('before-styles')
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">    
-    <link rel="stylesheet" href="{{ asset('assets/vendor/animate-css/vivify.min.css') }}">    
+    <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/animate-css/vivify.min.css') }}">
 
-    @stack('after-styles')    
-    @if (trim($__env->yieldContent('page-styles')))    
+    @stack('after-styles')
+    @if (trim($__env->yieldContent('page-styles')))
         @yield('page-styles')
-    @endif    
+    @endif
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{ asset('assets/css/site.min.css') }}">
 </head>
@@ -46,7 +46,7 @@
 <div id="wrapper">
 
     @include('layout.navbar')
-    
+
     @include('layout.sidebar')
 
     <div id="main-content">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             @yield('content')
-			
+
         </div>
 
     </div>
@@ -82,7 +82,7 @@
 
 <!-- Scripts -->
 @stack('before-scripts')
-<script src="{{ asset('assets/bundles/libscripts.bundle.js') }}"></script>    
+<script src="{{ asset('assets/bundles/libscripts.bundle.js') }}"></script>
 <script src="{{ asset('assets/bundles/vendorscripts.bundle.js') }}"></script>
 
 @stack('after-scripts')
@@ -90,6 +90,18 @@
 @if (trim($__env->yieldContent('page-script')))
     @yield('page-script')
 @endif
+
+<script type="text/javascript"><!--
+
+$(document).ready(function(){
+   var alertMessageExists = !!$('#alertMessages').length;
+
+   if (alertMessageExists) {
+       $('#alertMessages').scrollIntoView();
+   }
+});
+
+--></script>
 
 </body>
 </html>

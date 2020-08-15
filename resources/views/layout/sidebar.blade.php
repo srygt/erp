@@ -17,7 +17,7 @@
             <ul id="main-menu" class="metismenu">
 
                 <li class="{{ Request::segment(1) === 'mypage' ? 'active open' : null }}">
-                    <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Fatura İşemleri</span></a>
+                    <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Fatura İşlemleri</span></a>
                     <ul>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('faturalar.suFaturasi')}}">Su Faturası Olustur</a></li>
 
@@ -28,6 +28,13 @@
                     <ul>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('aboneler.abonelistesi')}}">Aboneler</a></li>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('aboneler.aboneekle')}}">Abone Ekle</a></li>
+                    </ul>
+                </li>
+                <li class="{{ Request::segment(1) === 'mypage' ? 'active open' : null }}">
+                    <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Mükellef İşlemleri</span></a>
+                    <ul>
+                        <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('mukellef.ekle.get')}}">Mükellef Oluştur</a></li>
+
                     </ul>
                 </li>
             </ul>

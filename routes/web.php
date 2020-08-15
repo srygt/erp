@@ -56,5 +56,13 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     /*Abone İslemleri*/
     Route::post('aboneler/aboneekle','abonecontroller@aboneekle')
         ->name('aboneeklePost');
+
+    // Mükellef İşlemleri
+    Route::get('mukellefler/ekle','MukellefController@ekleGet')
+        ->name('mukellef.ekle.get');
+    Route::post('mukellefler/ekle','MukellefController@eklePost')
+        ->name('mukellef.ekle.post');
+    Route::get('mukellefler/{id}','MukellefController@guncelleGet')
+        ->name('mukellef.guncelle.get');
 });
 
