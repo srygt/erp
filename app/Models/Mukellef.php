@@ -6,14 +6,41 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mukellef extends Model
 {
+    const COLUMN_VERGI_NO               = 'vergi_no';
+    const COLUMN_TC_KIMLIK_NO           = 'tc_kimlik_no';
+    const COLUMN_UNVAN                  = 'unvan';
+    const COLUMN_AD_SOYAD               = 'ad_soyad';
+    const COLUMN_VERGI_DAIRESI_SEHIR    = 'vergi_dairesi_sehir';
+    const COLUMN_VERGI_DAIRESI          = 'vergi_dairesi';
+    const COLUMN_EMAIL                  = 'email';
+    const COLUMN_WEBSITE                = 'website';
+    const COLUMN_ULKE                   = 'ulke';
+    const COLUMN_IL                     = 'il';
+    const COLUMN_ILCE                   = 'ilce';
+    const COLUMN_ADRES                  = 'adres';
+    const COLUMN_TELEFON                = 'telefon';
+    const COLUMN_URN                    = 'urn';
+
     protected $table = 'mukellefler';
-    public $timestamps = false;
-    protected $primaryKey = 'MUKID';
+    protected $fillable = [
+        self::COLUMN_VERGI_NO,
+        self::COLUMN_TC_KIMLIK_NO,
+        self::COLUMN_UNVAN,
+        self::COLUMN_AD_SOYAD,
+        self::COLUMN_VERGI_DAIRESI_SEHIR,
+        self::COLUMN_VERGI_DAIRESI,
+        self::COLUMN_EMAIL,
+        self::COLUMN_WEBSITE,
+        self::COLUMN_ULKE,
+        self::COLUMN_IL,
+        self::COLUMN_ILCE,
+        self::COLUMN_ADRES,
+        self::COLUMN_TELEFON,
+        self::COLUMN_URN,
+    ];
 
-    protected $guarded = ['MUKID'];
-
-    public  function abone(){
-        $this->belongsTo('App\Models\Abone','VKNTCKN');
+    public function abonelikler(){
+        $this->hasMany(Abone::class);
     }
 
 }
