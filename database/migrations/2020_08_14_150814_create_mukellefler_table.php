@@ -20,14 +20,14 @@ class CreateMukelleflerTable extends Migration
             $table->char(Mukellef::COLUMN_TC_KIMLIK_NO,11)->nullable();
             $table->string(Mukellef::COLUMN_UNVAN);
             $table->string(Mukellef::COLUMN_VERGI_DAIRESI_SEHIR);
-            $table->string(Mukellef::COLUMN_VERGI_DAIRESI_ISMI);
+            $table->string(Mukellef::COLUMN_VERGI_DAIRESI);
             $table->string(Mukellef::COLUMN_EMAIL);
             $table->string(Mukellef::COLUMN_WEBSITE)->nullable();
             $table->string(Mukellef::COLUMN_ULKE);
             $table->string(Mukellef::COLUMN_IL);
             $table->string(Mukellef::COLUMN_ILCE);
-            $table->integer(Mukellef::COLUMN_ADRES);
-            $table->integer(Mukellef::COLUMN_TELEFON)->nullable();
+            $table->string(Mukellef::COLUMN_ADRES);
+            $table->string(Mukellef::COLUMN_TELEFON);
             $table->string(Mukellef::COLUMN_URN);
             $table->timestamps();
         });
