@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Mukellef;
 use App\Rules\TcknRule;
 use App\Rules\UrnRule;
 use App\Rules\VergiNoRule;
@@ -28,19 +27,17 @@ class MukellefEkleRequest extends FormRequest
      */
     public function rules()
     {
-        $mukellefModel = new Mukellef;
-
         return [
-            'id'                    => 'nullable|numeric|exists:' . $mukellefModel->getTable(),
+            'id'                    => 'nullable|numeric|exists:App\Models\Mukellef',
             'vkntckn'               => 'required|digits_between:10,11',
-            'vergi_no'              => ['nullable', new VergiNoRule, 'unique:' . $mukellefModel->getTable() . ',vergi_no,' . $this->id],
-            'tc_kimlik_no'          => ['nullable', new TcknRule, 'unique:' . $mukellefModel->getTable() . ',tc_kimlik_no,' . $this->id],
-            'unvan'                 => 'required|unique:' . $mukellefModel->getTable() . ',unvan,' . $this->id,
+            'vergi_no'              => ['nullable', new VergiNoRule, 'unique:App\Models\Mukellef,vergi_no,' . $this->id],
+            'tc_kimlik_no'          => ['nullable', new TcknRule, 'unique:App\Models\Mukellef,tc_kimlik_no,' . $this->id],
+            'unvan'                 => 'required|unique:App\Models\Mukellef,unvan,' . $this->id,
             'vergi_dairesi_sehir'   => 'required',
             'vergi_dairesi'         => 'required',
             'urn'                   => ['required', new UrnRule],
-            'email'                 => 'required|email|unique:' . $mukellefModel->getTable() . ',email,' . $this->id,
-            'telefon'               => 'required|digits:12|unique:' . $mukellefModel->getTable() . ',telefon,' . $this->id,
+            'email'                 => 'required|email|unique:App\Models\Mukellef,email,' . $this->id,
+            'telefon'               => 'required|digits:12|unique:App\Models\Mukellef,telefon,' . $this->id,
             'website'               => 'nullable|url',
             'ulke'                  => 'required',
             'il'                    => 'required',
