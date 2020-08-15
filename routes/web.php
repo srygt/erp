@@ -32,11 +32,11 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('faturalar.suFaturasi');
     Route::get('aboneler/aboneekle','MainController@aboneekle')
         ->name('aboneler.aboneekle');
-    Route::get('aboneler/abonelistesi','abonecontroller@abonelistesi')
+    Route::get('aboneler/abonelistesi','AboneController@abonelistesi')
         ->name('aboneler.abonelistesi');
-    Route::get('aboneler/{aboneler}/duzenle','abonecontroller@aboneduzenle')
+    Route::get('aboneler/{aboneler}/duzenle','AboneController@aboneduzenle')
         ->name('aboneduzenle');
-    Route::put('abone/{aboneler}','abonecontroller@guncelle')
+    Route::put('abone/{aboneler}','AboneController@guncelle')
         ->name('aboneguncelle');
     Route::get('sayaclar/ekle','SayacController@ekle')
         ->name('sayac.ekle.get');
@@ -54,7 +54,7 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     Route::get('faturalar/suFaturasiGonder','FaturaGonder@suFaturasiGonder');
 
     /*Abone İslemleri*/
-    Route::post('aboneler/aboneekle','abonecontroller@aboneekle')
+    Route::post('aboneler/aboneekle','AboneController@aboneekle')
         ->name('aboneeklePost');
 
     // Mükellef İşlemleri
@@ -62,7 +62,17 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('mukellef.ekle.get');
     Route::post('mukellefler/ekle','MukellefController@eklePost')
         ->name('mukellef.ekle.post');
+    Route::get('mukellefler/api/{id}','MukellefController@detayApi')
+        ->name('mukellef.detay');
     Route::get('mukellefler/{id}','MukellefController@guncelleGet')
         ->name('mukellef.guncelle.get');
+
+    // Abone İşlemleri
+    Route::get('aboneler/ekle','AboneController@ekleGet')
+        ->name('abone.ekle.get');
+    Route::post('aboneler/ekle','AboneController@eklePost')
+        ->name('abone.ekle.post');
+    Route::get('aboneler/{id}','AboneController@guncelleGet')
+        ->name('abone.guncelle.get');
 });
 

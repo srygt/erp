@@ -38,12 +38,12 @@ class MukellefController extends Controller
             Mukellef::where('id', $request->id)
                 ->update($payload);
 
-            return redirect()->back()->with('message','Başarıyla Güncellendi');
+            return redirect()->back()->with('message', 'Başarıyla Güncellendi');
         }
         else {
             Mukellef::create($payload);
 
-            return redirect()->back()->with('message','Başarıyla Eklendi');
+            return redirect()->back()->with('message', 'Başarıyla Eklendi');
         }
     }
 
@@ -54,5 +54,10 @@ class MukellefController extends Controller
         return view('mukellef.ekle', [
             'mukellef' => $mukellef,
         ]);
+    }
+
+    public function detayApi(int $id)
+    {
+        return Mukellef::find($id);
     }
 }

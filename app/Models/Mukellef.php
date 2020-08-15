@@ -3,23 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mukellef extends Model
 {
-    const COLUMN_VERGI_NO               = 'vergi_no';
-    const COLUMN_TC_KIMLIK_NO           = 'tc_kimlik_no';
-    const COLUMN_UNVAN                  = 'unvan';
-    const COLUMN_AD_SOYAD               = 'ad_soyad';
-    const COLUMN_VERGI_DAIRESI_SEHIR    = 'vergi_dairesi_sehir';
-    const COLUMN_VERGI_DAIRESI          = 'vergi_dairesi';
-    const COLUMN_EMAIL                  = 'email';
-    const COLUMN_WEBSITE                = 'website';
-    const COLUMN_ULKE                   = 'ulke';
-    const COLUMN_IL                     = 'il';
-    const COLUMN_ILCE                   = 'ilce';
-    const COLUMN_ADRES                  = 'adres';
-    const COLUMN_TELEFON                = 'telefon';
-    const COLUMN_URN                    = 'urn';
+    use SoftDeletes;
 
     protected $table = 'mukellefler';
     protected $fillable = [
@@ -38,6 +26,22 @@ class Mukellef extends Model
         self::COLUMN_TELEFON,
         self::COLUMN_URN,
     ];
+
+    const COLUMN_ID                     = 'id';
+    const COLUMN_VERGI_NO               = 'vergi_no';
+    const COLUMN_TC_KIMLIK_NO           = 'tc_kimlik_no';
+    const COLUMN_UNVAN                  = 'unvan';
+    const COLUMN_AD_SOYAD               = 'ad_soyad';
+    const COLUMN_VERGI_DAIRESI_SEHIR    = 'vergi_dairesi_sehir';
+    const COLUMN_VERGI_DAIRESI          = 'vergi_dairesi';
+    const COLUMN_EMAIL                  = 'email';
+    const COLUMN_WEBSITE                = 'website';
+    const COLUMN_ULKE                   = 'ulke';
+    const COLUMN_IL                     = 'il';
+    const COLUMN_ILCE                   = 'ilce';
+    const COLUMN_ADRES                  = 'adres';
+    const COLUMN_TELEFON                = 'telefon';
+    const COLUMN_URN                    = 'urn';
 
     public function abonelikler(){
         $this->hasMany(Abone::class);
