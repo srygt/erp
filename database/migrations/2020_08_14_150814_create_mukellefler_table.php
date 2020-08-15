@@ -21,6 +21,9 @@ class CreateMukelleflerTable extends Migration
             $table->string(Mukellef::COLUMN_UNVAN);
             $table->string(Mukellef::COLUMN_VERGI_DAIRESI_SEHIR);
             $table->string(Mukellef::COLUMN_VERGI_DAIRESI);
+
+            // aşağıdaki alanlarda yapılacak değişikliklerin
+            // 2020_08_14_150814_create_mukellefler_table'da da yapılması lazım
             $table->string(Mukellef::COLUMN_EMAIL);
             $table->string(Mukellef::COLUMN_WEBSITE)->nullable();
             $table->string(Mukellef::COLUMN_ULKE);
@@ -29,7 +32,9 @@ class CreateMukelleflerTable extends Migration
             $table->string(Mukellef::COLUMN_ADRES);
             $table->string(Mukellef::COLUMN_TELEFON);
             $table->string(Mukellef::COLUMN_URN);
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
