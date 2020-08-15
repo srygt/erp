@@ -31,7 +31,7 @@ class MukellefEkleRequest extends FormRequest
         $mukellefModel = new Mukellef;
 
         return [
-            'id'                    => 'nullable|numeric',
+            'id'                    => 'nullable|numeric|exists:' . $mukellefModel->getTable(),
             'vkntckn'               => 'required|digits_between:10,11',
             'vergi_no'              => ['nullable', new VergiNoRule, 'unique:' . $mukellefModel->getTable() . ',vergi_no,' . $this->id],
             'tc_kimlik_no'          => ['nullable', new TcknRule, 'unique:' . $mukellefModel->getTable() . ',tc_kimlik_no,' . $this->id],
