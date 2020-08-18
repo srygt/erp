@@ -1,6 +1,6 @@
 @extends('layout.master')
-@section('parentPageTitle', 'Abone İşlemleri ')
-@section('title', 'Abone Listesi')
+@section('parentPageTitle', 'Fatura İşlemleri ')
+@section('title', 'Fatura Listesi')
 
 
 @section('content')
@@ -13,22 +13,24 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>ÜNVAN</th>
-                                <th>VKNTCKN</th>
-                                <th>İL</th>
+                                <th>Abone</th>
+                                <th>Mükellef</th>
+                                <th>Tür</th>
+                                <th>Tarih</th>
                                 <th>İşlemler</th>
                             </tr>
                             </thead>
                             <tbody>
-                         @foreach($mukelleflistesi as $mukellef)
+                         @foreach($faturalar as $fatura)
                             <tr>
-                                <td>{{$mukellef->id}}</td>
-                                <td><div class="font-15">{{$mukellef->unvan}}</div></td>
-                                <td>{{$mukellef->VKNTCKN}}</td>
-                                <td>{{$mukellef->IL}}</td>
+                                <td>{{$fatura->uuid}}</td>
+                                <td><div class="font-15">{{ $fatura->abone->baslik }}</div></td>
+                                <td>{{ $fatura->abone->mukellef->unvan }}</td>
+                                <td>{{ \Illuminate\Support\Str::ucfirst($fatura->abone->tur) }}</td>
+                                <td>{{ $fatura->created_at->toDateString() }}</td>
                                 <td>
-                                    <a href="{{route('aboneduzenle',$mukellef->id)}}"><i class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
+                                    <a href="{{ route('fatura.detay', $fatura->uuid) }}" class="btn btn-sm btn-default" ><i class="fa fa-download text-blue"></i></a>
+                                    <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
                                 </td>
                             </tr>
                          @endforeach

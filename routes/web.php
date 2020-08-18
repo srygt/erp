@@ -74,9 +74,12 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     Route::get('faturalar/ekle','FaturaTaslakController@suFaturasi')
         ->name('faturataslak.ekle.get');
     Route::post('faturalar/suFaturasi','FaturaTaslakController@suFaturasiEkle')
-        ->middleware('datetypeconverter')
         ->name('faturataslak.ekle.post');
     Route::post('faturalar','FaturaController@store')
         ->name('fatura.ekle.post');
+    Route::get('faturalar','FaturaController@index')
+        ->name('fatura.liste');
+    Route::get('faturalar/{id}','FaturaController@download')
+        ->name('fatura.detay');
 });
 

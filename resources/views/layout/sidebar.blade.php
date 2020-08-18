@@ -19,6 +19,7 @@
                 <li class="{{ Request::segment(1) === 'mypage' ? 'active open' : null }}">
                     <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Fatura İşlemleri</span></a>
                     <ul>
+                        <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('fatura.liste')}}">Fatura Listesi</a></li>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('faturataslak.ekle.get')}}">Fatura Olustur</a></li>
 
                     </ul>

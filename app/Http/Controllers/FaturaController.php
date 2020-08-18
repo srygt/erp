@@ -10,9 +10,35 @@ use App\Services\Fatura\FaturaFactory;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Onrslu\HtEfatura\Services\RestRequest;
 
 class FaturaController extends Controller
 {
+    public function index()
+    {
+        $faturalar = Fatura::where(Fatura::COLUMN_DURUM, Fatura::COLUMN_DURUM_BASARILI)
+            ->orderBy(Fatura::COLUMN_ID, 'DESC')
+            ->with('abone.mukellef')
+            ->get();
+
+        return view('faturalar.liste',['faturalar' => $faturalar]);
+    }
+
+    public function download($uuid)
+    {
+        $response = (new RestRequest)->getDocumentFile($uuid)->getBody()->getContents();
+        $response = json_decode($response);
+
+        return response()->make(
+            base64_decode($response->DocumentFile),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline;',
+            ]
+        );
+    }
+
     public function store(Request $request)
     {
         /** @var FaturaTaslagi $faturaTaslagi */
