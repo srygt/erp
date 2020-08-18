@@ -28,8 +28,6 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('home');
     Route::get('panel/cikis','AuthController@logout')
         ->name('cikis');
-    Route::get('faturalar/suFaturasi','SuFaturaController@suFaturasi')
-        ->name('faturalar.suFaturasi');
     Route::get('aboneler/aboneekle','MainController@aboneekle')
         ->name('aboneler.aboneekle');
     Route::get('aboneler/abonelistesi','AboneController@abonelistesi')
@@ -42,9 +40,6 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('sayac.ekle.get');
 
     /* Veritabanı İşlemleri */
-    Route::post('faturalar/suFaturasi','SuFaturaController@suFaturasiEkle')
-        ->middleware('datetypeconverter')
-        ->name('sufaturasiekle');
     Route::post('sayaclar/ekle','SayacController@ekle')
         ->middleware('datetypeconverter')
         ->name('sayac.ekle.post');
@@ -74,5 +69,14 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('abone.ekle.post');
     Route::get('aboneler/{id}','AboneController@guncelleGet')
         ->name('abone.guncelle.get');
+
+    // Fatura İşlemleri
+    Route::get('faturalar/ekle','FaturaTaslakController@suFaturasi')
+        ->name('faturataslak.ekle.get');
+    Route::post('faturalar/suFaturasi','FaturaTaslakController@suFaturasiEkle')
+        ->middleware('datetypeconverter')
+        ->name('faturataslak.ekle.post');
+    Route::post('faturalar','FaturaController@store')
+        ->name('fatura.ekle.post');
 });
 
