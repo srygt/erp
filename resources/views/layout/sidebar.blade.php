@@ -17,7 +17,7 @@
             <ul id="main-menu" class="metismenu">
 
                 <li class="{{ Request::segment(1) === 'mypage' ? 'active open' : null }}">
-                    <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Fatura İşlemleri</span></a>
+                    <a href="#myPage" class="has-arrow"><i class="fa fa-folder-open-o"></i><span>Fatura İşlemleri</span></a>
                     <ul>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('fatura.liste')}}">Fatura Listesi</a></li>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('faturataslak.ekle.get')}}">Fatura Olustur</a></li>
@@ -25,14 +25,14 @@
                     </ul>
                 </li>
                 <li class="{{ Request::segment(1) === 'mypage' ? 'active open' : null }}">
-                    <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Abone İşlemleri</span></a>
+                    <a href="#myPage" class="has-arrow"><i class="fa fa-handshake-o"></i><span>Abone İşlemleri</span></a>
                     <ul>
-                        <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('aboneler.abonelistesi')}}">Aboneler</a></li>
+                        <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('aboneler.liste')}}">Aboneler</a></li>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('abone.ekle.get')}}">Abone Ekle</a></li>
                     </ul>
                 </li>
                 <li class="{{ Request::segment(1) === 'mypage' ? 'active open' : null }}">
-                    <a href="#myPage" class="has-arrow"><i class="icon-home"></i><span>Mükellef İşlemleri</span></a>
+                    <a href="#myPage" class="has-arrow"><i class="fa fa-building-o"></i><span>Mükellef İşlemleri</span></a>
                     <ul>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('mukellef.liste')}}">Mükellef Listesi</a></li>
                         <li class="{{ Request::segment(2) === 'index' ? 'active' : null }}"><a href="{{route('mukellef.ekle.get')}}">Mükellef Oluştur</a></li>

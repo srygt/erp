@@ -13,22 +13,24 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>ÜNVAN</th>
-                                <th>VKNTCKN</th>
+                                <th>VKN / TCKN</th>
+                                <th>Abone</th>
+                                <th>Ünvan</th>
                                 <th>İL</th>
                                 <th>İşlemler</th>
                             </tr>
                             </thead>
                             <tbody>
-                         @foreach($mukelleflistesi as $mukellef)
+                         @foreach($aboneler as $abone)
                             <tr>
-                                <td>{{$mukellef->id}}</td>
-                                <td><div class="font-15">{{$mukellef->unvan}}</div></td>
-                                <td>{{$mukellef->VKNTCKN}}</td>
-                                <td>{{$mukellef->IL}}</td>
+                                <td>{{ $abone->id }}</td>
+                                <td>{{ $abone->mukellef->getIdentificationId() }}</td>
+                                <td><div class="font-15">{{ $abone->baslik }}</div></td>
+                                <td>{{ $abone->mukellef->unvan }}</td>
+                                <td>{{ $abone->il }}</td>
                                 <td>
-                                    <a href="{{route('aboneduzenle',$mukellef->id)}}"><i class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
+                                    <a href="{{ route('abone.guncelle.get', $abone->id) }}" class="btn btn-sm btn-default" ><i class="fa fa-edit text-blue"></i></a>
+                                    <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
                                 </td>
                             </tr>
                          @endforeach

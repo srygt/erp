@@ -30,8 +30,6 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('cikis');
     Route::get('aboneler/aboneekle','MainController@aboneekle')
         ->name('aboneler.aboneekle');
-    Route::get('aboneler/abonelistesi','AboneController@abonelistesi')
-        ->name('aboneler.abonelistesi');
     Route::get('aboneler/{aboneler}/duzenle','AboneController@aboneduzenle')
         ->name('aboneduzenle');
     Route::put('abone/{aboneler}','AboneController@guncelle')
@@ -71,6 +69,8 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('abone.ekle.post');
     Route::get('aboneler/{id}','AboneController@guncelleGet')
         ->name('abone.guncelle.get');
+    Route::get('aboneler','AboneController@index')
+        ->name('aboneler.liste');
 
     // Fatura İşlemleri
     Route::get('faturalar/ekle','FaturaTaslakController@suFaturasi')

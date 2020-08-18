@@ -66,16 +66,9 @@ class AboneController extends Controller
         ]);
     }
 
-    public function abonelistesi(){
-        $mukelleflistesi = $this->abonelistele();
+    public function index(){
+        $aboneler   = Abone::with('mukellef')->get();
 
-        return view('abone.aboneler',['mukelleflistesi' => $mukelleflistesi]);
-    }
-
-    public function abonelistele(){
-        $mukellef = new Mukellef();
-        $mukelleflistesi = $mukellef->all();
-
-        return $mukelleflistesi;
+        return view('abone.liste', ['aboneler' => $aboneler]);
     }
 }
