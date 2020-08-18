@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Utils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -43,8 +44,18 @@ class Mukellef extends Model
     const COLUMN_TELEFON                = 'telefon';
     const COLUMN_URN                    = 'urn';
 
-    public function abonelikler(){
+    public function abonelikler()
+    {
         $this->hasMany(Abone::class);
     }
 
+    public function getIdentificationId() : string
+    {
+        return $this->{Mukellef::COLUMN_TC_KIMLIK_NO} ?? $this->{Mukellef::COLUMN_VERGI_NO};
+    }
+
+    public function getFormattedTelephone() : string
+    {
+        return Utils::getFormattedTelephoneNumber($this->{self::COLUMN_TELEFON});
+    }
 }

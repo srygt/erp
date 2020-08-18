@@ -2,9 +2,16 @@
 
 namespace App\Models;
 
+use App\Helpers\Utils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Class Abone
+ * @package App\Models
+ *
+ * @property Mukellef $mukellef
+ */
 class Abone extends Model
 {
     use SoftDeletes;
@@ -42,7 +49,23 @@ class Abone extends Model
         self::COLUMN_TUR_DOGALGAZ   => 'Doğalgaz',
     ];
 
-    public function mukellef(){
+    public function mukellef()
+    {
         return $this->belongsTo(Mukellef::class,'mukellef_id','id');
+    }
+
+    public function faturalar()
+    {
+        return $this->hasMany(Fatura::class);
+    }
+
+    public function faturaTaslaklari()
+    {
+        return $this->hasMany(FaturaTaslagi::class);
+    }
+
+    public function getFormattedTelephone() : string
+    {
+        return Utils::getFormattedTelephoneNumber($this->{Mukellef::COLUMN_TELEFON});
     }
 }
