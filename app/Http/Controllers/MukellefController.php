@@ -7,6 +7,13 @@ use App\Models\Mukellef;
 
 class MukellefController extends Controller
 {
+    public function index()
+    {
+        $mukellefler = Mukellef::get();
+
+        return view('mukellef.liste', ['mukellefler' => $mukellefler]);
+    }
+
     public function ekleGet()
     {
         $mukellef = new Mukellef();

@@ -61,6 +61,8 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('mukellef.detay');
     Route::get('mukellefler/{id}','MukellefController@guncelleGet')
         ->name('mukellef.guncelle.get');
+    Route::get('mukellefler','MukellefController@index')
+        ->name('mukellef.liste');
 
     // Abone İşlemleri
     Route::get('aboneler/ekle','AboneController@ekleGet')
