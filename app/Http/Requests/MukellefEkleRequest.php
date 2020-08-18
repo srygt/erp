@@ -81,6 +81,14 @@ class MukellefEkleRequest extends FormRequest
         // telefon
         if ( isset($this->telefon) ) {
             $parameters['telefon'] = preg_replace('~\D~i', '', $this->telefon);
+
+            if (mb_strlen($parameters['telefon']) === 10) {
+                $parameters['telefon'] = '90' . $parameters['telefon'];
+            }
+
+            if (mb_strlen($parameters['telefon']) === 11) {
+                $parameters['telefon'] = '9' . $parameters['telefon'];
+            }
         }
 
         // website
