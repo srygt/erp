@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\aboneeklerequest;
+use App\Http\Requests\AboneEkleRequest;
 use App\Models\Abone;
 use App\Models\Mukellef;
-use Carbon\Carbon;
 
 class AboneController extends Controller
 {
