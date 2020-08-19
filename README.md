@@ -13,3 +13,4 @@
 *   `git submodule update --init --recursive`
     (to do that you need to access permission of https://github.com/onuruslu/ht-efatura)
 *   `composer dump`
+*   `php artisan migrate --seed`
