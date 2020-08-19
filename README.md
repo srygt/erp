@@ -12,5 +12,4 @@
     FATURA_CODE_START="000"
     ```
 *   `composer install`
-*   `composer dump`
 *   `php artisan migrate --seed`
