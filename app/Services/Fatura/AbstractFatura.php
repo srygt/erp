@@ -27,6 +27,7 @@ use Onrslu\HtEfatura\Types\Enums\CustomerIdentificationSchemeId;
 use Onrslu\HtEfatura\Types\Enums\InvoiceTypeCode\Satis;
 use Onrslu\HtEfatura\Types\Enums\ProfileId\EArsivFatura;
 use Onrslu\HtEfatura\Types\Enums\ProfileId\TicariFatura;
+use Onrslu\HtEfatura\Types\Enums\TargetCode;
 use Onrslu\HtEfatura\Types\Time;
 use Throwable;
 
@@ -107,7 +108,6 @@ abstract class AbstractFatura
             ->setOrderReferenceDate($fatura->created_at->toDateString())
             ->setOrderReferenceId($fatura->{Fatura::COLUMN_ID})
             ->setPayableAmount($invoiceLines->getPriceTotal())
-            ->setProfileID(new EArsivFatura())
             ->setTaxInclusiveAmount($invoiceLines->getPriceTotal())
             ->setUUID($fatura->{Fatura::COLUMN_UUID});
 
@@ -121,7 +121,6 @@ abstract class AbstractFatura
             ->setInvoiceheader($invoiceHeader);
 
         $invoice
-            ->setAppType(new EArsiv())
             ->setDestinationIdentifier($fatura->abone->mukellef->getIdentificationId())
             ->setDestinationUrn($fatura->abone->{Mukellef::COLUMN_URN})
             ->setSourceUrn(config('fatura.urn'))
@@ -161,7 +160,7 @@ abstract class AbstractFatura
     protected function getResponse(FaturaInterface $fatura, Invoice $invoice, bool $isPreview)
     {
 
-        $fatura     = $this->_updateRequestColumn($fatura, json_encode($invoice));
+        $fatura     = $this->_updateDBBeforeRequest($fatura, json_encode($invoice));
 
         try {
             $invoice        = $invoice->setIsPreview($isPreview);
@@ -169,7 +168,7 @@ abstract class AbstractFatura
                 ->getBody()
                 ->getContents();
 
-            $jsonResponse   = $this->_updateResponseColumn($fatura, $response);
+            $jsonResponse   = $this->_updateDBAfterRequest($fatura, $response);
         }
         catch (Exception $exception) {
             $fatura->{Fatura::COLUMN_HATA}      = $exception;
@@ -192,7 +191,7 @@ abstract class AbstractFatura
      *
      * @return FaturaInterface|null
      */
-    protected function _updateRequestColumn(?FaturaInterface $fatura, string $request) : ?FaturaInterface
+    protected function _updateDBBeforeRequest(?FaturaInterface $fatura, string $request) : ?FaturaInterface
     {
         $fatura->{Fatura::COLUMN_ISTEK}         = $request;
         $fatura->save();
@@ -207,7 +206,7 @@ abstract class AbstractFatura
      * @return object
      * @throws Throwable
      */
-    protected function _updateResponseColumn(FaturaInterface $fatura, string $response) : object
+    protected function _updateDBAfterRequest(FaturaInterface $fatura, string $response) : object
     {
         $fatura->{Fatura::COLUMN_CEVAP}     = $response;
         $fatura->save();
@@ -224,6 +223,33 @@ abstract class AbstractFatura
     }
 
     /**
+     * @param Invoice $invoice
+     * @return Invoice
+     */
+    protected function setTargetType(Invoice $invoice) : Invoice
+    {
+        $restRequest = new RestRequest();
+
+        $isEFaturaUser  = $restRequest->isGibUser(
+                new EFatura(),
+                new TargetCode(TargetCode::RECEIVER),
+                $invoice->getInvoiceModel()->getCustomerAgent()->getIdentificationID(),
+                $invoice->getDestinationUrn()
+            );
+
+        if ($isEFaturaUser) {
+            $invoice->setAppType(new EFatura());
+            $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new TicariFatura());
+        }
+        else {
+            $invoice->setAppType(new EArsiv());
+            $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new EArsivFatura());
+        }
+
+        return $invoice;
+    }
+
+    /**
      * @param FaturaTaslagi $faturaTaslagi
      * @return mixed
      * @throws GuzzleException
@@ -232,6 +258,7 @@ abstract class AbstractFatura
     public function getPreview(FaturaTaslagi $faturaTaslagi)
     {
         $invoice    = $this->getInvoice($faturaTaslagi);
+        $invoice    = $this->setTargetType($invoice);
 
         return $this->getResponse($faturaTaslagi, $invoice, true);
     }
@@ -245,6 +272,7 @@ abstract class AbstractFatura
     public function getBill(Fatura $fatura)
     {
         $invoice    = $this->getInvoice($fatura);
+        $invoice    = $this->setTargetType($invoice);
 
         return $this->getResponse($fatura, $invoice, false);
     }
