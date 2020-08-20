@@ -63,7 +63,7 @@
                     </ul>
                 </li>
                 <li class="{{ Request::segment(2) === 'ayarlar' ? 'active' : null }}">
-                    <a href="{{route('ayar.get')}}">
+                    <a href="{{route('ayar.index')}}">
                         <i class="fa fa-cogs"></i>
                         <span>Ayarlar</span>
                     </a>

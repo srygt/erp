@@ -85,9 +85,9 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('fatura.detay');
 
     // Ayarlar
-    Route::get('ayarlar','AyarController@indexGet')
-        ->name('ayar.get');
-    Route::post('ayarlar','AyarController@indexPost')
-        ->name('ayar.post');
+    Route::get('ayarlar','AyarController@index')
+        ->name('ayar.index');
+    Route::post('ayarlar','AyarController@update')
+        ->name('ayar.update');
 });
 

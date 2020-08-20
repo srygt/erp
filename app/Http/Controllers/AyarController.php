@@ -8,11 +8,11 @@ use Illuminate\Support\Collection;
 
 class AyarController extends Controller
 {
-    public function indexGet()
+    public function index()
     {
         return view('ayarlar', ['ayarlar' => $this->ayarTransformer()]);
     }
-    public function indexPost(AyarGuncelleRequest $request)
+    public function update(AyarGuncelleRequest $request)
     {
         $payload = $request->only([
             'elektrik.son_odeme_gun',
