@@ -4,6 +4,7 @@
 @section('content')
     <form action="{{route("faturataslak.ekle.post")}}" method="post">
         @csrf
+        <input type="hidden" id="tur" name="tur" value="">
         <div class="col-lg-8 col-md-12">
             <div class="card">
                 <div class="body">
@@ -26,32 +27,57 @@
                                 @endif
                             </div>
                         @endif
-                        <div class="col-lg-12 col-md-12">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Abone<span class="text-danger">*</span></label>
-                                <select class="form-control" name="abone_id">
-                                    <option value="">Seçin</option>
-                                    @foreach($aboneler as $abone)
-                                        <option
-                                            value="{{ $abone->id }}"
-                                            @if(old('abone_id') == $abone->id)
-                                                selected
-                                            @endif
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="abone_id" id="abone_id">
+                                            <option value="">Seçin</option>
+                                            @foreach($aboneler as $abone)
+                                                <option
+                                                    value="{{ $abone->id }}"
+                                                    data-tur="{{ $abone->tur }}"
+                                                    @if(old('abone_id') == $abone->id)
+                                                    selected
+                                                    @endif
+                                                >
+                                                    {{
+                                                        $abone->mukellef->unvan
+                                                        . ' - ' . \App\Models\Abone::TUR_LIST[$abone->tur]
+                                                        . ' - ' . $abone->baslik
+                                                    }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button
+                                            id="fillDefaultsButton"
+                                            onclick="fillDefaults()"
+                                            type="button"
+                                            class="btn btn-primary"
+                                            disabled
                                         >
-                                            {{
-                                                $abone->mukellef->unvan
-                                                . ' - ' . \App\Models\Abone::TUR_LIST[$abone->tur]
-                                                . ' - ' . $abone->baslik
-                                            }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                            <i class="fa fa-refresh"></i>
+                                            <span>Varsayılanlarını Çek</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="birim_fiyat" value="{{old("birim_fiyat")}}" min="0.000000" step="0.000001">
+                                <input
+                                    id="birim_fiyat"
+                                    name="birim_fiyat"
+                                    value="{{old("birim_fiyat")}}"
+                                    min="0.000000"
+                                    step="0.000001"
+                                    type="number"
+                                    class="form-control"
+                                >
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
@@ -59,10 +85,51 @@
                                 <label>Son Ödeme Tarihi<span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="icon-calendar"></i></span>
+                                        <span class="input-group-text">
+                                            <i class="icon-calendar"></i>
+                                        </span>
                                     </div>
-                                    <input data-provide="datepicker" data-date-autoclose="true" name="son_odeme_tarihi"
-                                           class="form-control date" placeholder="Seçin" value="{{old("son_odeme_tarihi")}}">
+                                    <input
+                                        id="son_odeme_tarihi"
+                                        name="son_odeme_tarihi"
+                                        value="{{ old("son_odeme_tarihi") }}"
+                                        placeholder="Seçin"
+                                        data-provide="datepicker"
+                                        data-date-autoclose="true"
+                                        class="form-control date"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" id="elektrikSpecificArea" style="display: none;">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Birim Dağıtım Fiyatı<span class="text-danger">*</span></label>
+                                        <input
+                                            id="birim_dagitim_fiyat"
+                                            name="birim_dagitim_fiyat"
+                                            value="{{old("birim_dagitim_fiyat")}}"
+                                            min="0.000000"
+                                            step="0.000001"
+                                            type="number"
+                                            class="form-control"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Birim Sistem Kullanım Fiyatı<span class="text-danger">*</span></label>
+                                        <input
+                                            id="birim_sistem_fiyat"
+                                            name="birim_sistem_fiyat"
+                                            value="{{old("birim_sistem_fiyat")}}"
+                                            min="0.000000"
+                                            step="0.000001"
+                                            type="number"
+                                            class="form-control"
+                                        >
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -110,12 +177,61 @@
     <script src="{{ asset('assets/vendor/toastr/toastr.js') }}"></script>
 
     <script>
+        var ayarlar = {!! json_encode($ayarlar) !!};
+
+        console.log(ayarlar);
+
+        function getComingDayDate(day) {
+            var possibleDate                = new Date();
+
+            if (day > possibleDate.getDay()) {
+                // getMonth() Ocak'ı  "0" kabul ediyor, setMonth() Ocak'ı "1" kabul ediyor :)
+                possibleDate.setMonth( possibleDate.getMonth() + 2);
+            }
+
+            return ("0" + day).slice(-2)
+                + '.' + ("0" + possibleDate.getMonth()).slice(-2)
+                + '.' + ("0" + possibleDate.getFullYear()).slice(-4);
+        }
+
+        function fillDefaults() {
+            let tur                 = $('#abone_id').find(':selected').data('tur');
+
+            let birim_fiyat_baslik          = tur + '.tuketim_birim_fiyat';
+            $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
+
+            let birim_dagitim_fiyat_baslik  = tur + '.dagitim_birim_fiyat';
+            $('#birim_dagitim_fiyat').val( ayarlar[birim_dagitim_fiyat_baslik] );
+
+            let birim_sistem_fiyat_baslik   = tur + '.sistem_birim_fiyat';
+            $('#birim_sistem_fiyat').val( ayarlar[birim_sistem_fiyat_baslik] );
+
+            let son_odeme_baslik    = tur + '.son_odeme_gun'
+            $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
+        }
+
         $(function () {
 
             $('.date').datepicker({
                 format: 'dd.mm.yyyy',
                 language: 'tr'
             });
+
+            $('#abone_id').on('change', function(){
+                $('#fillDefaultsButton').prop('disabled', !$(this).val());
+
+                let tur = $(this).find(':selected').data('tur');
+                $('#tur').val(tur);
+
+                if (tur === '{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}' )
+                {
+                    $('#elektrikSpecificArea').show(250);
+                }
+                else {
+                    $('#elektrikSpecificArea').hide(250);
+                }
+            })
+            .trigger('change');
 
         });
     </script>

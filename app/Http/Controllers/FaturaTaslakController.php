@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Http\Requests\FaturaTaslagiEkleRequest;
 use App\Models\Abone;
+use App\Models\Ayar;
 use App\Models\Fatura;
 use App\Services\Fatura\FaturaFactory;
 use Exception;
@@ -15,11 +16,17 @@ class FaturaTaslakController extends Controller
 {
     public function suFaturasi()
     {
+        $ayarlar    = Ayar::allFormatted();
+        $aboneler   = Abone::with('mukellef')->get();
 
-        $aboneler = Abone::with('mukellef')->get();
 
-
-        return view('faturalar.ekle', compact("aboneler"));
+        return view(
+            'faturalar.ekle',
+            [
+                'ayarlar'   => $ayarlar,
+                'aboneler'  => $aboneler,
+            ]
+        );
     }
 
     public function suFaturasiEkle(FaturaTaslagiEkleRequest $request)
@@ -29,13 +36,13 @@ class FaturaTaslakController extends Controller
         $faturaTaslagi = $abone
             ->faturaTaslaklari()
             ->create([
-                Fatura::COLUMN_UUID             => (string) Uuid::uuid4(),
-                Fatura::COLUMN_ABONE_ID         => $request->abone_id,
-                Fatura::COLUMN_BIRIM_FIYAT      => $request->birim_fiyat,
-                Fatura::COLUMN_SON_ODEME_TARIHI => $request->son_odeme_tarihi,
-                Fatura::COLUMN_ENDEKS_ILK       => $request->ilk_endeks,
-                Fatura::COLUMN_ENDEKS_SON       => $request->son_endeks,
-                Fatura::COLUMN_NOT              => $request->not,
+                Fatura::COLUMN_UUID                 => (string) Uuid::uuid4(),
+                Fatura::COLUMN_ABONE_ID             => $request->abone_id,
+                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $request->birim_fiyat,
+                Fatura::COLUMN_SON_ODEME_TARIHI     => $request->son_odeme_tarihi,
+                Fatura::COLUMN_ENDEKS_ILK           => $request->ilk_endeks,
+                Fatura::COLUMN_ENDEKS_SON           => $request->son_endeks,
+                Fatura::COLUMN_NOT                  => $request->not,
             ]);
 
         $faturaService = FaturaFactory::getService($abone->{Abone::COLUMN_TUR});

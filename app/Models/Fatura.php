@@ -36,7 +36,9 @@ class Fatura extends Model implements FaturaInterface
     const COLUMN_DURUM_HATA         = 'hata';
     const COLUMN_DURUM_BASARILI     = 'basarili';
     const COLUMN_INVOICE_ID         = 'fatura_no';
-    const COLUMN_BIRIM_FIYAT        = 'birim_fiyat';
+    const COLUMN_BIRIM_FIYAT_TUKETIM= 'birim_fiyat';
+    const COLUMN_BIRIM_FIYAT_DAGITIM= 'dagitim_birim_fiyat';
+    const COLUMN_BIRIM_FIYAT_SISTEM = 'sistem_birim_fiyat';
     const COLUMN_SON_ODEME_TARIHI   = 'son_odeme_tarihi';
     const COLUMN_ENDEKS_ILK         = 'ilk_endeks';
     const COLUMN_ENDEKS_SON         = 'son_endeks';

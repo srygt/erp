@@ -48,14 +48,14 @@ class FaturaController extends Controller
         $fatura = $faturaTaslagi
             ->fatura()
             ->create([
-                Fatura::COLUMN_UUID             => $faturaTaslagi->{Fatura::COLUMN_UUID},
-                Fatura::COLUMN_INVOICE_ID       => Fatura::getNextInvoiceId(),
-                Fatura::COLUMN_ABONE_ID         => $faturaTaslagi->{Fatura::COLUMN_ABONE_ID},
-                Fatura::COLUMN_BIRIM_FIYAT      => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT},
-                Fatura::COLUMN_SON_ODEME_TARIHI => $faturaTaslagi->{Fatura::COLUMN_SON_ODEME_TARIHI},
-                Fatura::COLUMN_ENDEKS_ILK       => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK},
-                Fatura::COLUMN_ENDEKS_SON       => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON},
-                Fatura::COLUMN_NOT              => $faturaTaslagi->{Fatura::COLUMN_NOT},
+                Fatura::COLUMN_UUID                 => $faturaTaslagi->{Fatura::COLUMN_UUID},
+                Fatura::COLUMN_INVOICE_ID           => Fatura::getNextInvoiceId(),
+                Fatura::COLUMN_ABONE_ID             => $faturaTaslagi->{Fatura::COLUMN_ABONE_ID},
+                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_SON_ODEME_TARIHI     => $faturaTaslagi->{Fatura::COLUMN_SON_ODEME_TARIHI},
+                Fatura::COLUMN_ENDEKS_ILK           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK},
+                Fatura::COLUMN_ENDEKS_SON           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON},
+                Fatura::COLUMN_NOT                  => $faturaTaslagi->{Fatura::COLUMN_NOT},
             ]);
 
         $faturaService = FaturaFactory::getService($faturaTaslagi->abone->{Abone::COLUMN_TUR});

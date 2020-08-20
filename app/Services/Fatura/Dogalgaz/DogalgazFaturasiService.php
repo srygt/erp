@@ -30,7 +30,7 @@ class DogalgazFaturasiService extends AbstractFatura
             'tuketim'   =>
                 $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON} - $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
             'bedel'     => [
-                'birimFiyat'   => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT},
+                'birimFiyat'   => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
             ]
         ];
 

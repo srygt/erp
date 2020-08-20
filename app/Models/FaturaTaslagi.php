@@ -25,7 +25,7 @@ class FaturaTaslagi extends Model implements FaturaInterface
     protected $fillable = [
         Fatura::COLUMN_UUID,
         Fatura::COLUMN_INVOICE_ID,
-        Fatura::COLUMN_BIRIM_FIYAT,
+        Fatura::COLUMN_BIRIM_FIYAT_TUKETIM,
         Fatura::COLUMN_SON_ODEME_TARIHI,
         Fatura::COLUMN_ENDEKS_ILK,
         Fatura::COLUMN_ENDEKS_SON,
@@ -52,14 +52,14 @@ class FaturaTaslagi extends Model implements FaturaInterface
     {
         return $this->fatura()
             ->create([
-                Fatura::COLUMN_UUID             => $this->{Fatura::COLUMN_UUID},
-                Fatura::COLUMN_INVOICE_ID       => $this->{Fatura::COLUMN_INVOICE_ID},
-                Fatura::COLUMN_BIRIM_FIYAT      => $this->{Fatura::COLUMN_BIRIM_FIYAT},
-                Fatura::COLUMN_SON_ODEME_TARIHI => $this->{Fatura::COLUMN_SON_ODEME_TARIHI},
-                Fatura::COLUMN_ENDEKS_ILK       => $this->{Fatura::COLUMN_ENDEKS_ILK},
-                Fatura::COLUMN_ENDEKS_SON       => $this->{Fatura::COLUMN_ENDEKS_SON},
-                Fatura::COLUMN_NOT              => $this->{Fatura::COLUMN_NOT},
-                Fatura::COLUMN_ABONE_ID         => $this->{Fatura::COLUMN_ABONE_ID},
+                Fatura::COLUMN_UUID                 => $this->{Fatura::COLUMN_UUID},
+                Fatura::COLUMN_INVOICE_ID           => $this->{Fatura::COLUMN_INVOICE_ID},
+                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $this->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_SON_ODEME_TARIHI     => $this->{Fatura::COLUMN_SON_ODEME_TARIHI},
+                Fatura::COLUMN_ENDEKS_ILK           => $this->{Fatura::COLUMN_ENDEKS_ILK},
+                Fatura::COLUMN_ENDEKS_SON           => $this->{Fatura::COLUMN_ENDEKS_SON},
+                Fatura::COLUMN_NOT                  => $this->{Fatura::COLUMN_NOT},
+                Fatura::COLUMN_ABONE_ID             => $this->{Fatura::COLUMN_ABONE_ID},
             ]);
     }
 }
