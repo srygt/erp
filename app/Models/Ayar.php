@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Ayar extends Model
 {
@@ -39,4 +40,19 @@ class Ayar extends Model
         self::FIELD_DOGALGAZ_SON_ODEME_GUN,
         self::FIELD_DOGALGAZ_TUKETIM_BIRIM_FIYAT,
     ];
+
+    public static function allFormatted()
+    {
+        /** @var Collection $ayarlar */
+        $ayarlar = self::get();
+
+        $data = [];
+
+        foreach ($ayarlar as $ayar)
+        {
+            $data[$ayar->{self::COLUMN_BASLIK}]     = $ayar->{self::COLUMN_DEGER};
+        }
+
+        return $data;
+    }
 }

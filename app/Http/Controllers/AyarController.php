@@ -10,7 +10,7 @@ class AyarController extends Controller
 {
     public function index()
     {
-        return view('ayarlar', ['ayarlar' => $this->ayarTransformer()]);
+        return view('ayarlar', ['ayarlar' => Ayar::allFormatted()]);
     }
     public function update(AyarGuncelleRequest $request)
     {
@@ -40,20 +40,5 @@ class AyarController extends Controller
 
         return redirect()->back()
             ->with('message', 'Ayarlar Başarıyla Güncellendi!');
-    }
-
-    protected function ayarTransformer() : array
-    {
-        /** @var Collection $ayarlar */
-        $ayarlar = Ayar::get();
-
-        $data = [];
-
-        foreach ($ayarlar as $ayar)
-        {
-            $data[$ayar->{Ayar::COLUMN_BASLIK}]     = $ayar->{Ayar::COLUMN_DEGER};
-        }
-
-        return $data;
     }
 }
