@@ -48,24 +48,24 @@
                                 </select>
                             </div>
                         </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label>Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="birim_fiyat" value="{{old("birim_fiyat")}}" min="0.000000" step="0.000001">
-                                </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" name="birim_fiyat" value="{{old("birim_fiyat")}}" min="0.000000" step="0.000001">
                             </div>
-                            <div class="col-lg-6 col-md-12">
-                                <div class="form-group">
-                                    <label>Son Ödeme Tarihi<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="icon-calendar"></i></span>
-                                        </div>
-                                        <input data-provide="datepicker" data-date-autoclose="true" name="son_odeme_tarihi"
-                                               class="form-control date" placeholder="Seçin" value="{{old("son_odeme_tarihi")}}">
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Son Ödeme Tarihi<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-calendar"></i></span>
                                     </div>
+                                    <input data-provide="datepicker" data-date-autoclose="true" name="son_odeme_tarihi"
+                                           class="form-control date" placeholder="Seçin" value="{{old("son_odeme_tarihi")}}">
                                 </div>
                             </div>
+                        </div>
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>İlk Endeks<span class="text-danger">*</span></label>
