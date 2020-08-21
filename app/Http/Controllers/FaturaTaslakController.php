@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
 
 class FaturaTaslakController extends Controller
 {
-    public function suFaturasi()
+    public function ekleGet()
     {
         $ayarlar    = Ayar::allFormatted();
         $aboneler   = Abone::with('mukellef')->get();
@@ -29,7 +29,7 @@ class FaturaTaslakController extends Controller
         );
     }
 
-    public function suFaturasiEkle(FaturaTaslagiEkleRequest $request)
+    public function eklePost(FaturaTaslagiEkleRequest $request)
     {
         $abone = Abone::find($request->abone_id);
 

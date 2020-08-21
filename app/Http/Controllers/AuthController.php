@@ -13,14 +13,24 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
-    public function LoginPost(Request $request){
+    public function LoginPost(Request $request)
+    {
        if( Auth::attempt(['username'=>$request->username,'password'=>$request->password])){
            return redirect()->route('home');
        }
+
        return redirect()->route('Login')->withErrors('Giriş Bilgileriniz Hatalı');
     }
-    public function logout(){
+
+    public function logout()
+    {
         Auth::logout();
+
+        return redirect()->route('Login');
+    }
+
+    public function redirectToLogin()
+    {
         return redirect()->route('Login');
     }
 }

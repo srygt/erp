@@ -2,7 +2,7 @@
 @section('parentPageTitle', 'Fatura İşlemleri')
 @section('title', 'Su Faturası Ekle')
 @section('content')
-    <form action="{{route("faturataslak.ekle.post")}}" method="post">
+    <form action="{{ route("faturataslak.ekle.post") }}" method="post">
         @csrf
         <input type="hidden" id="tur" name="tur" value="">
         <div class="col-lg-8 col-md-12">

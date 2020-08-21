@@ -12,9 +12,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('Login');
-});
+Route::get('/', 'AuthController@redirectToLogin');
+
 Route::prefix('panel')->middleware('logincontrol')->group(function (){
     Route::get('giris', 'AuthController@index')
         ->name('Login');
@@ -73,9 +72,9 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('aboneler.liste');
 
     // Fatura İşlemleri
-    Route::get('faturalar/ekle','FaturaTaslakController@suFaturasi')
+    Route::get('faturalar/ekle','FaturaTaslakController@ekleGet')
         ->name('faturataslak.ekle.get');
-    Route::post('faturalar/suFaturasi','FaturaTaslakController@suFaturasiEkle')
+    Route::post('faturalar/ekle','FaturaTaslakController@eklePost')
         ->name('faturataslak.ekle.post');
     Route::post('faturalar','FaturaController@store')
         ->name('fatura.ekle.post');
