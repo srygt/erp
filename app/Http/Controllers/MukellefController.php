@@ -43,7 +43,15 @@ class MukellefController extends Controller
 
         if ($request->id) {
             Mukellef::where('id', $request->id)
-                ->update($payload);
+                ->update(
+                    array_merge(    // kullanıcının hem vergi no hem de tc kimlik no ya sahip olmasını istemeyiz
+                        [
+                            Mukellef::COLUMN_VERGI_NO       => null,
+                            Mukellef::COLUMN_TC_KIMLIK_NO   => null,
+                        ],
+                        $payload
+                    )
+                );
 
             return redirect()->back()->with('message', 'Başarıyla Güncellendi');
         }

@@ -52,6 +52,8 @@ class FaturaController extends Controller
                 Fatura::COLUMN_INVOICE_ID           => Fatura::getNextInvoiceId(),
                 Fatura::COLUMN_ABONE_ID             => $faturaTaslagi->{Fatura::COLUMN_ABONE_ID},
                 Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_BIRIM_FIYAT_DAGITIM  => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_DAGITIM},
+                Fatura::COLUMN_BIRIM_FIYAT_SISTEM   => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_SISTEM},
                 Fatura::COLUMN_SON_ODEME_TARIHI     => $faturaTaslagi->{Fatura::COLUMN_SON_ODEME_TARIHI},
                 Fatura::COLUMN_ENDEKS_ILK           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK},
                 Fatura::COLUMN_ENDEKS_SON           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON},
