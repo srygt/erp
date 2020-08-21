@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
 //        $this->call(AboneSeeder::class);
 //        $this->call(MukellefSeeder::class);
         $this->call(AdminSeeder::class);
+        $this->call(AyarSeeder::class);
     }
 }
