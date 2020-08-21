@@ -27,27 +27,6 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('home');
     Route::get('panel/cikis','AuthController@logout')
         ->name('cikis');
-    Route::get('aboneler/aboneekle','MainController@aboneekle')
-        ->name('aboneler.aboneekle');
-    Route::get('aboneler/{aboneler}/duzenle','AboneController@aboneduzenle')
-        ->name('aboneduzenle');
-    Route::put('abone/{aboneler}','AboneController@guncelle')
-        ->name('aboneguncelle');
-    Route::get('sayaclar/ekle','SayacController@ekle')
-        ->name('sayac.ekle.get');
-
-    /* Veritabanı İşlemleri */
-    Route::post('sayaclar/ekle','SayacController@ekle')
-        ->middleware('datetypeconverter')
-        ->name('sayac.ekle.post');
-
-    /*Fatura İslemleri*/
-    Route::get('faturalar/suFaturasiolustur','EarsivFaturaOlustur@suFaturasiOlustur');
-    Route::get('faturalar/suFaturasiGonder','FaturaGonder@suFaturasiGonder');
-
-    /*Abone İslemleri*/
-    Route::post('aboneler/aboneekle','AboneController@aboneekle')
-        ->name('aboneeklePost');
 
     // Mükellef İşlemleri
     Route::get('mukellefler/ekle','MukellefController@ekleGet')
