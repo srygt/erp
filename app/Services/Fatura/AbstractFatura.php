@@ -162,22 +162,12 @@ abstract class AbstractFatura
 
         $fatura     = $this->_updateDBBeforeRequest($fatura, json_encode($invoice));
 
-        try {
-            $invoice        = $invoice->setIsPreview($isPreview);
-            $response       = ((new RestRequest())->postSendInvoiceModel($invoice))
-                ->getBody()
-                ->getContents();
+        $invoice        = $invoice->setIsPreview($isPreview);
+        $response       = ((new RestRequest())->postSendInvoiceModel($invoice))
+            ->getBody()
+            ->getContents();
 
-            $jsonResponse   = $this->_updateDBAfterRequest($fatura, $response);
-        }
-        catch (Exception $exception) {
-            $fatura->{Fatura::COLUMN_HATA}      = $exception;
-            $fatura->{Fatura::COLUMN_DURUM}     = Fatura::COLUMN_DURUM_HATA;
-
-            $fatura->save();
-
-            throw $exception;
-        }
+        $jsonResponse   = $this->_updateDBAfterRequest($fatura, $response);
 
         $fatura->{Fatura::COLUMN_DURUM} = Fatura::COLUMN_DURUM_BASARILI;
         $fatura->save();
@@ -250,6 +240,17 @@ abstract class AbstractFatura
     }
 
     /**
+     * @param Throwable $e
+     * @param FaturaInterface $fatura
+     */
+    protected static function logError(Throwable $e, FaturaInterface $fatura)
+    {
+        $fatura->{Fatura::COLUMN_DURUM} = Fatura::COLUMN_DURUM_HATA;
+        $fatura->{Fatura::COLUMN_HATA}  = $e;
+        $fatura->save();
+    }
+
+    /**
      * @param FaturaTaslagi $faturaTaslagi
      * @return mixed
      * @throws GuzzleException
@@ -257,10 +258,18 @@ abstract class AbstractFatura
      */
     public function getPreview(FaturaTaslagi $faturaTaslagi)
     {
-        $invoice    = $this->getInvoice($faturaTaslagi);
-        $invoice    = $this->setTargetType($invoice);
+        try
+        {
+            $invoice    = $this->getInvoice($faturaTaslagi);
+            $invoice    = $this->setTargetType($invoice);
 
-        return $this->getResponse($faturaTaslagi, $invoice, true);
+            return $this->getResponse($faturaTaslagi, $invoice, true);
+        }
+        catch (Throwable $e)
+        {
+            self::logError($e, $faturaTaslagi);
+            throw $e;
+        }
     }
 
     /**
@@ -271,9 +280,17 @@ abstract class AbstractFatura
      */
     public function getBill(Fatura $fatura)
     {
-        $invoice    = $this->getInvoice($fatura);
-        $invoice    = $this->setTargetType($invoice);
+        try
+        {
+            $invoice    = $this->getInvoice($fatura);
+            $invoice    = $this->setTargetType($invoice);
 
-        return $this->getResponse($fatura, $invoice, false);
+            return $this->getResponse($fatura, $invoice, false);
+        }
+        catch (Throwable $e)
+        {
+            self::logError($e, $fatura);
+            throw $e;
+        }
     }
 }
