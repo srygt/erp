@@ -107,9 +107,9 @@
                                     <div class="form-group">
                                         <label>Birim Dağıtım Fiyatı<span class="text-danger">*</span></label>
                                         <input
-                                            id="birim_dagitim_fiyat"
-                                            name="birim_dagitim_fiyat"
-                                            value="{{old("birim_dagitim_fiyat")}}"
+                                            id="dagitim_birim_fiyat"
+                                            name="dagitim_birim_fiyat"
+                                            value="{{old("dagitim_birim_fiyat")}}"
                                             min="0.000000"
                                             step="0.000001"
                                             type="number"
@@ -121,9 +121,9 @@
                                     <div class="form-group">
                                         <label>Birim Sistem Kullanım Fiyatı<span class="text-danger">*</span></label>
                                         <input
-                                            id="birim_sistem_fiyat"
-                                            name="birim_sistem_fiyat"
-                                            value="{{old("birim_sistem_fiyat")}}"
+                                            id="sistem_birim_fiyat"
+                                            name="sistem_birim_fiyat"
+                                            value="{{old("sistem_birim_fiyat")}}"
                                             min="0.000000"
                                             step="0.000001"
                                             type="number"
@@ -200,11 +200,11 @@
             let birim_fiyat_baslik          = tur + '.tuketim_birim_fiyat';
             $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
 
-            let birim_dagitim_fiyat_baslik  = tur + '.dagitim_birim_fiyat';
-            $('#birim_dagitim_fiyat').val( ayarlar[birim_dagitim_fiyat_baslik] );
+            let dagitim_birim_fiyat_baslik  = tur + '.dagitim_birim_fiyat';
+            $('#dagitim_birim_fiyat').val( ayarlar[dagitim_birim_fiyat_baslik] );
 
-            let birim_sistem_fiyat_baslik   = tur + '.sistem_birim_fiyat';
-            $('#birim_sistem_fiyat').val( ayarlar[birim_sistem_fiyat_baslik] );
+            let sistem_birim_fiyat_baslik   = tur + '.sistem_birim_fiyat';
+            $('#sistem_birim_fiyat').val( ayarlar[sistem_birim_fiyat_baslik] );
 
             let son_odeme_baslik    = tur + '.son_odeme_gun'
             $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )

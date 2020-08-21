@@ -14,6 +14,8 @@ use Illuminate\Validation\Rule;
  * @property int $id
  * @property int $abone_id
  * @property float $birim_fiyat
+ * @property float $dagitim_birim_fiyat
+ * @property float $sistem_birim_fiyat
  * @property string $son_odeme_tarihi
  * @property float $ilk_endeks
  * @property float $son_endeks

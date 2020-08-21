@@ -31,8 +31,8 @@ class ElektrikFaturasiService extends AbstractFatura
                 $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON} - $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
             'bedel'     => [
                 'elektrikTuketim'   => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
-                'dagitim'           => 0.0251,
-                'sistemKullanim'    => 0.0362,
+                'dagitim'           => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_DAGITIM},
+                'sistemKullanim'    => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_SISTEM},
             ]
         ];
 
