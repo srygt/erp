@@ -7,38 +7,41 @@
 
 <div class="row clearfix">
     <div class="col-lg-12">
-
-                    <div class="table-responsive">
-                        <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>VKN / TCKN</th>
-                                <th>Abone</th>
-                                <th>Ünvan</th>
-                                <th>İL</th>
-                                <th>İşlemler</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                         @foreach($aboneler as $abone)
-                            <tr>
-                                <td>{{ $abone->id }}</td>
-                                <td>{{ $abone->mukellef->getIdentificationId() }}</td>
-                                <td><div class="font-15">{{ $abone->baslik }}</div></td>
-                                <td>{{ $abone->mukellef->unvan }}</td>
-                                <td>{{ $abone->il }}</td>
-                                <td>
-                                    <a href="{{ route('abone.guncelle.get', $abone->id) }}" class="btn btn-sm btn-default" ><i class="fa fa-edit text-blue"></i></a>
-                                    <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
-                                </td>
-                            </tr>
-                         @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="table-responsive">
+            <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>VKN / TCKN</th>
+                    <th>Abone No</th>
+                    <th>Sayaç No</th>
+                    <th>Abone</th>
+                    <th>Ünvan</th>
+                    <th>Tür</th>
+                    <th>İşlemler</th>
+                </tr>
+                </thead>
+                <tbody>
+             @foreach($aboneler as $abone)
+                <tr>
+                    <td>{{ $abone->id }}</td>
+                    <td>{{ $abone->mukellef->getIdentificationId() }}</td>
+                    <td>{{ $abone->abone_no }}</td>
+                    <td>{{ $abone->sayac_no }}</td>
+                    <td><div class="font-15">{{ $abone->baslik }}</div></td>
+                    <td>{{ $abone->mukellef->unvan }}</td>
+                    <td>{{ \App\Models\Abone::TUR_LIST[$abone->tur] }}</td>
+                    <td>
+                        <a href="{{ route('abone.guncelle.get', $abone->id) }}" class="btn btn-sm btn-default" ><i class="fa fa-edit text-blue"></i></a>
+                        <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
+                    </td>
+                </tr>
+             @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @stop
 
 @section('page-styles')
