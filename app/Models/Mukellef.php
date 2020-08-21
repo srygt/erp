@@ -46,7 +46,7 @@ class Mukellef extends Model
 
     public function abonelikler()
     {
-        $this->hasMany(Abone::class);
+        return $this->hasMany(Abone::class);
     }
 
     public function getIdentificationId() : string
