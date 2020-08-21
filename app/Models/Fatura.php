@@ -56,9 +56,11 @@ class Fatura extends Model implements FaturaInterface
         self::COLUMN_DURUM_BASARILI,
     ];
 
+    const COLUMN_FATURA_TASLAGI_ID  = 'fatura_taslagi_id';
+
     public function faturaTaslagi()
     {
-        $this->hasOne(FaturaTaslagi::class);
+        $this->belongsTo(FaturaTaslagi::class);
     }
 
     public function abone()

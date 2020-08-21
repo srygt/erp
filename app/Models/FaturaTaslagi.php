@@ -39,11 +39,9 @@ class FaturaTaslagi extends Model implements FaturaInterface
         Fatura::COLUMN_SON_ODEME_TARIHI   => 'date',
     ];
 
-    const COLUMN_FATURA_ID  = 'fatura_id';
-
     public function fatura()
     {
-        return $this->belongsTo(Fatura::class,self::COLUMN_FATURA_ID,'id');
+        return $this->hasOne(Fatura::class);
     }
 
     public function abone()

@@ -32,6 +32,11 @@ class CreateFaturalarTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unsignedBigInteger(Fatura::COLUMN_FATURA_TASLAGI_ID)->nullable();
+            $table->foreign(Fatura::COLUMN_FATURA_TASLAGI_ID)
+                ->references('id')
+                ->on('faturalar');
+
             $table->unsignedBigInteger(Fatura::COLUMN_ABONE_ID);
             $table->foreign(Fatura::COLUMN_ABONE_ID)
                 ->references('id')
