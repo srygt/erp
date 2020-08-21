@@ -11,16 +11,16 @@ $factory->define(Abone::class, function (Faker $faker) {
     $email      = $faker->email;
 
     return [
-        Abone::COLUMN_BASLIK    => $sehir . ' Şubesi',
-        Abone::COLUMN_ABONE_NO  => $faker->numerify('###############'),
-        Abone::COLUMN_SAYAC_NO  => $faker->numerify('###############'),
-        Mukellef::COLUMN_EMAIL                  => $email,
-        Mukellef::COLUMN_ULKE                   => 'Türkiye',
-        Mukellef::COLUMN_IL                     => $sehir,
-        Mukellef::COLUMN_ILCE                   => $faker->streetName,
-        Mukellef::COLUMN_ADRES                  => $faker->address,
-        Mukellef::COLUMN_TELEFON                => mb_substr($faker->e164PhoneNumber, 1),
-        Mukellef::COLUMN_URN                    => 'urn:mail:' . $email,
+        Abone::COLUMN_BASLIK        => $sehir . ' Şubesi',
+        Abone::COLUMN_ABONE_NO      => $faker->numerify('###############'),
+        Abone::COLUMN_SAYAC_NO      => $faker->numerify('###############'),
+        Mukellef::COLUMN_EMAIL      => $email,
+        Mukellef::COLUMN_ULKE       => 'Türkiye',
+        Mukellef::COLUMN_IL         => $sehir,
+        Mukellef::COLUMN_ILCE       => $faker->streetName,
+        Mukellef::COLUMN_ADRES      => $faker->address,
+        Mukellef::COLUMN_TELEFON    => mb_substr($faker->e164PhoneNumber, 1),
+        Mukellef::COLUMN_URN        => 'urn:mail:' . $email,
     ];
 });
 
