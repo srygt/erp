@@ -34,14 +34,14 @@ class AboneEkleRequest extends FormRequest
             'baslik'                => 'required',
             'abone_no'              => 'required|numeric|unique:App\Models\Abone,abone_no,' . $this->id,
             'sayac_no'              => 'required|numeric|unique:App\Models\Abone,sayac_no,' . $this->id,
-            'email'                 => 'required|email',
-            'telefon'               => 'required|digits:12',
+            'email'                 => 'nullable|email',
+            'telefon'               => 'nullable',
             'website'               => 'nullable|url',
             'ulke'                  => 'required',
             'il'                    => 'required',
             'ilce'                  => 'required',
             'urn'                   => ['required', new UrnRule],
-            'adres'                 => 'required',
+            'adres'                 => 'nullable',
         ];
     }
 
@@ -71,14 +71,6 @@ class AboneEkleRequest extends FormRequest
         // telefon
         if ( isset($this->telefon) ) {
             $parameters['telefon'] = preg_replace('~\D~i', '', $this->telefon);
-
-            if (mb_strlen($parameters['telefon']) === 10) {
-                $parameters['telefon'] = '90' . $parameters['telefon'];
-            }
-
-            if (mb_strlen($parameters['telefon']) === 11) {
-                $parameters['telefon'] = '9' . $parameters['telefon'];
-            }
         }
 
         // website

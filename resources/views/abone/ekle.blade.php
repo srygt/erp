@@ -101,7 +101,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>E-Posta <span class="text-danger">*</span></label>
+                                    <label>E-Posta</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="icon-envelope"></i></span>
@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>Telefon Numarası<span class="text-danger">*</span></label>
+                                    <label>Telefon Numarası</label>
                                     <input class="form-control" value="{{ old('telefon', $abone->telefon) }}" name="telefon" id="telefon" placeholder="905001112233" type="tel">
                                 </div>
                             </div>
@@ -132,25 +132,19 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Ülke<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="ulke">
-                                        <option value="Türkiye">Türkiye</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="ulke" name="ulke" readonly value="{{ $abone->ulke ? $abone->ulke : 'Türkiye' }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>İl<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="il"  name="il">
-                                        <option value="">Seçin...</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="il" name="il" value="{{ old('il', $abone->il) }}">
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>İlçe<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="ilce" name="ilce">
-                                        <option value="">Seçin...</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="ilce" name="ilce" value="{{ old('ilce', $abone->ilce) }}">
                                 </div>
                             </div>
                         </div>
@@ -165,7 +159,7 @@
                             </div>
                             <div class="col-sm-12 col-md-8">
                                 <div class="form-group">
-                                    <label>Adres<span class="text-danger">*</span></label>
+                                    <label>Adres</label>
                                     <textarea class="form-control" name="adres" id="adres" rows="3">{{ old('adres', $abone->adres) }}</textarea>
                                 </div>
                             </div>
@@ -257,17 +251,8 @@
                         $('#telefon').val(mukellef.telefon);
                         $('#website').val(mukellef.website);
                         $('#ulke').val(mukellef.ulke);
-                        $('#il').val(mukellef.il).trigger('change');
-
-                        var counter = 0;
-                        $('#ilce').on('optionsLoaded', function(){
-                            if (counter === 0) {
-                                $('#ilce').val(mukellef.ilce).trigger('change');
-                            }
-
-                            counter++;
-                        });
-
+                        $('#il').val(mukellef.il);
+                        $('#ilce').val(mukellef.ilce);
                         $('#urn').val(mukellef.urn);
                         $('#adres').val(mukellef.adres);
                     });

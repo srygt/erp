@@ -32,17 +32,19 @@ class MukellefEkleRequest extends FormRequest
             'vkntckn'               => 'required|digits_between:10,11',
             'vergi_no'              => ['nullable', new VergiNoRule, 'unique:App\Models\Mukellef,vergi_no,' . $this->id],
             'tc_kimlik_no'          => ['nullable', new TcknRule, 'unique:App\Models\Mukellef,tc_kimlik_no,' . $this->id],
+            'ad'                    => 'required_if:tur,TC Kimlik No',
+            'soyad'                 => 'required_if:tur,TC Kimlik No',
             'unvan'                 => 'required|unique:App\Models\Mukellef,unvan,' . $this->id,
-            'vergi_dairesi_sehir'   => 'required',
+            'vergi_dairesi_sehir'   => 'nullable',
             'vergi_dairesi'         => 'required',
-            'urn'                   => ['required', new UrnRule],
-            'email'                 => 'required|email|unique:App\Models\Mukellef,email,' . $this->id,
-            'telefon'               => 'required|digits:12|unique:App\Models\Mukellef,telefon,' . $this->id,
+            'urn'                   => ['nullable', new UrnRule],
+            'email'                 => 'nullable|email|unique:App\Models\Mukellef,email,' . $this->id,
+            'telefon'               => 'nullable|unique:App\Models\Mukellef,telefon,' . $this->id,
             'website'               => 'nullable|url',
             'ulke'                  => 'required',
             'il'                    => 'required',
             'ilce'                  => 'required',
-            'adres'                 => 'required',
+            'adres'                 => 'nullable',
         ];
     }
 
@@ -52,6 +54,9 @@ class MukellefEkleRequest extends FormRequest
             'vkntckn'               => 'VKN/TCKN',
             'vergi_no'              => 'VKN/TCKN',
             'tc_kimlik_no'          => 'VKN/TCKN',
+            'tur'                   => 'Kimlik Numarası Türü',
+            'ad'                    => 'Ad',
+            'soyad'                 => 'Soyad',
             'unvan'                 => 'Ünvan',
             'vergi_dairesi_sehir'   => 'Vergi Dairesi Şehir',
             'vergi_dairesi'         => 'Vergi Dairesi',
@@ -71,24 +76,21 @@ class MukellefEkleRequest extends FormRequest
         $parameters = [];
 
         // vkntckn
-        if ( isset($this->vkntckn) &&  strlen($this->vkntckn) == 11 ) {
-            $parameters['tc_kimlik_no'] = $this->vkntckn;
-        }
-        else if ( isset($this->vkntckn) &&  strlen($this->vkntckn) == 10 ) {
-            $parameters['vergi_no'] = $this->vkntckn;
+        if ( isset($this->vkntckn) ) {
+
+            if ( strlen($this->vkntckn) == 11 ) {
+                $parameters['tc_kimlik_no'] = $this->vkntckn;
+                $parameters['tur'] = 'TC Kimlik No';
+            }
+            else if ( strlen($this->vkntckn) == 10 ) {
+                $parameters['vergi_no'] = $this->vkntckn;
+                $parameters['tur'] = 'Vergi No';
+            }
         }
 
         // telefon
         if ( isset($this->telefon) ) {
             $parameters['telefon'] = preg_replace('~\D~i', '', $this->telefon);
-
-            if (mb_strlen($parameters['telefon']) === 10) {
-                $parameters['telefon'] = '90' . $parameters['telefon'];
-            }
-
-            if (mb_strlen($parameters['telefon']) === 11) {
-                $parameters['telefon'] = '9' . $parameters['telefon'];
-            }
         }
 
         // website

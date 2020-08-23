@@ -28,6 +28,8 @@ class MukellefController extends Controller
         $payload = $request->only([
             Mukellef::COLUMN_VERGI_NO,
             Mukellef::COLUMN_TC_KIMLIK_NO,
+            Mukellef::COLUMN_AD,
+            Mukellef::COLUMN_SOYAD,
             Mukellef::COLUMN_UNVAN,
             Mukellef::COLUMN_VERGI_DAIRESI_SEHIR,
             Mukellef::COLUMN_VERGI_DAIRESI,

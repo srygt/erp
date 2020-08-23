@@ -40,6 +40,7 @@
                                     <label>VKN/TCKN<span class="text-danger">*</span></label>
                                     <input
                                         class="form-control"
+                                        id="vkntckn"
                                         name="vkntckn"
                                         type="text"
                                         value="{{
@@ -61,32 +62,40 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>Vergi Dairesi Şehir<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="vdil" name="vergi_dairesi_sehir">
-                                        <option value="">Seçin...</option>
-                                    </select>
+                                    <label>Vergi Dairesi Şehir</label>
+                                    <input type="text" class="form-control" name="vergi_dairesi_sehir" value="{{ old('vergi_dairesi_sehir', $mukellef->vergi_dairesi_sehir) }}">
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label>Vergi Dairesi<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="vd" name="vergi_dairesi">
-                                        <option value="">Seçin...</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="vergi_dairesi" value="{{ old('vergi_dairesi', $mukellef->vergi_dairesi) }}">
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>Urn<span class="text-danger">*</span></label>
+                                    <label>Urn</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="urn" placeholder="urn:mail:aaa@bbb.com" value="{{ old('urn', $mukellef->urn) }}">
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Ad</label>
+                                    <input class="form-control" name="ad" value="{{ old('ad', $mukellef->ad) }}" type="text">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Soyad</label>
+                                    <input class="form-control" name="soyad" value="{{ old('soyad', $mukellef->soyad) }}" type="text">
+                                </div>
+                            </div>
                             <div class="border bg-info col-md-12 mb-3" ></div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>E-Posta <span class="text-danger">*</span></label>
+                                    <label>E-Posta</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="icon-envelope"></i></span>
@@ -97,8 +106,8 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>Telefon Numarası<span class="text-danger">*</span></label>
-                                    <input class="form-control" value="{{ old('telefon', $mukellef->telefon) ?? '90' }}" name="telefon" placeholder="905001112233" type="tel">
+                                    <label>Telefon Numarası</label>
+                                    <input class="form-control" value="{{ old('telefon', $mukellef->telefon) }}" name="telefon" placeholder="905001112233" type="tel">
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
@@ -117,25 +126,19 @@
                             <div class="col-sm-6 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label>Ülke<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="ulke">
-                                        <option value="Türkiye">Türkiye</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="ulke" readonly value="{{ $mukellef->ulke ? $mukellef->ulke : 'Türkiye' }}">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label>İl<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="il"  name="il">
-                                        <option value="">Seçin...</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="il" value="{{ old('il', $mukellef->il) }}">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label>İlçe<span class="text-danger">*</span></label>
-                                    <select class="form-control" id="ilce" name="ilce">
-                                        <option value="">Seçin...</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="ilce" value="{{ old('ilce', $mukellef->ilce) }}">
                                 </div>
                             </div>
                         </div>
