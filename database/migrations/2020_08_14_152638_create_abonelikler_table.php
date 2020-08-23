@@ -30,13 +30,13 @@ class CreateAboneliklerTable extends Migration
 
             // aşağıdaki alanlarda yapılacak değişikliklerin
             // 2020_08_14_150814_create_mukellefler_table'da da yapılması lazım
-            $table->string(Mukellef::COLUMN_EMAIL);
+            $table->string(Mukellef::COLUMN_EMAIL)->nullable();
             $table->string(Mukellef::COLUMN_WEBSITE)->nullable();
             $table->string(Mukellef::COLUMN_ULKE);
             $table->string(Mukellef::COLUMN_IL);
             $table->string(Mukellef::COLUMN_ILCE);
-            $table->string(Mukellef::COLUMN_ADRES);
-            $table->string(Mukellef::COLUMN_TELEFON);
+            $table->string(Mukellef::COLUMN_ADRES)->nullable();
+            $table->string(Mukellef::COLUMN_TELEFON)->nullable();
             $table->string(Mukellef::COLUMN_URN);
 
             $table->unsignedBigInteger('mukellef_id');

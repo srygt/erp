@@ -15,7 +15,8 @@ class Mukellef extends Model
         self::COLUMN_VERGI_NO,
         self::COLUMN_TC_KIMLIK_NO,
         self::COLUMN_UNVAN,
-        self::COLUMN_AD_SOYAD,
+        self::COLUMN_AD,
+        self::COLUMN_SOYAD,
         self::COLUMN_VERGI_DAIRESI_SEHIR,
         self::COLUMN_VERGI_DAIRESI,
         self::COLUMN_EMAIL,
@@ -32,7 +33,8 @@ class Mukellef extends Model
     const COLUMN_VERGI_NO               = 'vergi_no';
     const COLUMN_TC_KIMLIK_NO           = 'tc_kimlik_no';
     const COLUMN_UNVAN                  = 'unvan';
-    const COLUMN_AD_SOYAD               = 'ad_soyad';
+    const COLUMN_AD                     = 'ad';
+    const COLUMN_SOYAD                  = 'soyad';
     const COLUMN_VERGI_DAIRESI_SEHIR    = 'vergi_dairesi_sehir';
     const COLUMN_VERGI_DAIRESI          = 'vergi_dairesi';
     const COLUMN_EMAIL                  = 'email';
