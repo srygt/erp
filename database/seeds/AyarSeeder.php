@@ -19,9 +19,9 @@ class AyarSeeder extends Seeder
             Ayar::FIELD_ELEKTRIK_DAGITIM_BIRIM_FIYAT    => 0.0251,
             Ayar::FIELD_ELEKTRIK_SISTEM_BIRIM_FIYAT     => 0.0362,
             Ayar::FIELD_SU_SON_ODEME_GUN                => 16,
-            Ayar::FIELD_SU_TUKETIM_BIRIM_FIYAT          => 0.05432111,
+            Ayar::FIELD_SU_TUKETIM_BIRIM_FIYAT          => 0.054321,
             Ayar::FIELD_DOGALGAZ_SON_ODEME_GUN          => 17,
-            Ayar::FIELD_DOGALGAZ_TUKETIM_BIRIM_FIYAT    => 0.15219573,
+            Ayar::FIELD_DOGALGAZ_TUKETIM_BIRIM_FIYAT    => 0.152195,
         ];
 
         $data = collect($data)->map(function($value, $key){
