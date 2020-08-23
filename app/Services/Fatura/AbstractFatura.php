@@ -51,9 +51,11 @@ abstract class AbstractFatura
             ->setStreetName($fatura->abone->mukellef->{Mukellef::COLUMN_ADRES})
             ->setElectronicMail($fatura->abone->mukellef->{Mukellef::COLUMN_EMAIL})
             ->setPartyName($fatura->abone->mukellef->{Mukellef::COLUMN_UNVAN})
+            ->setPersonFirstName($fatura->abone->mukellef->{Mukellef::COLUMN_AD})
+            ->setPersonFamilyName($fatura->abone->mukellef->{Mukellef::COLUMN_SOYAD})
             ->setIdentificationID($fatura->abone->mukellef->getIdentificationId())
             ->setTaxSchemeName($fatura->abone->mukellef->{Mukellef::COLUMN_VERGI_DAIRESI})
-            ->setTelephone($fatura->abone->getFormattedTelephone())
+            ->setTelephone($fatura->abone->mukellef->{Mukellef::COLUMN_TELEFON})
             ->setCustomerIdentificationsOther($this->getCustomerIdentificationOthers($fatura->abone));
 
         $customerAgent = new Party();
@@ -64,9 +66,11 @@ abstract class AbstractFatura
             ->setStreetName($fatura->abone->{Mukellef::COLUMN_ADRES})
             ->setElectronicMail($fatura->abone->{Mukellef::COLUMN_EMAIL})
             ->setPartyName($fatura->abone->mukellef->{Mukellef::COLUMN_UNVAN})
+            ->setPersonFirstName($fatura->abone->mukellef->{Mukellef::COLUMN_AD})
+            ->setPersonFamilyName($fatura->abone->mukellef->{Mukellef::COLUMN_SOYAD})
             ->setIdentificationID($fatura->abone->mukellef->getIdentificationId())
             ->setTaxSchemeName($fatura->abone->mukellef->{Mukellef::COLUMN_VERGI_DAIRESI})
-            ->setTelephone($fatura->abone->getFormattedTelephone())
+            ->setTelephone($fatura->abone->{Mukellef::COLUMN_TELEFON})
             ->setCustomerIdentificationsOther($this->getCustomerIdentificationOthers($fatura->abone));
 
         $seller = new Party();

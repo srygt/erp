@@ -13,7 +13,7 @@ class AboneSeeder extends Seeder
      */
     public function run()
     {
-        $mukellefler = Mukellef::get();
+        $mukellefler = Mukellef::whereNotNull('urn')->get();
 
         /** @var Mukellef $mukellef */
         foreach ($mukellefler as $mukellef)
