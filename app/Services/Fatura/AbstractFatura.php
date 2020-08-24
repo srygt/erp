@@ -164,7 +164,7 @@ abstract class AbstractFatura
     protected function getResponse(FaturaInterface $fatura, Invoice $invoice, bool $isPreview)
     {
 
-        $fatura     = $this->_updateDBBeforeRequest($fatura, json_encode($invoice));
+        $fatura     = $this->_updateDBBeforeRequest($fatura, $invoice);
 
         $invoice        = $invoice->setIsPreview($isPreview);
         $response       = ((new RestRequest())->postSendInvoiceModel($invoice))
@@ -181,13 +181,15 @@ abstract class AbstractFatura
 
     /**
      * @param FaturaInterface|null $fatura
-     * @param string $request
-     *
+     * @param Invoice $invoice
      * @return FaturaInterface|null
      */
-    protected function _updateDBBeforeRequest(?FaturaInterface $fatura, string $request) : ?FaturaInterface
+    protected function _updateDBBeforeRequest(?FaturaInterface $fatura, Invoice $invoice) : ?FaturaInterface
     {
-        $fatura->{Fatura::COLUMN_ISTEK}         = $request;
+        $fatura->{Fatura::COLUMN_ISTEK}                 = json_encode($invoice);
+        $fatura->{Fatura::COLUMN_TOPLAM_ODENECEK_UCRET} = $invoice->getInvoiceModel()
+                                                            ->getInvoiceheader()
+                                                            ->getPayableAmount();
         $fatura->save();
 
         return $fatura;

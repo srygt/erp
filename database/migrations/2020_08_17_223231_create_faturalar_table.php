@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Abone;
 use App\Models\Fatura;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,6 +20,7 @@ class CreateFaturalarTable extends Migration
             $table->uuid(Fatura::COLUMN_UUID)->unique();
             $table->enum(Fatura::COLUMN_DURUM, Fatura::LIST_DURUM)->index();
             $table->string(Fatura::COLUMN_INVOICE_ID, 100)->index();
+            $table->enum(Fatura::COLUMN_TUR, array_keys(Abone::TUR_LIST))->index();
             $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM, 12, 9)->unsigned();
             $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_DAGITIM, 12, 9)->unsigned()->nullable();
             $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_SISTEM, 12, 9)->unsigned()->nullable();
@@ -29,6 +31,8 @@ class CreateFaturalarTable extends Migration
             $table->text(Fatura::COLUMN_ISTEK)->nullable();
             $table->text(Fatura::COLUMN_CEVAP)->nullable();
             $table->text(Fatura::COLUMN_HATA)->nullable();
+            $table->decimal(Fatura::COLUMN_TOPLAM_ODENECEK_UCRET, 12, 2)
+                ->unsigned()->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
 

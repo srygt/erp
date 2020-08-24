@@ -25,6 +25,7 @@ class FaturaTaslagi extends Model implements FaturaInterface
     protected $fillable = [
         Fatura::COLUMN_UUID,
         Fatura::COLUMN_INVOICE_ID,
+        Fatura::COLUMN_TUR,
         Fatura::COLUMN_BIRIM_FIYAT_TUKETIM,
         Fatura::COLUMN_BIRIM_FIYAT_TUKETIM,
         Fatura::COLUMN_BIRIM_FIYAT_DAGITIM,
@@ -32,6 +33,7 @@ class FaturaTaslagi extends Model implements FaturaInterface
         Fatura::COLUMN_SON_ODEME_TARIHI,
         Fatura::COLUMN_ENDEKS_ILK,
         Fatura::COLUMN_ENDEKS_SON,
+        Fatura::COLUMN_TOPLAM_ODENECEK_UCRET,
         Fatura::COLUMN_NOT,
     ];
 

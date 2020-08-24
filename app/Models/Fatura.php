@@ -16,6 +16,7 @@ class Fatura extends Model implements FaturaInterface
     protected $fillable = [
         self::COLUMN_UUID,
         self::COLUMN_DURUM,
+        self::COLUMN_TUR,
         self::COLUMN_INVOICE_ID,
         self::COLUMN_BIRIM_FIYAT_TUKETIM,
         self::COLUMN_BIRIM_FIYAT_DAGITIM,
@@ -24,6 +25,7 @@ class Fatura extends Model implements FaturaInterface
         self::COLUMN_ENDEKS_ILK,
         self::COLUMN_ENDEKS_SON,
         self::COLUMN_NOT,
+        self::COLUMN_TOPLAM_ODENECEK_UCRET,
         self::COLUMN_ABONE_ID,
     ];
 
@@ -31,24 +33,26 @@ class Fatura extends Model implements FaturaInterface
         self::COLUMN_SON_ODEME_TARIHI   => 'date',
     ];
 
-    const COLUMN_ID                 = 'id';
-    const COLUMN_UUID               = 'uuid';
-    const COLUMN_DURUM              = 'durum';
-    const COLUMN_DURUM_BEKLEMEDE    = 'beklemede';
-    const COLUMN_DURUM_HATA         = 'hata';
-    const COLUMN_DURUM_BASARILI     = 'basarili';
-    const COLUMN_INVOICE_ID         = 'fatura_no';
-    const COLUMN_BIRIM_FIYAT_TUKETIM= 'birim_fiyat';
-    const COLUMN_BIRIM_FIYAT_DAGITIM= 'dagitim_birim_fiyat';
-    const COLUMN_BIRIM_FIYAT_SISTEM = 'sistem_birim_fiyat';
-    const COLUMN_SON_ODEME_TARIHI   = 'son_odeme_tarihi';
-    const COLUMN_ENDEKS_ILK         = 'ilk_endeks';
-    const COLUMN_ENDEKS_SON         = 'son_endeks';
-    const COLUMN_NOT                = 'not';
-    const COLUMN_ISTEK              = 'istek';
-    const COLUMN_CEVAP              = 'cevap';
-    const COLUMN_HATA               = 'hata';
-    const COLUMN_ABONE_ID           = 'abone_id';
+    const COLUMN_ID                     = 'id';
+    const COLUMN_UUID                   = 'uuid';
+    const COLUMN_DURUM                  = 'durum';
+    const COLUMN_DURUM_BEKLEMEDE        = 'beklemede';
+    const COLUMN_DURUM_HATA             = 'hata';
+    const COLUMN_DURUM_BASARILI         = 'basarili';
+    const COLUMN_INVOICE_ID             = 'fatura_no';
+    const COLUMN_TUR                    = 'tur';
+    const COLUMN_BIRIM_FIYAT_TUKETIM    = 'birim_fiyat';
+    const COLUMN_BIRIM_FIYAT_DAGITIM    = 'dagitim_birim_fiyat';
+    const COLUMN_BIRIM_FIYAT_SISTEM     = 'sistem_birim_fiyat';
+    const COLUMN_SON_ODEME_TARIHI       = 'son_odeme_tarihi';
+    const COLUMN_ENDEKS_ILK             = 'ilk_endeks';
+    const COLUMN_ENDEKS_SON             = 'son_endeks';
+    const COLUMN_NOT                    = 'not';
+    const COLUMN_ISTEK                  = 'istek';
+    const COLUMN_CEVAP                  = 'cevap';
+    const COLUMN_HATA                   = 'hata';
+    const COLUMN_TOPLAM_ODENECEK_UCRET  = 'toplam_odenecek_ucret';
+    const COLUMN_ABONE_ID               = 'abone_id';
 
     const LIST_DURUM = [
         self::COLUMN_DURUM_BEKLEMEDE,
