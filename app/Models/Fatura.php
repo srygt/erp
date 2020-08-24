@@ -35,6 +35,7 @@ class Fatura extends Model implements FaturaInterface
 
     const COLUMN_ID                     = 'id';
     const COLUMN_UUID                   = 'uuid';
+    const COLUMN_APP_TYPE               = 'app_type';
     const COLUMN_DURUM                  = 'durum';
     const COLUMN_DURUM_BEKLEMEDE        = 'beklemede';
     const COLUMN_DURUM_HATA             = 'hata';

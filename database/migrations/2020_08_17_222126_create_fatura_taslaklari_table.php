@@ -30,6 +30,7 @@ class CreateFaturaTaslaklariTable extends Migration
             $table->text(Fatura::COLUMN_ISTEK)->nullable();
             $table->text(Fatura::COLUMN_CEVAP)->nullable();
             $table->text(Fatura::COLUMN_HATA)->nullable();
+            $table->integer(Fatura::COLUMN_APP_TYPE)->nullable()->index();
             $table->decimal(Fatura::COLUMN_TOPLAM_ODENECEK_UCRET, 12, 2)
                 ->unsigned()->nullable()->index();
             $table->timestamps();

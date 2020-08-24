@@ -187,6 +187,7 @@ abstract class AbstractFatura
     protected function _updateDBBeforeRequest(?FaturaInterface $fatura, Invoice $invoice) : ?FaturaInterface
     {
         $fatura->{Fatura::COLUMN_ISTEK}                 = json_encode($invoice);
+        $fatura->{Fatura::COLUMN_APP_TYPE}              = (string)($invoice->getAppType());
         $fatura->{Fatura::COLUMN_TOPLAM_ODENECEK_UCRET} = $invoice->getInvoiceModel()
                                                             ->getInvoiceheader()
                                                             ->getPayableAmount();
