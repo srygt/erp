@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Onrslu\HtEfatura\Models\DocumentList\DocumentList;
 use Onrslu\HtEfatura\Services\RestRequest;
+use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
 use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
 use Onrslu\HtEfatura\Types\Enums\DateType\CreatedDate;
 
@@ -23,17 +24,24 @@ class MainController extends Controller
      * @return Renderable
      */
     public function home(){
-
         $istatistikler = Cache::remember('istatistikler', 60*60*8, function()
         {
-            /** @var Collection $toplamUcret */
+            /** @var Collection $tumZaman */
             $tumZaman           = Fatura::where(Fatura::COLUMN_DURUM, Fatura::COLUMN_DURUM_BASARILI)
                 ->select([
+                    Fatura::COLUMN_APP_TYPE,
                     Fatura::COLUMN_TOPLAM_ODENECEK_UCRET,
                     Fatura::COLUMN_TUR,
                     'created_at'
                 ])
                 ->get();
+
+            $tumZamanGroupedByAppType   = $tumZaman->countBy(function($fatura){
+                                                return $fatura->{Fatura::COLUMN_APP_TYPE};
+                                            })->all();
+
+            $toplamGidenEFatura = $tumZamanGroupedByAppType[EFatura::TYPE];
+            $toplamGidenEArsiv  = $tumZamanGroupedByAppType[EArsiv::TYPE];
 
             $buAy               = $tumZaman->where('created_at', '>=', Carbon::now()->startOfMonth());
 
@@ -45,16 +53,13 @@ class MainController extends Controller
                 });
             });
 
-            /** @var Collection $toplamMukellef */
-            $toplamMukellef     = Mukellef::count();
-
             /** @var Collection $toplamAbone */
             $toplamAbone        = Abone::count();
 
             $documentList       = (new DocumentList)
                                     ->setAppType(new EFatura)
                                     ->setDateType(new CreatedDate)
-                                    ->setStartDate(date('Y-m-d', strtotime('-52 week')))
+                                    ->setStartDate(date('Y-m-d', strtotime('-6 months')))
                                     ->setEndDate(date('Y-m-d', strtotime('+1 minutes')));
 
             $cevap              = json_decode(
@@ -64,10 +69,10 @@ class MainController extends Controller
             throw_if(!$cevap->IsSucceeded, new HizliTeknolojiIsSuccessException($cevap->Message));
 
             return [
-                'toplamUcret'       => $tumZaman->sum(Fatura::COLUMN_TOPLAM_ODENECEK_UCRET),
-                'buAydakiUcret'     => $buAy->sum(Fatura::COLUMN_TOPLAM_ODENECEK_UCRET),
+                'toplamGelenEFatura'=> count($cevap->documents),
+                'toplamGidenEFatura'=> $toplamGidenEFatura,
+                'toplamGidenEArsiv' => $toplamGidenEArsiv,
                 'turlereGoreToplam' => $turlereGoreToplam->toArray(),
-                'toplamMukellef'    => $toplamMukellef,
                 'toplamAbone'       => $toplamAbone,
                 'yeniFaturalar'     => array_slice(
                                             array_reverse($cevap->documents),

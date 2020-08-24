@@ -13,10 +13,10 @@
             <div class="card">
                 <div class="body">
                     <div class="d-flex align-items-center">
-                        <div class="icon-in-bg bg-indigo text-white rounded-circle"><i class="fa fa-briefcase"></i></div>
+                        <div class="icon-in-bg bg-indigo text-white rounded-circle"><i class="fa fa-arrow-down"></i></div>
                         <div class="ml-4">
-                            <span>Toplam Fatura</span>
-                            <h4 class="mb-0 font-weight-medium">{{ $toplamUcret }}TL</h4>
+                            <span>Gelen e-Fatura</span>
+                            <h4 class="mb-0 font-weight-medium">{{ $toplamGelenEFatura }}</h4>
                         </div>
                     </div>
                 </div>
@@ -26,10 +26,10 @@
             <div class="card">
                 <div class="body">
                     <div class="d-flex align-items-center">
-                        <div class="icon-in-bg bg-azura text-white rounded-circle"><i class="fa fa-credit-card"></i></div>
+                        <div class="icon-in-bg bg-azura text-white rounded-circle"><i class="fa fa-arrow-up"></i></div>
                         <div class="ml-4">
-                            <span>Bu Aydaki Fatura</span>
-                            <h4 class="mb-0 font-weight-medium">{{ $buAydakiUcret }}TL</h4>
+                            <span>Giden e-Fatura</span>
+                            <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEFatura }}</h4>
                         </div>
                     </div>
                 </div>
@@ -39,10 +39,10 @@
             <div class="card">
                 <div class="body">
                     <div class="d-flex align-items-center">
-                        <div class="icon-in-bg bg-orange text-white rounded-circle"><i class="fa fa-users"></i></div>
+                        <div class="icon-in-bg bg-orange text-white rounded-circle"><i class="fa fa-file"></i></div>
                         <div class="ml-4">
-                            <span>Mükellef Sayısı</span>
-                            <h4 class="mb-0 font-weight-medium">{{ $toplamMukellef }}</h4>
+                            <span>Giden e-Arşiv</span>
+                            <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEArsiv }}</h4>
                         </div>
                     </div>
                 </div>
