@@ -15,6 +15,6 @@
 *   `php artisan migrate --seed`
 
 # HT-Mukellef CSV Import
-*   `import:ht-mukellefler <filePath> --delimiter[=DELIMITER] --headerOffset[=HEADEROFFSET]`
-*   `import:ht-mukellefler "/var/www/file.csv"`
-*   `import:ht-mukellefler "/var/www/file.csv" --delimiter=";" --headerOffset=5`
+*   `php artisan import:ht-mukellefler <filePath> --delimiter[=DELIMITER] --headerOffset[=HEADEROFFSET]`
+*   `php artisan import:ht-mukellefler "/var/www/file.csv"`
+*   `php artisan import:ht-mukellefler "/var/www/file.csv" --delimiter=";" --headerOffset=5`
