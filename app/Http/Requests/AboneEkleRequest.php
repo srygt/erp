@@ -40,7 +40,7 @@ class AboneEkleRequest extends FormRequest
             'ulke'                  => 'required',
             'il'                    => 'required',
             'ilce'                  => 'required',
-            'urn'                   => ['required', new UrnRule],
+            'urn'                   => ['nullable', new UrnRule],
             'adres'                 => 'nullable',
         ];
     }

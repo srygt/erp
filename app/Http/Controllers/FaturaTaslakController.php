@@ -37,7 +37,8 @@ class FaturaTaslakController extends Controller
             ->faturaTaslaklari()
             ->create([
                 Fatura::COLUMN_UUID                 => (string) Uuid::uuid4(),
-                Fatura::COLUMN_ABONE_ID             => $request->abone_id,
+                Fatura::COLUMN_ABONE_ID             => $abone->id,
+                Fatura::COLUMN_TUR                  => $abone->{Abone::COLUMN_TUR},
                 Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $request->birim_fiyat,
                 Fatura::COLUMN_BIRIM_FIYAT_DAGITIM  => $request->dagitim_birim_fiyat,
                 Fatura::COLUMN_BIRIM_FIYAT_SISTEM   => $request->sistem_birim_fiyat,
