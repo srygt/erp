@@ -37,7 +37,7 @@ class CreateAboneliklerTable extends Migration
             $table->string(Mukellef::COLUMN_ILCE);
             $table->string(Mukellef::COLUMN_ADRES)->nullable();
             $table->string(Mukellef::COLUMN_TELEFON)->nullable();
-            $table->string(Mukellef::COLUMN_URN);
+            $table->string(Mukellef::COLUMN_URN)->nullable();
 
             $table->unsignedBigInteger('mukellef_id');
             $table->foreign('mukellef_id')
