@@ -4,18 +4,14 @@
         <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i class="lnr lnr-menu fa fa-chevron-circle-left"></i></button>
     </div>
     <div class="sidebar-scroll">
-        <div class="user-account">
-            <div class="user_div">
-                <img src="{{asset('assets/images/user.png')}}" class="user-photo" alt="User Profile Picture">
-            </div>
-            <div class="dropdown">
-                <span>Hoşgeldin,</span>
-                <a href="javascript:void(0);" class=" user-name" data-toggle="dropdown"><strong>{{\Illuminate\Support\Facades\Auth::User()->name}} {{\Illuminate\Support\Facades\Auth::User()->lastname}}</strong></a>
-            </div>
-        </div>
         <nav id="left-sidebar-nav" class="sidebar-nav">
             <ul id="main-menu" class="metismenu">
-
+                <li class="{{ Request::segment(2) === 'anasayfa' ? 'active' : null }}">
+                    <a href="{{route('home')}}">
+                        <i class="fa fa-home"></i>
+                        <span>Ana Sayfa</span>
+                    </a>
+                </li>
                 <li class="{{ Request::segment(2) === 'faturalar' ? 'active open' : null }}">
                     <a href="#myPage" class="has-arrow"><i class="fa fa-folder-open-o"></i><span>Fatura İşlemleri</span></a>
                     <ul>
