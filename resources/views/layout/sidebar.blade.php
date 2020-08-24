@@ -16,9 +16,14 @@
                     <a href="#myPage" class="has-arrow"><i class="fa fa-folder-open-o"></i><span>Fatura İşlemleri</span></a>
                     <ul>
                         <li
+                            class="{{ Request::segment(2) === 'faturalar' && Request::segment(3) == 'gelen' ? 'active' : null }}"
+                        >
+                            <a href="{{route('fatura.gelen.liste')}}">Gelen Fatura Listesi</a>
+                        </li>
+                        <li
                             class="{{ Request::segment(2) === 'faturalar' && Request::segment(3) == '' ? 'active' : null }}"
                         >
-                            <a href="{{route('fatura.liste')}}">Fatura Listesi</a>
+                            <a href="{{route('fatura.liste')}}">Giden Fatura Listesi</a>
                         </li>
                         <li
                             class="{{ Request::segment(2) === 'faturalar' && Request::segment(3) === 'ekle' ? 'active' : null }}"

@@ -3,17 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\HizliTeknolojiIsSuccessException;
+use App\Http\Requests\GelenFaturaRequest;
 use App\Models\Abone;
 use App\Models\Fatura;
 use App\Models\FaturaTaslagi;
 use App\Services\Fatura\FaturaFactory;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+use Onrslu\HtEfatura\Models\DocumentList\DocumentList;
 use Onrslu\HtEfatura\Services\RestRequest;
+use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
+use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
+use Onrslu\HtEfatura\Types\Enums\DateType\CreatedDate;
+use Throwable;
 
 class FaturaController extends Controller
 {
+    /**
+     * @return Application|Factory|View
+     */
     public function index()
     {
         $faturalar = Fatura::where(Fatura::COLUMN_DURUM, Fatura::COLUMN_DURUM_BASARILI)
@@ -24,10 +40,59 @@ class FaturaController extends Controller
         return view('faturalar.liste',['faturalar' => $faturalar]);
     }
 
-    public function download($uuid)
+    /**
+     * @param GelenFaturaRequest $request
+     * @return Application|Factory|View
+     * @throws Throwable
+     */
+    public function gelenFaturalar(GelenFaturaRequest $request)
     {
+        $since = $request->input('since', GelenFaturaRequest::SINCE_DEFAULT);
+
+        $documentList       = (new DocumentList)
+            ->setAppType(new EFatura)
+            ->setDateType(new CreatedDate)
+            ->setStartDate(date('Y-m-d', strtotime('-' . $since . ' days')))
+            ->setEndDate(date('Y-m-d', strtotime('+1 minutes')));
+
+        $response           = json_decode(
+            (new RestRequest)->getDocumentList($documentList)->getBody()->getContents()
+        );
+
+        throw_if(!$response->IsSucceeded, new HizliTeknolojiIsSuccessException($response->Message));
+
+        return view(
+            'faturalar.gelenFaturaListe',
+            [
+                'faturalar' => array_reverse($response->documents),
+            ]
+        );
+    }
+
+    /**
+     * @param $appType
+     * @param $uuid
+     * @return Response|mixed
+     * @throws GuzzleException
+     * @throws BindingResolutionException
+     * @throws Throwable
+     */
+    public function download($appType, $uuid)
+    {
+        Validator::make([
+                'appType'   => $appType,
+                'uuid'      => $uuid
+            ],
+            [
+                'appType'   => Rule::in([EFatura::TYPE, EArsiv::TYPE]),
+                'uuid'      => 'required|uuid',
+            ])
+            ->validate();
+
         $response = (new RestRequest)->getDocumentFile($uuid)->getBody()->getContents();
         $response = json_decode($response);
+
+        throw_if(!$response->IsSucceeded, new HizliTeknolojiIsSuccessException($response->Message));
 
         return response()->make(
             base64_decode($response->DocumentFile),

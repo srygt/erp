@@ -29,7 +29,7 @@
                                 <td>{{ \Illuminate\Support\Str::ucfirst($fatura->abone->tur) }}</td>
                                 <td>{{ $fatura->created_at->toDateString() }}</td>
                                 <td>
-                                    <a href="{{ route('fatura.detay', $fatura->uuid) }}" class="btn btn-sm btn-default" ><i class="fa fa-download text-blue"></i></a>
+                                    <a href="{{ route('fatura.detay', ['appType' => 3, 'uuid' => $fatura->uuid]) }}" class="btn btn-sm btn-default" ><i class="fa fa-download text-blue"></i></a>
                                     <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
                                 </td>
                             </tr>

@@ -59,8 +59,10 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('fatura.ekle.post');
     Route::get('faturalar','FaturaController@index')
         ->name('fatura.liste');
-    Route::get('faturalar/{id}','FaturaController@download')
+    Route::get('faturalar/pdf/{appType}/{uuid}','FaturaController@download')
         ->name('fatura.detay');
+    Route::get('faturalar/gelen','FaturaController@gelenFaturalar')
+        ->name('fatura.gelen.liste');
 
     // Ayarlar
     Route::get('ayarlar','AyarController@index')
