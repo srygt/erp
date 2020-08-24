@@ -5,6 +5,13 @@
 @else
     @section('title', 'Abone Ekle')
 @endif
+
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('assets/vendor/dropify/css/dropify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-select2/css/select2.min.css') }}"/>
+@append
+
 @section('content')
     <div class="row clearfix">
         @if ($errors->any() || session()->has('message'))
@@ -175,16 +182,11 @@
         </div>
         @stop
 
-        @section('page-styles')
-
-            <link rel="stylesheet" href="{{ asset('assets/vendor/dropify/css/dropify.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
-        @stop
-
         @section('page-script')
             <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
             <script src="{{ asset('js/abonejs.js') }}"></script>
             <script src="{{ asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
+            <script src="{{ asset('assets/vendor/jquery-select2/js/select2.min.js') }}"></script>
             <script>
 
                 $.getJSON("{{ asset('js/json/il-bolge.json') }}",function (sonuc) {
@@ -238,9 +240,12 @@
                     });
                 });
 
-                $('#mukellef_id').on('change', function(){
-                    $('#contactFetch').prop('disabled', !$(this).val());
-                }).trigger('change');
+                $('#mukellef_id')
+                    .on('change', function(){
+                        $('#contactFetch').prop('disabled', !$(this).val());
+                    })
+                    .trigger('change')
+                    .select2();
 
                 function fillContactInfo(mukellefId) {
                     var url = '{{ route('mukellef.detay', ['id' => ':id']) }}';

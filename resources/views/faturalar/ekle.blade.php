@@ -1,6 +1,13 @@
 @extends('layout.master')
 @section('parentPageTitle', 'Fatura İşlemleri')
 @section('title', 'Su Faturası Ekle')
+
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-select2/css/select2.min.css') }}"/>
+@append
+
 @section('content')
     <form action="{{ route("faturataslak.ekle.post") }}" method="post">
         @csrf
@@ -163,11 +170,6 @@
     </form>
 @stop
 
-@section('page-styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
-@stop
-
 @section('page-script')
     <script src="{{ asset('assets/bundles/c3.bundle.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
@@ -175,11 +177,10 @@
     <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/index.js') }}"></script>
     <script src="{{ asset('assets/vendor/toastr/toastr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-select2/js/select2.min.js') }}"></script>
 
     <script>
         var ayarlar = {!! json_encode($ayarlar) !!};
-
-        console.log(ayarlar);
 
         function getComingDayDate(day) {
             var possibleDate                = new Date();
@@ -217,21 +218,23 @@
                 language: 'tr'
             });
 
-            $('#abone_id').on('change', function(){
-                $('#fillDefaultsButton').prop('disabled', !$(this).val());
+            $('#abone_id')
+                .on('change', function(){
+                    $('#fillDefaultsButton').prop('disabled', !$(this).val());
 
-                let tur = $(this).find(':selected').data('tur');
-                $('#tur').val(tur);
+                    let tur = $(this).find(':selected').data('tur');
+                    $('#tur').val(tur);
 
-                if (tur === '{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}' )
-                {
-                    $('#elektrikSpecificArea').show(250);
-                }
-                else {
-                    $('#elektrikSpecificArea').hide(250);
-                }
-            })
-            .trigger('change');
+                    if (tur === '{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}' )
+                    {
+                        $('#elektrikSpecificArea').show(250);
+                    }
+                    else {
+                        $('#elektrikSpecificArea').hide(250);
+                    }
+                })
+                .trigger('change')
+                .select2();
 
         });
     </script>
