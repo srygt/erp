@@ -9,6 +9,24 @@
 @section('content')
 
     <div class="row clearfix">
+        @if ($errors->any() || session()->has('message'))
+            <div class="col-sm-12" id="messages">
+                @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message')}}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+        @endif
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="body">

@@ -92,7 +92,11 @@ class FaturaController extends Controller
         $response = (new RestRequest)->getDocumentFile($uuid)->getBody()->getContents();
         $response = json_decode($response);
 
-        throw_if(!$response->IsSucceeded, new HizliTeknolojiIsSuccessException($response->Message));
+        if (!$response->IsSucceeded) {
+            return redirect()
+                ->route('home')
+                ->withErrors($response->Message);
+        }
 
         return response()->make(
             base64_decode($response->DocumentFile),
