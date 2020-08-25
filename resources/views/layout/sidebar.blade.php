@@ -1,7 +1,9 @@
 <div id="left-sidebar" class="sidebar">
     <div class="navbar-brand">
         <a href="{{route('home')}}"><img src="{{asset('assets/images/osb.png')}}" alt="Oculux Logo" class="img-fluid logo"><span>Diyarbakır OSB</span></a>
-        <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i class="lnr lnr-menu fa fa-chevron-circle-left"></i></button>
+        <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right">
+            <i class="lnr lnr-menu fa fa-chevron-circle-left text-blush"></i>
+        </button>
     </div>
     <div class="sidebar-scroll">
         <nav id="left-sidebar-nav" class="sidebar-nav">
