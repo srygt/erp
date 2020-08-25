@@ -7,6 +7,7 @@ namespace App\Services\Fatura;
 use App\Contracts\FaturaInterface;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Models\Abone;
+use App\Models\AyarEkKalem;
 use App\Models\Fatura;
 use App\Models\FaturaTaslagi;
 use App\Models\Mukellef;
@@ -15,8 +16,11 @@ use GuzzleHttp\Exception\GuzzleException;
 use Onrslu\HtEfatura\Models\CustomerIdentificationOther;
 use Onrslu\HtEfatura\Models\Invoice;
 use Onrslu\HtEfatura\Models\InvoiceHeader;
+use Onrslu\HtEfatura\Models\InvoiceLine;
 use Onrslu\HtEfatura\Models\InvoiceLines;
 use Onrslu\HtEfatura\Models\InvoiceModel;
+use Onrslu\HtEfatura\Models\LineTax;
+use Onrslu\HtEfatura\Models\LineTaxes;
 use Onrslu\HtEfatura\Models\Note;
 use Onrslu\HtEfatura\Models\Party;
 use Onrslu\HtEfatura\Services\RestRequest;
@@ -27,7 +31,10 @@ use Onrslu\HtEfatura\Types\Enums\CustomerIdentificationSchemeId;
 use Onrslu\HtEfatura\Types\Enums\InvoiceTypeCode\Satis;
 use Onrslu\HtEfatura\Types\Enums\ProfileId\EArsivFatura;
 use Onrslu\HtEfatura\Types\Enums\ProfileId\TicariFatura;
+use Onrslu\HtEfatura\Types\Enums\QuantityUnitUser;
 use Onrslu\HtEfatura\Types\Enums\TargetCode;
+use Onrslu\HtEfatura\Types\Enums\TaxTypeCode;
+use Onrslu\HtEfatura\Types\PriceModifiers\Percentage;
 use Onrslu\HtEfatura\Types\Time;
 use Throwable;
 
@@ -244,6 +251,49 @@ abstract class AbstractFatura
         }
 
         return $invoice;
+    }
+
+    /**
+     * @param float $tuketimMiktari
+     * @param string $tur
+     * @param QuantityUnitUser $quantityType
+     * @return array
+     * @throws Throwable
+     */
+    protected function getEkKalemler(float $tuketimMiktari, string $tur, QuantityUnitUser $quantityType) : array
+    {
+        $invoiceLines   = [];
+        $ekKalemler = AyarEkKalem::where(AyarEkKalem::COLUMN_TUR, $tur)
+            ->get();
+
+        if ($ekKalemler->count() < 1) {
+            return [];
+        }
+
+        foreach ($ekKalemler as $no => $ekKalem) {
+            $invoiceLine = new InvoiceLine();
+            $invoiceLine
+                ->setId($no + 2)
+                ->setItemName($ekKalem->{AyarEkKalem::COLUMN_BASLIK})
+                ->setPriceAmount($ekKalem->{AyarEkKalem::COLUMN_DEGER})
+                ->setQuantityAmount($tuketimMiktari)
+                ->setQuantityUnitUser($quantityType);
+
+            $taxKdv = (new LineTax())
+                ->setTax(new Percentage(0.18, $invoiceLine->getPriceTotalWithoutTaxes()))
+                ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
+                ->setTaxName('KDV');
+
+            $taxes = new LineTaxes([
+                $taxKdv,
+            ]);
+
+            $invoiceLine->setLineTaxes($taxes);
+
+            $invoiceLines[] = $invoiceLine;
+        }
+
+        return $invoiceLines;
     }
 
     /**

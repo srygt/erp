@@ -64,10 +64,24 @@
                     </ul>
                 </li>
                 <li class="{{ Request::segment(2) === 'ayarlar' ? 'active' : null }}">
-                    <a href="{{route('ayar.index')}}">
-                        <i class="fa fa-cogs"></i>
-                        <span>Ayarlar</span>
-                    </a>
+                    <a href="#myPage" class="has-arrow"><i class="fa fa-cogs"></i><span>Ayar İşlemleri</span></a>
+                    <ul>
+                        <li
+                            class="{{ Request::segment(2) === 'ayarlar' && Request::segment(3) == 'genel' ? 'active' : null }}"
+                        >
+                            <a href="{{route('ayar.genel.index')}}">Genel</a>
+                        </li>
+                        <li
+                            class="{{ Request::segment(2) === 'ayarlar' && Request::segment(3) == 'ek-kalemler' && Request::segment(4) != 'ekle' ? 'active' : null }}"
+                        >
+                            <a href="{{route('ayar.ek-kalem.index')}}">Ek Kalem Listesi</a>
+                        </li>
+                        <li
+                            class="{{ Request::segment(2) === 'ayarlar' && Request::segment(3) == 'ek-kalemler' && Request::segment(4) == 'ekle' ? 'active' : null }}"
+                        >
+                            <a href="{{route('ayar.ek-kalem.store.get')}}">Ek Kalem Oluştur</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>

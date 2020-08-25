@@ -40,8 +40,6 @@ class FaturaTaslakController extends Controller
                 Fatura::COLUMN_ABONE_ID             => $abone->id,
                 Fatura::COLUMN_TUR                  => $abone->{Abone::COLUMN_TUR},
                 Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $request->birim_fiyat,
-                Fatura::COLUMN_BIRIM_FIYAT_DAGITIM  => $request->dagitim_birim_fiyat,
-                Fatura::COLUMN_BIRIM_FIYAT_SISTEM   => $request->sistem_birim_fiyat,
                 Fatura::COLUMN_SON_ODEME_TARIHI     => $request->son_odeme_tarihi,
                 Fatura::COLUMN_ENDEKS_ILK           => $request->ilk_endeks,
                 Fatura::COLUMN_ENDEKS_SON           => $request->son_endeks,

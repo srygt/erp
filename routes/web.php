@@ -34,9 +34,11 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     Route::post('mukellefler/ekle','MukellefController@eklePost')
         ->name('mukellef.ekle.post');
     Route::get('mukellefler/api/{id}','MukellefController@detayApi')
-        ->name('mukellef.detay');
+        ->name('mukellef.detay')
+        ->where(['id' => '[0-9]+']);
     Route::get('mukellefler/{id}','MukellefController@guncelleGet')
-        ->name('mukellef.guncelle.get');
+        ->name('mukellef.guncelle.get')
+        ->where(['id' => '[0-9]+']);
     Route::get('mukellefler','MukellefController@index')
         ->name('mukellef.liste');
 
@@ -46,7 +48,8 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     Route::post('aboneler/ekle','AboneController@eklePost')
         ->name('abone.ekle.post');
     Route::get('aboneler/{id}','AboneController@guncelleGet')
-        ->name('abone.guncelle.get');
+        ->name('abone.guncelle.get')
+        ->where(['id' => '[0-9]+']);
     Route::get('aboneler','AboneController@index')
         ->name('aboneler.liste');
 
@@ -64,10 +67,27 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     Route::get('faturalar/gelen','FaturaController@gelenFaturalar')
         ->name('fatura.gelen.liste');
 
-    // Ayarlar
-    Route::get('ayarlar','AyarController@index')
-        ->name('ayar.index');
-    Route::post('ayarlar','AyarController@update')
-        ->name('ayar.update');
+    // Genel Ayarlar
+    Route::get('ayarlar/genel','GenelAyarController@index')
+        ->name('ayar.genel.index');
+    Route::post('ayarlar/genel','GenelAyarController@update')
+        ->name('ayar.genel.update');
+
+    // Ek Kalem Ayarları
+    Route::get('ayarlar/ek-kalemler','AyarEkKalemController@index')
+        ->name('ayar.ek-kalem.index');
+    Route::get('ayarlar/ek-kalemler/{id}','AyarEkKalemController@show')
+        ->name('ayar.ek-kalem.show')
+        ->where(['id' => '[0-9]+']);
+    Route::get('ayarlar/ek-kalemler/ekle','AyarEkKalemController@storeGet')
+        ->name('ayar.ek-kalem.store.get');
+    Route::post('ayarlar/ek-kalemler/{id}','AyarEkKalemController@update')
+        ->name('ayar.ek-kalem.update')
+        ->where(['id' => '[0-9]+']);
+    Route::post('ayarlar/ek-kalemler','AyarEkKalemController@storePost')
+        ->name('ayar.ek-kalem.store.post');
+    Route::delete('ayarlar/ek-kalemler/{id}','AyarEkKalemController@destroy')
+        ->name('ayar.ek-kalem.destroy')
+        ->where(['id' => '[0-9]+']);
 });
 

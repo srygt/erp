@@ -5,6 +5,7 @@ namespace App\Services\Fatura\Su;
 
 
 use App\Contracts\FaturaInterface;
+use App\Models\Abone;
 use App\Models\Fatura;
 use App\Services\Fatura\AbstractFatura;
 use Onrslu\HtEfatura\Models\Invoice;
@@ -34,12 +35,16 @@ class SuFaturasiService extends AbstractFatura
             ]
         ];
 
-        $invoiceLine         = $this->getSuTuketim($values);
+        $invoiceKalemSuTuketim        = $this->getSuTuketim($values);
+        $invoiceEkKalemler            = $this->getEkKalemler(
+                                            $values['tuketim'],
+                                            Abone::COLUMN_TUR_SU,
+                                            new QuantityUnitUser('MTQ')
+                                        );
+        $invoiceKalemler              = array_merge([$invoiceKalemSuTuketim], $invoiceEkKalemler);
 
         // Invoice Lines
-        $invoiceLines = new InvoiceLines([
-            $invoiceLine,
-        ]);
+        $invoiceLines = new InvoiceLines($invoiceKalemler);
 
         $invoice = parent::createInvoice($faturaTaslagi, $invoiceLines);
 

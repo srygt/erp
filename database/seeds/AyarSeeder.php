@@ -16,8 +16,6 @@ class AyarSeeder extends Seeder
         $data = [
             Ayar::FIELD_ELEKTRIK_SON_ODEME_GUN          => 15,
             Ayar::FIELD_ELEKTRIK_TUKETIM_BIRIM_FIYAT    => 0.451779,
-            Ayar::FIELD_ELEKTRIK_DAGITIM_BIRIM_FIYAT    => 0.0251,
-            Ayar::FIELD_ELEKTRIK_SISTEM_BIRIM_FIYAT     => 0.0362,
             Ayar::FIELD_SU_SON_ODEME_GUN                => 16,
             Ayar::FIELD_SU_TUKETIM_BIRIM_FIYAT          => 0.054321,
             Ayar::FIELD_DOGALGAZ_SON_ODEME_GUN          => 17,

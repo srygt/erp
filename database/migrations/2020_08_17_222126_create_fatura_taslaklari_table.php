@@ -21,8 +21,6 @@ class CreateFaturaTaslaklariTable extends Migration
             $table->enum(Fatura::COLUMN_DURUM, Fatura::LIST_DURUM)->index();
             $table->enum(Fatura::COLUMN_TUR, array_keys(Abone::TUR_LIST))->index();
             $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM, 12, 9)->unsigned();
-            $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_DAGITIM, 12, 9)->unsigned()->nullable();
-            $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_SISTEM, 12, 9)->unsigned()->nullable();
             $table->date(Fatura::COLUMN_SON_ODEME_TARIHI)->index();
             $table->string(Fatura::COLUMN_ENDEKS_ILK);
             $table->string(Fatura::COLUMN_ENDEKS_SON);
