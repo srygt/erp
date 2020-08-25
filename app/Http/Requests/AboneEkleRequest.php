@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Abone;
+use App\Rules\UniqueWithAdditionalColumnsRule;
 use App\Rules\UrnRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -32,8 +33,30 @@ class AboneEkleRequest extends FormRequest
             'tur'                   => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
             'mukellef_id'           => 'required|numeric|exists:App\Models\Mukellef,id',
             'baslik'                => 'required',
-            'abone_no'              => 'required|numeric|unique:App\Models\Abone,abone_no,' . $this->id,
-            'sayac_no'              => 'required|numeric|unique:App\Models\Abone,sayac_no,' . $this->id,
+            'abone_no'              => [
+                                        'required',
+                                        'numeric',
+                                        new UniqueWithAdditionalColumnsRule(
+                                            Abone::class,
+                                            Abone::COLUMN_ABONE_NO,
+                                            $this->id,
+                                            'id',
+                                            Abone::COLUMN_TUR,
+                                            $this->{Abone::COLUMN_TUR}
+                                        )
+                                        ],
+            'sayac_no'              => [
+                                        'required',
+                                        'numeric',
+                                        new UniqueWithAdditionalColumnsRule(
+                                            Abone::class,
+                                            Abone::COLUMN_SAYAC_NO,
+                                            $this->id,
+                                            'id',
+                                            Abone::COLUMN_TUR,
+                                            $this->{Abone::COLUMN_TUR}
+                                        )
+                                    ],
             'email'                 => 'nullable|email',
             'telefon'               => 'nullable',
             'website'               => 'nullable|url',
