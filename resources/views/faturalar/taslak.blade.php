@@ -3,8 +3,11 @@
 @section('title', 'Fatura Taslağı Önizleme')
 @section('content')
     <form action="{{route('fatura.ekle.post')}}" method="post">
-        <input type="hidden" name="uuid" value="{{ $taslakUuid ?? '' }}">
         @csrf
+        <input type="hidden" name="uuid" value="{{ $taslakUuid }}">
+        @foreach($ekKalemler as $ekKalem)
+            <input type="hidden" name="ek_kalemler[]" value="{{ $ekKalem }}">
+        @endforeach
         <div class="col-sm-12">
             <div class="card">
                 <div class="body">

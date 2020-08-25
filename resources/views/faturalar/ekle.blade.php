@@ -126,6 +126,41 @@
                                 <textarea rows="4" type="text" class="form-control" name="not"></textarea>
                             </div>
                         </div>
+                        <div class="border bg-info col-md-12 mb-3"></div>
+                        <div id="ekKalemList" class="col-lg-12 col-md-12">
+                            <div class="header">
+                                <h2>Ek Kalemler <small>Faturaya uygulanmasını istediğiniz ek kalemleri aşağıdan seçin</small></h2>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Başlık</th>
+                                            <th>Birim Fiyat</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach(array_keys(\App\Models\Abone::TUR_LIST) as $tur)
+                                    <tbody id="ekKalemList-{{ $tur }}" class="ekKalemList" style="display: none;">
+                                    @foreach(($ekKalemler[$tur] ?? []) as $ekKalem)
+                                        <tr>
+                                            <td scope="row">
+                                                <div class="fancy-checkbox">
+                                                    <label>
+                                                        <input type="checkbox" name="ek_kalemler[]" value="{{ $ekKalem->id }}" checked>
+                                                        <span>{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_BASLIK} }}</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 text-lg-right m-t-20">
@@ -198,6 +233,9 @@
 
                     let tur = $(this).find(':selected').data('tur');
                     $('#tur').val(tur);
+
+                    $('.ekKalemList').hide();
+                    $('#ekKalemList-' + tur).show();
                 })
                 .trigger('change')
                 .select2();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\HizliTeknolojiIsSuccessException;
+use App\Http\Requests\FaturaEkleRequest;
 use App\Http\Requests\GelenFaturaRequest;
 use App\Models\Abone;
 use App\Models\Fatura;
@@ -108,10 +109,10 @@ class FaturaController extends Controller
         );
     }
 
-    public function store(Request $request)
+    public function store(FaturaEkleRequest $request)
     {
         /** @var FaturaTaslagi $faturaTaslagi */
-        $faturaTaslagi = FaturaTaslagi::where('uuid', $request->uuid)->first();
+        $faturaTaslagi = FaturaTaslagi::where('uuid', $request->uuid)->firstOrFail();
 
         /** @var Fatura $fatura */
         $fatura = $faturaTaslagi
@@ -131,7 +132,7 @@ class FaturaController extends Controller
         $faturaService = FaturaFactory::getService($faturaTaslagi->abone->{Abone::COLUMN_TUR});
 
         try {
-            $response = $faturaService->getBill($fatura);
+            $response = $faturaService->getBill($fatura, $request->ek_kalemler);
         } catch (GuzzleException $e) {
             return self::showErrorMessage($e);
         } catch (HizliTeknolojiIsSuccessException $e) {

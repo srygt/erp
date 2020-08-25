@@ -256,14 +256,17 @@ abstract class AbstractFatura
     /**
      * @param float $tuketimMiktari
      * @param string $tur
+     * @param int[] $selectedEkKalemler
      * @param QuantityUnitUser $quantityType
      * @return array
      * @throws Throwable
      */
-    protected function getEkKalemler(float $tuketimMiktari, string $tur, QuantityUnitUser $quantityType) : array
+    protected function getEkKalemler(float $tuketimMiktari, string $tur,
+                                     array $selectedEkKalemler, QuantityUnitUser $quantityType) : array
     {
         $invoiceLines   = [];
         $ekKalemler = AyarEkKalem::where(AyarEkKalem::COLUMN_TUR, $tur)
+            ->whereIn('id', $selectedEkKalemler)
             ->get();
 
         if ($ekKalemler->count() < 1) {
@@ -310,15 +313,16 @@ abstract class AbstractFatura
 
     /**
      * @param FaturaTaslagi $faturaTaslagi
+     * @param int[] $selectedEkKalemler
      * @return mixed
      * @throws GuzzleException
      * @throws Throwable
      */
-    public function getPreview(FaturaTaslagi $faturaTaslagi)
+    public function getPreview(FaturaTaslagi $faturaTaslagi, array $selectedEkKalemler)
     {
         try
         {
-            $invoice    = $this->getInvoice($faturaTaslagi);
+            $invoice    = $this->getInvoice($faturaTaslagi, $selectedEkKalemler);
             $invoice    = $this->setTargetType($invoice);
 
             return $this->getResponse($faturaTaslagi, $invoice, true);
@@ -332,15 +336,16 @@ abstract class AbstractFatura
 
     /**
      * @param Fatura $fatura
+     * @param int[] $selectedEkKalemler
      * @return mixed
      * @throws Throwable
      * @throws GuzzleException
      */
-    public function getBill(Fatura $fatura)
+    public function getBill(Fatura $fatura, array $selectedEkKalemler)
     {
         try
         {
-            $invoice    = $this->getInvoice($fatura);
+            $invoice    = $this->getInvoice($fatura, $selectedEkKalemler);
             $invoice    = $this->setTargetType($invoice);
 
             return $this->getResponse($fatura, $invoice, false);

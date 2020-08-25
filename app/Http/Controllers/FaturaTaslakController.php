@@ -6,7 +6,9 @@ use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Http\Requests\FaturaTaslagiEkleRequest;
 use App\Models\Abone;
 use App\Models\Ayar;
+use App\Models\AyarEkKalem;
 use App\Models\Fatura;
+use App\Models\FaturaTaslagi;
 use App\Services\Fatura\FaturaFactory;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
@@ -16,6 +18,15 @@ class FaturaTaslakController extends Controller
 {
     public function ekleGet()
     {
+        $ekKalemler = AyarEkKalem::select([
+                            'id',
+                            AyarEkKalem::COLUMN_TUR,
+                            AyarEkKalem::COLUMN_DEGER,
+                            AyarEkKalem::COLUMN_BASLIK,
+                        ])
+                        ->get()
+                        ->groupBy(AyarEkKalem::COLUMN_TUR);
+
         $ayarlar    = Ayar::allFormatted();
         $aboneler   = Abone::with('mukellef')->get();
 
@@ -23,6 +34,7 @@ class FaturaTaslakController extends Controller
         return view(
             'faturalar.ekle',
             [
+                'ekKalemler'=> $ekKalemler,
                 'ayarlar'   => $ayarlar,
                 'aboneler'  => $aboneler,
             ]
@@ -33,6 +45,7 @@ class FaturaTaslakController extends Controller
     {
         $abone = Abone::find($request->abone_id);
 
+        /** @var FaturaTaslagi $faturaTaslagi */
         $faturaTaslagi = $abone
             ->faturaTaslaklari()
             ->create([
@@ -49,7 +62,7 @@ class FaturaTaslakController extends Controller
         $faturaService = FaturaFactory::getService($abone->{Abone::COLUMN_TUR});
 
         try {
-            $response = $faturaService->getPreview($faturaTaslagi);
+            $response = $faturaService->getPreview($faturaTaslagi, $request->ek_kalemler);
         } catch (GuzzleException $e) {
             return self::showErrorMessage($e);
         } catch (HizliTeknolojiIsSuccessException $e) {
@@ -59,8 +72,9 @@ class FaturaTaslakController extends Controller
         return view(
             'faturalar.taslak',
             [
-                'response' => $response,
-                'taslakUuid' => $faturaTaslagi->uuid,
+                'response'      => $response,
+                'taslakUuid'    => $faturaTaslagi->uuid,
+                'ekKalemler'    => $request->ek_kalemler,
             ]
         );
     }

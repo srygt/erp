@@ -22,10 +22,11 @@ class SuFaturasiService extends AbstractFatura
 {
     /**
      * @param FaturaInterface $faturaTaslagi
+     * @param int[] $selectedEkKalemler
      * @return Invoice
      * @throws Throwable
      */
-    protected function getInvoice(FaturaInterface $faturaTaslagi)
+    protected function getInvoice(FaturaInterface $faturaTaslagi, array $selectedEkKalemler)
     {
         $values = [
             'tuketim'   =>
@@ -39,6 +40,7 @@ class SuFaturasiService extends AbstractFatura
         $invoiceEkKalemler            = $this->getEkKalemler(
                                             $values['tuketim'],
                                             Abone::COLUMN_TUR_SU,
+                                            $selectedEkKalemler,
                                             new QuantityUnitUser('MTQ')
                                         );
         $invoiceKalemler              = array_merge([$invoiceKalemSuTuketim], $invoiceEkKalemler);

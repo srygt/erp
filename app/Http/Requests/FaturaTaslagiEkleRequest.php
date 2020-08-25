@@ -50,6 +50,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_ENDEKS_ILK           => 'required|numeric',
             Fatura::COLUMN_ENDEKS_SON           => 'required|numeric|gte:' . Fatura::COLUMN_ENDEKS_ILK,
             Fatura::COLUMN_NOT                  => 'nullable',
+            'ek_kalemler.*'                     => 'nullable|numeric|exists:App\Models\AyarEkKalem,id',
         ];
     }
 
@@ -63,6 +64,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_ENDEKS_ILK           => 'İlk Endeks',
             Fatura::COLUMN_ENDEKS_SON           => 'Son Endeks',
             Fatura::COLUMN_NOT                  => 'Fatura Açıklaması',
+            'ek_kalemler.*'                     => 'Ek Kalem',
         ];
     }
 
@@ -73,6 +75,10 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_ENDEKS_ILK           => str_replace(',', '.', $this->{Fatura::COLUMN_ENDEKS_ILK}),
             Fatura::COLUMN_ENDEKS_SON           => str_replace(',', '.', $this->{Fatura::COLUMN_ENDEKS_SON}),
         ];
+
+        if (!isset($this->ek_kalemler) || !is_array($this->ek_kalemler)) {
+            $payload['ek_kalemler']              = [];
+        }
 
         $this->merge($payload);
     }

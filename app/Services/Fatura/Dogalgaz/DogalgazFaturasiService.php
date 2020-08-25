@@ -22,10 +22,11 @@ class DogalgazFaturasiService extends AbstractFatura
 {
     /**
      * @param FaturaInterface $faturaTaslagi
+     * @param int[] $selectedEkKalemler
      * @return Invoice
      * @throws Throwable
      */
-    protected function getInvoice(FaturaInterface $faturaTaslagi)
+    protected function getInvoice(FaturaInterface $faturaTaslagi, array $selectedEkKalemler)
     {
         $values = [
             'tuketim'   =>
@@ -37,10 +38,11 @@ class DogalgazFaturasiService extends AbstractFatura
 
         $invoiceLineDogalgazTuketim   = $this->getDogalgazTuketim($values);
         $invoiceEkKalemler            = $this->getEkKalemler(
-            $values['tuketim'],
-            Abone::COLUMN_TUR_DOGALGAZ,
-            new QuantityUnitUser('MTQ')
-        );
+                                            $values['tuketim'],
+                                            Abone::COLUMN_TUR_DOGALGAZ,
+                                            $selectedEkKalemler,
+                                            new QuantityUnitUser('MTQ')
+                                        );
 
         $invoiceKalemler              = array_merge([$invoiceLineDogalgazTuketim], $invoiceEkKalemler);
 
