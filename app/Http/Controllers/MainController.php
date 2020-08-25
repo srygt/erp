@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Models\Abone;
 use App\Models\Fatura;
-use App\Models\Mukellef;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -24,6 +23,7 @@ class MainController extends Controller
      * @return Renderable
      */
     public function home(){
+        Cache::forget('istatistikler');
         $istatistikler = Cache::remember('istatistikler', 60*60*8, function()
         {
             /** @var Collection $tumZaman */
@@ -40,8 +40,8 @@ class MainController extends Controller
                                                 return $fatura->{Fatura::COLUMN_APP_TYPE};
                                             })->all();
 
-            $toplamGidenEFatura = $tumZamanGroupedByAppType[EFatura::TYPE];
-            $toplamGidenEArsiv  = $tumZamanGroupedByAppType[EArsiv::TYPE];
+            $toplamGidenEFatura = $tumZamanGroupedByAppType[EFatura::TYPE]  ?? 0;
+            $toplamGidenEArsiv  = $tumZamanGroupedByAppType[EArsiv::TYPE]   ?? 0;
 
             $buAy               = $tumZaman->where('created_at', '>=', Carbon::now()->startOfMonth());
 
