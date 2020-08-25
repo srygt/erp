@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('title', 'Ayarlar')
 @section('content')
-    <form action="{{route("ayar.update")}}" method="post">
+    <form action="{{route("ayar.genel.update")}}" method="post">
         @csrf
         <div class="col-lg-8 col-md-12">
             <div class="card">

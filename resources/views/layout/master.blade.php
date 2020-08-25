@@ -87,11 +87,35 @@
 
 @stack('after-scripts')
 
-@if (trim($__env->yieldContent('page-script')))
-    @yield('page-script')
-@endif
-
 <script type="text/javascript"><!--
+
+function deleteItem(parentElement, deleteUrl) {
+    swal({
+        title: "Silmek istediğinize emin misiniz?",
+        text: "Silinen verileri geri getiremezsiniz!",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: 'İptal',
+        confirmButtonColor: "#dc3545",
+        confirmButtonText: "Evet, sil!",
+        closeOnConfirm: false
+    }, () => {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: "DELETE",
+            url: deleteUrl,
+        })
+            .done(() => {
+                parentElement.remove();
+                swal("Silindi!", "Silme işlemi başarı ile tamamlandı.", "success");
+            })
+            .fail(( jqXHR, textStatus ) => {
+                alert( "Request failed: " + textStatus );
+            });
+    });
+}
 
 $(document).ready(function(){
    var alertMessageExists = !!$('#alertMessages').length;
@@ -102,6 +126,10 @@ $(document).ready(function(){
 });
 
 --></script>
+
+@if (trim($__env->yieldContent('page-script')))
+    @yield('page-script')
+@endif
 
 </body>
 </html>

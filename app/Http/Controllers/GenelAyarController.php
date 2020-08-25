@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Ayar;
 use App\Http\Requests\AyarGuncelleRequest;
-use Illuminate\Support\Collection;
 
-class AyarController extends Controller
+class GenelAyarController extends Controller
 {
     public function index()
     {
-        return view('ayarlar', ['ayarlar' => Ayar::allFormatted()]);
+        return view('ayarlar.genel', ['ayarlar' => Ayar::allFormatted()]);
     }
     public function update(AyarGuncelleRequest $request)
     {
@@ -38,7 +37,8 @@ class AyarController extends Controller
             }
         }
 
-        return redirect()->back()
+        return redirect()
+            ->back()
             ->with('message', 'Ayarlar Başarıyla Güncellendi!');
     }
 }
