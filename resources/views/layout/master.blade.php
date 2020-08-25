@@ -75,7 +75,7 @@
             </div>
             @yield('content')
 
-            <div class="col-xs-12 text-right mb-3">
+            <div class="col-xs-12 text-right my-3">
                 <a href="https://www.matgis.com.tr">
                     <img src="{{ asset('assets/images/matgis.png') }}" alt="MatGis tarafından geliştirilmiştir.">
                 </a>
