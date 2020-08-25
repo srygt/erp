@@ -19,8 +19,6 @@ class Fatura extends Model implements FaturaInterface
         self::COLUMN_TUR,
         self::COLUMN_INVOICE_ID,
         self::COLUMN_BIRIM_FIYAT_TUKETIM,
-        self::COLUMN_BIRIM_FIYAT_DAGITIM,
-        self::COLUMN_BIRIM_FIYAT_SISTEM,
         self::COLUMN_SON_ODEME_TARIHI,
         self::COLUMN_ENDEKS_ILK,
         self::COLUMN_ENDEKS_SON,
@@ -43,8 +41,6 @@ class Fatura extends Model implements FaturaInterface
     const COLUMN_INVOICE_ID             = 'fatura_no';
     const COLUMN_TUR                    = 'tur';
     const COLUMN_BIRIM_FIYAT_TUKETIM    = 'birim_fiyat';
-    const COLUMN_BIRIM_FIYAT_DAGITIM    = 'dagitim_birim_fiyat';
-    const COLUMN_BIRIM_FIYAT_SISTEM     = 'sistem_birim_fiyat';
     const COLUMN_SON_ODEME_TARIHI       = 'son_odeme_tarihi';
     const COLUMN_ENDEKS_ILK             = 'ilk_endeks';
     const COLUMN_ENDEKS_SON             = 'son_endeks';

@@ -5,6 +5,7 @@ namespace App\Services\Fatura\Dogalgaz;
 
 
 use App\Contracts\FaturaInterface;
+use App\Models\Abone;
 use App\Models\Fatura;
 use App\Services\Fatura\AbstractFatura;
 use Onrslu\HtEfatura\Models\Invoice;
@@ -34,12 +35,17 @@ class DogalgazFaturasiService extends AbstractFatura
             ]
         ];
 
-        $invoiceLine         = $this->getDogalgazTuketim($values);
+        $invoiceLineDogalgazTuketim   = $this->getDogalgazTuketim($values);
+        $invoiceEkKalemler            = $this->getEkKalemler(
+            $values['tuketim'],
+            Abone::COLUMN_TUR_DOGALGAZ,
+            new QuantityUnitUser('MTQ')
+        );
+
+        $invoiceKalemler              = array_merge([$invoiceLineDogalgazTuketim], $invoiceEkKalemler);
 
         // Invoice Lines
-        $invoiceLines = new InvoiceLines([
-            $invoiceLine,
-        ]);
+        $invoiceLines = new InvoiceLines($invoiceKalemler);
 
         $invoice = parent::createInvoice($faturaTaslagi, $invoiceLines);
 

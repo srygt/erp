@@ -108,38 +108,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12" id="elektrikSpecificArea" style="display: none;">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label>Birim Dağıtım Fiyatı<span class="text-danger">*</span></label>
-                                        <input
-                                            id="dagitim_birim_fiyat"
-                                            name="dagitim_birim_fiyat"
-                                            value="{{old("dagitim_birim_fiyat")}}"
-                                            min="0.000000"
-                                            step="0.000001"
-                                            type="number"
-                                            class="form-control"
-                                        >
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label>Birim Sistem Kullanım Fiyatı<span class="text-danger">*</span></label>
-                                        <input
-                                            id="sistem_birim_fiyat"
-                                            name="sistem_birim_fiyat"
-                                            value="{{old("sistem_birim_fiyat")}}"
-                                            min="0.000000"
-                                            step="0.000001"
-                                            type="number"
-                                            class="form-control"
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>İlk Endeks<span class="text-danger">*</span></label>
@@ -201,12 +169,6 @@
             let birim_fiyat_baslik          = tur + '.tuketim_birim_fiyat';
             $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
 
-            let dagitim_birim_fiyat_baslik  = tur + '.dagitim_birim_fiyat';
-            $('#dagitim_birim_fiyat').val( ayarlar[dagitim_birim_fiyat_baslik] );
-
-            let sistem_birim_fiyat_baslik   = tur + '.sistem_birim_fiyat';
-            $('#sistem_birim_fiyat').val( ayarlar[sistem_birim_fiyat_baslik] );
-
             let son_odeme_baslik    = tur + '.son_odeme_gun'
             $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
         }
@@ -224,14 +186,6 @@
 
                     let tur = $(this).find(':selected').data('tur');
                     $('#tur').val(tur);
-
-                    if (tur === '{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}' )
-                    {
-                        $('#elektrikSpecificArea').show(250);
-                    }
-                    else {
-                        $('#elektrikSpecificArea').hide(250);
-                    }
                 })
                 .trigger('change')
                 .select2();

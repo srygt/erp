@@ -5,6 +5,7 @@ namespace App\Services\Fatura\Elektrik;
 
 
 use App\Contracts\FaturaInterface;
+use App\Models\Abone;
 use App\Models\Fatura;
 use App\Services\Fatura\AbstractFatura;
 use Onrslu\HtEfatura\Models\Invoice;
@@ -31,21 +32,19 @@ class ElektrikFaturasiService extends AbstractFatura
                 $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON} - $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
             'bedel'     => [
                 'elektrikTuketim'   => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
-                'dagitim'           => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_DAGITIM},
-                'sistemKullanim'    => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_SISTEM},
             ]
         ];
 
-        $invoiceLineElektrikTuketim         = $this->getElektrikTuketim($values);
-        $invoiceLineDagitimBedeli           = $this->getDagitimBedeli($values);
-        $invoiceLineSistemKullanimBedeli    = $this->getSistemKullanimBedeli($values);
+        $invoiceKalemElektrikTuketim        = $this->getElektrikTuketim($values);
+        $invoiceEkKalemler                   = $this->getEkKalemler(
+                                                $values['tuketim'],
+                                                Abone::COLUMN_TUR_ELEKTRIK,
+                                                new QuantityUnitUser('KWH')
+                                                );
+        $invoiceKalemler                    = array_merge([$invoiceKalemElektrikTuketim], $invoiceEkKalemler);
 
         // Invoice Lines
-        $invoiceLines = new InvoiceLines([
-            $invoiceLineElektrikTuketim,
-            $invoiceLineDagitimBedeli,
-            $invoiceLineSistemKullanimBedeli,
-        ]);
+        $invoiceLines = new InvoiceLines($invoiceKalemler);
 
         $invoice = parent::createInvoice($faturaTaslagi, $invoiceLines);
 
@@ -103,65 +102,5 @@ class ElektrikFaturasiService extends AbstractFatura
         $invoiceLineElektrikTuketim->setLineTaxes($elektrikTuketimTaxes);
 
         return $invoiceLineElektrikTuketim;
-    }
-
-    /**
-     * @param $values
-     * @return InvoiceLine
-     * @throws Throwable
-     */
-    protected function getDagitimBedeli($values)
-    {
-        // Dağıtım Bedeli
-        $invoiceLineDagitimBedeli = new InvoiceLine();
-        $invoiceLineDagitimBedeli
-            ->setId(2)
-            ->setItemName('Dağıtım Bedeli')
-            ->setPriceAmount($values['bedel']['dagitim'])
-            ->setQuantityAmount($values['tuketim'])
-            ->setQuantityUnitUser(new QuantityUnitUser('KWH'));
-
-        $taxKdv = (new LineTax())
-            ->setTax(new Percentage(0.18, $invoiceLineDagitimBedeli->getPriceTotalWithoutTaxes()))
-            ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
-            ->setTaxName('KDV');
-
-        $dagitimBedeliTaxes = new LineTaxes([
-            $taxKdv,
-        ]);
-
-        $invoiceLineDagitimBedeli->setLineTaxes($dagitimBedeliTaxes);
-
-        return $invoiceLineDagitimBedeli;
-    }
-
-    /**
-     * @param $values
-     * @return InvoiceLine
-     * @throws Throwable
-     */
-    protected function getSistemKullanimBedeli($values)
-    {
-        // Sistem Kullanım Bedeli
-        $invoiceLineSistemKullanimBedeli = new InvoiceLine();
-        $invoiceLineSistemKullanimBedeli
-            ->setId(3)
-            ->setItemName('Sistem Kullanım Bedeli')
-            ->setPriceAmount($values['bedel']['sistemKullanim'])
-            ->setQuantityAmount($values['tuketim'])
-            ->setQuantityUnitUser(new QuantityUnitUser('KWH'));
-
-        $taxKdv = (new LineTax())
-            ->setTax(new Percentage(0.18, $invoiceLineSistemKullanimBedeli->getPriceTotalWithoutTaxes()))
-            ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
-            ->setTaxName('KDV');
-
-        $sistemKullanimBedeliTaxes = new LineTaxes([
-            $taxKdv,
-        ]);
-
-        $invoiceLineSistemKullanimBedeli->setLineTaxes($sistemKullanimBedeliTaxes);
-
-        return $invoiceLineSistemKullanimBedeli;
     }
 }

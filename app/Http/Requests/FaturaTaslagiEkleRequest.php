@@ -46,8 +46,6 @@ class FaturaTaslagiEkleRequest extends FormRequest
             'abone_id'                          => 'required|numeric|exists:App\Models\Abone,id',
             'tur'                               => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
             Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => 'required|numeric',
-            Fatura::COLUMN_BIRIM_FIYAT_DAGITIM  => 'required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|nullable|numeric',
-            Fatura::COLUMN_BIRIM_FIYAT_SISTEM   => 'required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|nullable|numeric',
             Fatura::COLUMN_SON_ODEME_TARIHI     => 'required|date_format:d.m.Y',
             Fatura::COLUMN_ENDEKS_ILK           => 'required|numeric',
             Fatura::COLUMN_ENDEKS_SON           => 'required|numeric|gte:' . Fatura::COLUMN_ENDEKS_ILK,
@@ -61,8 +59,6 @@ class FaturaTaslagiEkleRequest extends FormRequest
             'abone_id'                          => 'Abone',
             'tur'                               => 'Abonelik Türü',
             Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => 'Birim Tüketim Fiyatı',
-            Fatura::COLUMN_BIRIM_FIYAT_DAGITIM  => 'Birim Dağıtım Fiyatı',
-            Fatura::COLUMN_BIRIM_FIYAT_SISTEM   => 'Birim Sistem Fiyatı',
             Fatura::COLUMN_SON_ODEME_TARIHI     => 'Son Ödeme Tarihi',
             Fatura::COLUMN_ENDEKS_ILK           => 'İlk Endeks',
             Fatura::COLUMN_ENDEKS_SON           => 'Son Endeks',
@@ -77,13 +73,6 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_ENDEKS_ILK           => str_replace(',', '.', $this->{Fatura::COLUMN_ENDEKS_ILK}),
             Fatura::COLUMN_ENDEKS_SON           => str_replace(',', '.', $this->{Fatura::COLUMN_ENDEKS_SON}),
         ];
-
-        if (isset($this->{Fatura::COLUMN_BIRIM_FIYAT_DAGITIM})) {
-            $payload[Fatura::COLUMN_BIRIM_FIYAT_DAGITIM]  = str_replace(',', '.', $this->{Fatura::COLUMN_BIRIM_FIYAT_DAGITIM});
-        }
-        if (isset($this->{Fatura::COLUMN_BIRIM_FIYAT_SISTEM})) {
-            $payload[Fatura::COLUMN_BIRIM_FIYAT_SISTEM]  = str_replace(',', '.', $this->{Fatura::COLUMN_BIRIM_FIYAT_SISTEM});
-        }
 
         $this->merge($payload);
     }
