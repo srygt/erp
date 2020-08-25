@@ -23,8 +23,34 @@ class MainController extends Controller
      * @return Renderable
      */
     public function home(){
-        $istatistikler = Cache::remember('istatistikler', 60*60*8, function()
+        $istatistikler_api = Cache::remember('istatistikler_api', 60*60*3, function()
         {
+            $documentList       = (new DocumentList)
+                                    ->setAppType(new EFatura)
+                                    ->setDateType(new CreatedDate)
+                                    ->setStartDate(date('Y-m-d', strtotime('-6 months')))
+                                    ->setEndDate(date('Y-m-d', strtotime('+1 minutes')));
+
+            $cevap              = json_decode(
+                                    (new RestRequest)->getDocumentList($documentList)->getBody()->getContents()
+                                    );
+
+            throw_if(!$cevap->IsSucceeded, new HizliTeknolojiIsSuccessException($cevap->Message));
+
+            return [
+                'toplamGelenEFatura'=> count($cevap->documents),
+                'yeniFaturalar'     => array_slice(
+                                            array_reverse($cevap->documents),
+                                            0,
+                                            5,
+                                            false
+                                        ),
+            ];
+        });
+
+        $istatistikler_local = Cache::remember('istatistikler_local', 60*15, function()
+        {
+
             /** @var Collection $tumZaman */
             $tumZaman           = Fatura::where(Fatura::COLUMN_DURUM, Fatura::COLUMN_DURUM_BASARILI)
                 ->select([
@@ -36,8 +62,8 @@ class MainController extends Controller
                 ->get();
 
             $tumZamanGroupedByAppType   = $tumZaman->countBy(function($fatura){
-                                                return $fatura->{Fatura::COLUMN_APP_TYPE};
-                                            })->all();
+                return $fatura->{Fatura::COLUMN_APP_TYPE};
+            })->all();
 
             $toplamGidenEFatura = $tumZamanGroupedByAppType[EFatura::TYPE]  ?? 0;
             $toplamGidenEArsiv  = $tumZamanGroupedByAppType[EArsiv::TYPE]   ?? 0;
@@ -55,33 +81,14 @@ class MainController extends Controller
             /** @var Collection $toplamAbone */
             $toplamAbone        = Abone::count();
 
-            $documentList       = (new DocumentList)
-                                    ->setAppType(new EFatura)
-                                    ->setDateType(new CreatedDate)
-                                    ->setStartDate(date('Y-m-d', strtotime('-6 months')))
-                                    ->setEndDate(date('Y-m-d', strtotime('+1 minutes')));
-
-            $cevap              = json_decode(
-                                    (new RestRequest)->getDocumentList($documentList)->getBody()->getContents()
-                                    );
-
-            throw_if(!$cevap->IsSucceeded, new HizliTeknolojiIsSuccessException($cevap->Message));
-
             return [
-                'toplamGelenEFatura'=> count($cevap->documents),
                 'toplamGidenEFatura'=> $toplamGidenEFatura,
                 'toplamGidenEArsiv' => $toplamGidenEArsiv,
                 'turlereGoreToplam' => $turlereGoreToplam->toArray(),
                 'toplamAbone'       => $toplamAbone,
-                'yeniFaturalar'     => array_slice(
-                                            array_reverse($cevap->documents),
-                                            0,
-                                            5,
-                                            false
-                                        ),
             ];
         });
 
-        return view('index', $istatistikler);
+        return view('index', array_merge($istatistikler_api, $istatistikler_local));
     }
 }
