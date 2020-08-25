@@ -158,7 +158,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>Urn<span class="text-danger">*</span></label>
+                                    <label>Urn</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="urn" id="urn" placeholder="urn:mail:aaa@bbb.com" value="{{ old('urn', $abone->urn) }}">
                                     </div>
