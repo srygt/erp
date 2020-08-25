@@ -23,7 +23,6 @@ class MainController extends Controller
      * @return Renderable
      */
     public function home(){
-        Cache::forget('istatistikler');
         $istatistikler = Cache::remember('istatistikler', 60*60*8, function()
         {
             /** @var Collection $tumZaman */
