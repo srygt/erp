@@ -122,7 +122,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
-                                <label>Fatura Açıklaması<span class="text-danger">*</span></label>
+                                <label>Fatura Açıklaması</label>
                                 <textarea rows="4" type="text" class="form-control" name="not"></textarea>
                             </div>
                         </div>
