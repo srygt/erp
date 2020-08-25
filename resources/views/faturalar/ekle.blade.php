@@ -111,7 +111,7 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>İlk Endeks<span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="ilk_endeks" value="{{old("ilk_endeks")}}" min="0.000000" step="0.001">
+                                <input type="number" class="form-control" id="ilk_endeks" name="ilk_endeks" value="{{old("ilk_endeks")}}" min="0.000000" step="0.001">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
@@ -164,13 +164,25 @@
         }
 
         function fillDefaults() {
-            let tur                 = $('#abone_id').find(':selected').data('tur');
+            let seciliAbone         = $('#abone_id').find(':selected');
+            let tur                 = seciliAbone.data('tur');
 
-            let birim_fiyat_baslik          = tur + '.tuketim_birim_fiyat';
-            $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
+            $.get(
+                "{{ route('fatura.api.son-fatura') }}",
+                {
+                    'abone_id': seciliAbone.val()
+                },
+                function( sonFatura ) {
 
-            let son_odeme_baslik    = tur + '.son_odeme_gun'
-            $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
+                    $('#ilk_endeks').val(sonFatura.hasOwnProperty('son_endeks') ? sonFatura.son_endeks : '');
+
+                    let birim_fiyat_baslik  = tur + '.tuketim_birim_fiyat';
+                    $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
+
+                    let son_odeme_baslik    = tur + '.son_odeme_gun'
+                    $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
+                }
+            );
         }
 
         $(function () {

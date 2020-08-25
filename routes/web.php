@@ -33,9 +33,6 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('mukellef.ekle.get');
     Route::post('mukellefler/ekle','MukellefController@eklePost')
         ->name('mukellef.ekle.post');
-    Route::get('mukellefler/api/{id}','MukellefController@detayApi')
-        ->name('mukellef.detay')
-        ->where(['id' => '[0-9]+']);
     Route::get('mukellefler/{id}','MukellefController@guncelleGet')
         ->name('mukellef.guncelle.get')
         ->where(['id' => '[0-9]+']);
@@ -89,5 +86,12 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     Route::delete('ayarlar/ek-kalemler/{id}','AyarEkKalemController@destroy')
         ->name('ayar.ek-kalem.destroy')
         ->where(['id' => '[0-9]+']);
+
+    // Api
+    Route::get('mukellefler/api/{id}','MukellefController@detayApi')
+        ->name('mukellef.detay')
+        ->where(['id' => '[0-9]+']);
+    Route::get('faturalar/api/son-fatura','FaturaApiController@sonFaturaDetay')
+        ->name('fatura.api.son-fatura');
 });
 
