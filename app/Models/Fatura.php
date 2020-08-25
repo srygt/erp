@@ -45,9 +45,6 @@ class Fatura extends Model implements FaturaInterface
     const COLUMN_ENDEKS_ILK             = 'ilk_endeks';
     const COLUMN_ENDEKS_SON             = 'son_endeks';
     const COLUMN_NOT                    = 'not';
-    const COLUMN_ISTEK                  = 'istek';
-    const COLUMN_CEVAP                  = 'cevap';
-    const COLUMN_HATA                   = 'hata';
     const COLUMN_TOPLAM_ODENECEK_UCRET  = 'toplam_odenecek_ucret';
     const COLUMN_ABONE_ID               = 'abone_id';
 

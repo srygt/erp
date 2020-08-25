@@ -180,9 +180,6 @@ abstract class AbstractFatura
 
         $jsonResponse   = $this->_updateDBAfterRequest($fatura, $response);
 
-        $fatura->{Fatura::COLUMN_DURUM} = Fatura::COLUMN_DURUM_BASARILI;
-        $fatura->save();
-
         return $jsonResponse;
     }
 
@@ -193,7 +190,8 @@ abstract class AbstractFatura
      */
     protected function _updateDBBeforeRequest(?FaturaInterface $fatura, Invoice $invoice) : ?FaturaInterface
     {
-        $fatura->{Fatura::COLUMN_ISTEK}                 = json_encode($invoice);
+        FaturaLog::save('fatura.logPaths.request', $fatura, json_encode($invoice));
+
         $fatura->{Fatura::COLUMN_APP_TYPE}              = (string)($invoice->getAppType());
         $fatura->{Fatura::COLUMN_TOPLAM_ODENECEK_UCRET} = $invoice->getInvoiceModel()
                                                             ->getInvoiceheader()
@@ -212,8 +210,7 @@ abstract class AbstractFatura
      */
     protected function _updateDBAfterRequest(FaturaInterface $fatura, string $response) : object
     {
-        $fatura->{Fatura::COLUMN_CEVAP}     = $response;
-        $fatura->save();
+        FaturaLog::save('fatura.logPaths.response', $fatura, $response);
 
         $parsedResponse                     = json_decode($response);
         $isError                            = $parsedResponse[0]->IsSucceeded !== true;
@@ -222,6 +219,9 @@ abstract class AbstractFatura
             $isError,
             new HizliTeknolojiIsSuccessException($parsedResponse[0]->Message)
         );
+
+        $fatura->{Fatura::COLUMN_DURUM} = Fatura::COLUMN_DURUM_BASARILI;
+        $fatura->save();
 
         return $parsedResponse[0];
     }
@@ -302,8 +302,9 @@ abstract class AbstractFatura
      */
     protected static function logError(Throwable $e, FaturaInterface $fatura)
     {
+        FaturaLog::save('fatura.logPaths.error', $fatura, $e);
+
         $fatura->{Fatura::COLUMN_DURUM} = Fatura::COLUMN_DURUM_HATA;
-        $fatura->{Fatura::COLUMN_HATA}  = $e;
         $fatura->save();
     }
 
