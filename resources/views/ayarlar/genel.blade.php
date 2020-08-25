@@ -97,32 +97,6 @@
                                                 >
                                             </div>
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Varsayılan Birim Dağıtım Fiyatı<span class="text-danger">*</span></label>
-                                                <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    name="elektrik[dagitim_birim_fiyat]"
-                                                    value="{{ old("elektrik.dagitim_birim_fiyat", $ayarlar['elektrik.dagitim_birim_fiyat'] ?? '') }}"
-                                                    min="0.000000"
-                                                    step="0.000001"
-                                                >
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Varsayılan Birim Sistem Kullanım Fiyatı<span class="text-danger">*</span></label>
-                                                <input
-                                                    type="number"
-                                                    class="form-control"
-                                                    name="elektrik[sistem_birim_fiyat]"
-                                                    value="{{ old("elektrik.sistem_birim_fiyat", $ayarlar['elektrik.sistem_birim_fiyat'] ?? '') }}"
-                                                    min="0.000000"
-                                                    step="0.000001"
-                                                >
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="v-pills-su" role="tabpanel" aria-labelledby="v-pills-su-tab">
