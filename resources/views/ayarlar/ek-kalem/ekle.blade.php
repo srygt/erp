@@ -84,18 +84,19 @@
                 </div>
             </div>
         </div>
-        @stop
+    </div>
+@stop
 
-        @section('page-styles')
+@section('page-styles')
 
-            <link rel="stylesheet" href="{{ asset('assets/vendor/dropify/css/dropify.min.css') }}">
-        @stop
+    <link rel="stylesheet" href="{{ asset('assets/vendor/dropify/css/dropify.min.css') }}">
+@stop
 
-        @section('page-script')
-            <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
-            <script>
+@section('page-script')
+    <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
+    <script>
 
-            </script>
+    </script>
 
 
 @stop

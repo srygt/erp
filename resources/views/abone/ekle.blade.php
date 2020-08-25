@@ -172,7 +172,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 text-lg-right m-t-20">
+                            <div class="col-sm-12 text-right m-t-20">
                                 <button type="submit" class="btn btn-primary btn-lg">Gönder</button>
                             </div>
                         </div>
@@ -180,9 +180,10 @@
                 </div>
             </div>
         </div>
-        @stop
+    </div>
+@stop
 
-        @section('page-script')
+@section('page-script')
             <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
             <script src="{{ asset('js/abonejs.js') }}"></script>
             <script src="{{ asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>

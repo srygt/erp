@@ -159,15 +159,16 @@
                 </div>
             </div>
         </div>
-        @stop
+    </div>
+@stop
 
-        @section('page-styles')
+@section('page-styles')
 
-            <link rel="stylesheet" href="{{ asset('assets/vendor/dropify/css/dropify.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
-        @stop
+    <link rel="stylesheet" href="{{ asset('assets/vendor/dropify/css/dropify.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
+@stop
 
-        @section('page-script')
+@section('page-script')
             <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
             <script src="{{ asset('js/abonejs.js') }}"></script>
             <script src="{{ asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
