@@ -137,7 +137,7 @@
                         <td>{{ $yeniFatura->PayableAmount . $yeniFatura->DocumentCurrencyCode }}</td>
                         <td><span class="badge badge-info ml-0 mr-0">{{ $yeniFatura->DocumentTypeCode }}</span></td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-default" title="Faturayı Görüntüle" data-toggle="tooltip" data-placement="top"><i class="fa fa-download text-blue"></i></button>
+                            <a href="{{ route('fatura.detay', ['appType' => $yeniFatura->AppType, 'uuid' => $yeniFatura->UUID]) }}" class="btn btn-sm btn-default" title="Faturayı Görüntüle" data-toggle="tooltip" data-placement="top"><i class="fa fa-download text-blue"></i></button>
                         </td>
                     </tr>
                     @endforeach
