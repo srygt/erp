@@ -1,6 +1,6 @@
 <?php
 
-use App\AyarEkKalem;
+use App\Models\AyarEkKalem;
 use App\Models\Abone;
 use Illuminate\Database\Seeder;
 
