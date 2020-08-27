@@ -3,12 +3,17 @@
 @section('title', 'Anasayfa')
 
 @section('page-styles')
-<link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}" />
+<style type="text/css">
+#staticsList a {
+    color: #17191c;
+}
+</style>
 @append
 
 @section('content')
 
-    <div class="row clearfix">
+    <div id="staticsList" class="row clearfix">
         @if ($errors->any() || session()->has('message'))
             <div class="col-sm-12" id="messages">
                 @if (session()->has('message'))
@@ -30,52 +35,60 @@
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="body">
-                    <div class="d-flex align-items-center">
-                        <div class="icon-in-bg bg-indigo text-white rounded-circle"><i class="fa fa-arrow-down"></i></div>
-                        <div class="ml-4">
-                            <span>Gelen e-Fatura</span>
-                            <h4 class="mb-0 font-weight-medium">{{ $toplamGelenEFatura }}</h4>
+                    <a href="{{ route('fatura.gelen.liste') }}">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-in-bg bg-indigo text-white rounded-circle"><i class="fa fa-arrow-down"></i></div>
+                            <div class="ml-4">
+                                <span>Gelen e-Fatura</span>
+                                <h4 class="mb-0 font-weight-medium">{{ $toplamGelenEFatura }}</h4>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="body">
-                    <div class="d-flex align-items-center">
-                        <div class="icon-in-bg bg-azura text-white rounded-circle"><i class="fa fa-arrow-up"></i></div>
-                        <div class="ml-4">
-                            <span>Giden e-Fatura</span>
-                            <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEFatura }}</h4>
+                    <a href="{{ route('fatura.liste') }}">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-in-bg bg-azura text-white rounded-circle"><i class="fa fa-arrow-up"></i></div>
+                            <div class="ml-4">
+                                <span>Giden e-Fatura</span>
+                                <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEFatura }}</h4>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="body">
-                    <div class="d-flex align-items-center">
-                        <div class="icon-in-bg bg-orange text-white rounded-circle"><i class="fa fa-file"></i></div>
-                        <div class="ml-4">
-                            <span>Giden e-Arşiv</span>
-                            <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEArsiv }}</h4>
+                    <a href="{{ route('fatura.liste') }}">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-in-bg bg-orange text-white rounded-circle"><i class="fa fa-file"></i></div>
+                            <div class="ml-4">
+                                <span>Giden e-Arşiv</span>
+                                <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEArsiv }}</h4>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="body">
-                    <div class="d-flex align-items-center">
-                        <div class="icon-in-bg bg-pink text-white rounded-circle"><i class="fa fa-life-ring"></i></div>
-                        <div class="ml-4">
-                            <span>Abone Sayısı</span>
-                            <h4 class="mb-0 font-weight-medium">{{ $toplamAbone }}</h4>
+                    <a href="{{ route('aboneler.liste') }}">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-in-bg bg-pink text-white rounded-circle"><i class="fa fa-life-ring"></i></div>
+                            <div class="ml-4">
+                                <span>Abone Sayısı</span>
+                                <h4 class="mb-0 font-weight-medium">{{ $toplamAbone }}</h4>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
