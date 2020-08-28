@@ -24,9 +24,10 @@ $factory->define(Abone::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(Abone::class, Abone::COLUMN_TUR_ELEKTRIK, function () {
+$factory->state(Abone::class, Abone::COLUMN_TUR_ELEKTRIK, function (Faker $faker) {
     return [
         Abone::COLUMN_TUR       => Abone::COLUMN_TUR_ELEKTRIK,
+        Abone::COLUMN_TRT_PAYI  => $faker->boolean,
     ];
 });
 
