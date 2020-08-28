@@ -71,7 +71,7 @@ class DogalgazFaturasiService extends AbstractFatura
 
         $taxOtv = (new LineTax())
             ->setTax(
-                new Percentage(0.0142, $invoiceLine->getPriceTotalWithoutTaxes())
+                new Percentage(0.0157, $invoiceLine->getPriceTotalWithoutTaxes())
             )
             ->setTaxCode(new TaxTypeCode(TaxTypeCode::OTV_1_LISTE))
             ->setTaxName('ÖTV 1. LİSTE');
@@ -82,8 +82,8 @@ class DogalgazFaturasiService extends AbstractFatura
                 ->setTaxName('KDV');
 
         $lineTaxes = new LineTaxes([
+            $taxOtv,
             $taxKdv,
-            $taxOtv
         ]);
 
         $invoiceLine->setLineTaxes($lineTaxes);
