@@ -103,6 +103,10 @@ class AboneEkleRequest extends FormRequest
             $parameters['website'] = 'http://' . $this->website;
         }
 
+        if ( isset($this->tur) && $this->tur !== Abone::COLUMN_TUR_ELEKTRIK ) {
+            $parameters['trt_payi'] = null;
+        }
+
         $this->merge($parameters);
     }
 }
