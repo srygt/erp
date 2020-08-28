@@ -4,6 +4,7 @@
 namespace App\Services\Fatura;
 
 
+use App\Adapters\AyarEkKalemAdapter;
 use App\Contracts\FaturaInterface;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Models\Abone;
@@ -109,8 +110,9 @@ abstract class AbstractFatura
             ->setLineExtensionAmount($invoiceLines->getPriceTotalWithoutTaxes())
             ->setNote(
                 new Note(
-                    'Son Ödeme Tarihi: ' . $fatura->{Fatura::COLUMN_SON_ODEME_TARIHI}->toDateString()
-                    . "\n"
+                    $this->getAboneAndSayacNotes($fatura)
+                    . 'Son Ödeme Tarihi: ' . $fatura->{Fatura::COLUMN_SON_ODEME_TARIHI}->toDateString() . "\n"
+                    . 'IBAN: ' . config('fatura.iban') . "\n"
                     . $fatura->{Fatura::COLUMN_NOT}
                     . "\n"
                 )
@@ -181,6 +183,27 @@ abstract class AbstractFatura
         $jsonResponse   = $this->_updateDBAfterRequest($fatura, $response);
 
         return $jsonResponse;
+    }
+
+    /**
+     * @param FaturaInterface $fatura
+     * @return string
+     */
+    protected function getAboneAndSayacNotes(FaturaInterface $fatura) : string
+    {
+        $note = '';
+
+        if ($fatura->abone->{Abone::COLUMN_ABONE_NO})
+        {
+            $note   .= 'Abone No: ' . $fatura->abone->{Abone::COLUMN_ABONE_NO} . "\n";
+        }
+
+        if ($fatura->abone->{Abone::COLUMN_SAYAC_NO})
+        {
+            $note   .= 'Sayaç No: ' . $fatura->abone->{Abone::COLUMN_SAYAC_NO} . "\n";
+        }
+
+        return $note;
     }
 
     /**
@@ -256,7 +279,7 @@ abstract class AbstractFatura
     /**
      * @param float $tuketimMiktari
      * @param string $tur
-     * @param int[] $selectedEkKalemler
+     * @param array $selectedEkKalemler
      * @param QuantityUnitUser $quantityType
      * @return array
      * @throws Throwable
@@ -266,7 +289,7 @@ abstract class AbstractFatura
     {
         $invoiceLines   = [];
         $ekKalemler = AyarEkKalem::where(AyarEkKalem::COLUMN_TUR, $tur)
-            ->whereIn('id', $selectedEkKalemler)
+            ->whereIn('id', collect($selectedEkKalemler)->pluck('id'))
             ->get();
 
         if ($ekKalemler->count() < 1) {
@@ -274,13 +297,20 @@ abstract class AbstractFatura
         }
 
         foreach ($ekKalemler as $no => $ekKalem) {
+            $ekKalemAdapter = new AyarEkKalemAdapter(
+                                    $ekKalem,
+                                    $tuketimMiktari,
+                                    $selectedEkKalemler[$no]['deger'] ?? null,
+                                    $quantityType
+                                );
+
             $invoiceLine = new InvoiceLine();
             $invoiceLine
                 ->setId($no + 2)
-                ->setItemName($ekKalem->{AyarEkKalem::COLUMN_BASLIK})
-                ->setPriceAmount($ekKalem->{AyarEkKalem::COLUMN_DEGER})
-                ->setQuantityAmount($tuketimMiktari)
-                ->setQuantityUnitUser($quantityType);
+                ->setItemName($ekKalemAdapter->getBaslik())
+                ->setPriceAmount($ekKalemAdapter->getUcret())
+                ->setQuantityAmount($ekKalemAdapter->getMiktar())
+                ->setQuantityUnitUser($ekKalemAdapter->getMiktarTuru());
 
             $taxKdv = (new LineTax())
                 ->setTax(new Percentage(0.18, $invoiceLine->getPriceTotalWithoutTaxes()))
@@ -313,7 +343,7 @@ abstract class AbstractFatura
 
     /**
      * @param FaturaTaslagi $faturaTaslagi
-     * @param int[] $selectedEkKalemler
+     * @param array $selectedEkKalemler
      * @return mixed
      * @throws GuzzleException
      * @throws Throwable
@@ -336,7 +366,7 @@ abstract class AbstractFatura
 
     /**
      * @param Fatura $fatura
-     * @param int[] $selectedEkKalemler
+     * @param array $selectedEkKalemler
      * @return mixed
      * @throws Throwable
      * @throws GuzzleException

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Abone;
+use App\Models\AyarEkKalem;
 use App\Models\Fatura;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -50,7 +51,12 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_ENDEKS_ILK           => 'required|numeric',
             Fatura::COLUMN_ENDEKS_SON           => 'required|numeric|gte:' . Fatura::COLUMN_ENDEKS_ILK,
             Fatura::COLUMN_NOT                  => 'nullable',
-            'ek_kalemler.*'                     => 'nullable|numeric|exists:App\Models\AyarEkKalem,id',
+            'ek_kalemler'                       => 'nullable|array',
+            'ek_kalemler.*.id'                  => 'required|numeric|exists:App\Models\AyarEkKalem,id',
+            'ek_kalemler.*.ucret_tur'           => ['required', Rule::in(array_keys(AyarEkKalem::LIST_UCRET_TUR))],
+            'ek_kalemler.*.deger'               => 'required_if:ek_kalemler.*.ucret_tur,'
+                                                    . AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR
+                                                    . '|numeric'
         ];
     }
 
@@ -64,7 +70,11 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_ENDEKS_ILK           => 'İlk Endeks',
             Fatura::COLUMN_ENDEKS_SON           => 'Son Endeks',
             Fatura::COLUMN_NOT                  => 'Fatura Açıklaması',
+            'ek_kalemler'                       => 'Ek Kalemler',
             'ek_kalemler.*'                     => 'Ek Kalem',
+            'ek_kalemler.*.id'                  => 'Ek Kalem Idsi',
+            'ek_kalemler.*.ucret_tur'           => 'Ek Kalem Ücret Türü',
+            'ek_kalemler.*.deger'               => 'Ek Kalem Tutarı',
         ];
     }
 
@@ -76,10 +86,30 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_ENDEKS_SON           => str_replace(',', '.', $this->{Fatura::COLUMN_ENDEKS_SON}),
         ];
 
-        if (!isset($this->ek_kalemler) || !is_array($this->ek_kalemler)) {
-            $payload['ek_kalemler']              = [];
-        }
+        $payload['ek_kalemler']             = $this->uygulanmayacakEkKalemleriKaldir();
 
         $this->merge($payload);
+    }
+
+    /**
+     * @return array
+     */
+    protected function uygulanmayacakEkKalemleriKaldir() : array
+    {
+        $ek_kalemler            = [];
+
+        foreach ($this->ek_kalemler ?? [] as $ek_kalem)
+        {
+            $status             = AyarEkKalem::where([
+                                        'id'                    => $ek_kalem['id'] ?? '',
+                                        AyarEkKalem::COLUMN_TUR => $this->{Fatura::COLUMN_TUR} ?? '',
+                                    ])->exists();
+
+            if ($status) {
+                $ek_kalemler[]   = $ek_kalem;
+            }
+        }
+
+        return $ek_kalemler;
     }
 }

@@ -141,18 +141,39 @@
                                     </thead>
                                     @foreach(array_keys(\App\Models\Abone::TUR_LIST) as $tur)
                                     <tbody id="ekKalemList-{{ $tur }}" class="ekKalemList" style="display: none;">
-                                    @foreach(($ekKalemler[$tur] ?? []) as $ekKalem)
+                                    @foreach(($ekKalemler[$tur] ?? []) as $key => $ekKalem)
                                         <tr>
                                             <td scope="row">
                                                 <div class="fancy-checkbox">
                                                     <label>
-                                                        <input type="checkbox" name="ek_kalemler[]" value="{{ $ekKalem->id }}" checked>
+                                                        <input
+                                                            type="checkbox"
+                                                            name="ek_kalemler[{{ $key }}][id]"
+                                                            value="{{ $ekKalem->id }}"
+                                                            checked
+                                                        >
                                                         <span>{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_BASLIK} }}</span>
                                                     </label>
                                                 </div>
+                                                <input
+                                                    type="hidden"
+                                                    name="ek_kalemler[{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_UCRET_TUR }}]"
+                                                    value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} }}"
+                                                >
                                             </td>
                                             <td>
-                                                {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
+                                                @if ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
+                                                    <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        name="ek_kalemler[{{ $key }}][deger]"
+                                                        value="{{ old('ek_kalemler[' . $key . '][deger]') }}"
+                                                        min="0"
+                                                        step="0.01"
+                                                    >
+                                                @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_ORAN)
+                                                    {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

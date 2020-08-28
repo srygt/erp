@@ -21,6 +21,7 @@ class FaturaTaslakController extends Controller
         $ekKalemler = AyarEkKalem::select([
                             'id',
                             AyarEkKalem::COLUMN_TUR,
+                            AyarEkKalem::COLUMN_UCRET_TUR,
                             AyarEkKalem::COLUMN_DEGER,
                             AyarEkKalem::COLUMN_BASLIK,
                         ])

@@ -40,7 +40,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Tür<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="tur" id="tur">
+                                    <select id="tur" name="tur" class="form-control">
                                         <option value="">Seçin</option>
                                         @foreach(\App\Models\Abone::TUR_LIST as $slug => $title)
                                             <option
@@ -57,11 +57,29 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
+                                    <label>Ücret Türü<span class="text-danger">*</span></label>
+                                    <select id="ucretTur" name="ucret_tur" class="form-control">
+                                        <option value="">Seçin</option>
+                                        @foreach(\App\Models\AyarEkKalem::LIST_UCRET_TUR as $slug => $title)
+                                            <option
+                                                value="{{ $slug }}"
+                                                @if(old('ucret_tur', $ekKalem->ucret_tur ?? '') === $slug)
+                                                selected
+                                                @endif
+                                            >
+                                                {{ $title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
                                     <label>Başlık<span class="text-danger">*</span></label>
                                     <input class="form-control" name="baslik" value="{{ old('baslik', $ekKalem->baslik ?? '') }}" type="text">
                                 </div>
                             </div>
-                            <div class="col-sm-12">
+                            <div id="oranContainer" class="col-sm-12" style="display: none;">
                                 <div class="form-group">
                                     <label>Oran</label>
                                     <input
@@ -93,10 +111,17 @@
 @stop
 
 @section('page-script')
-    <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
-    <script>
-
-    </script>
-
-
+<script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
+<script>
+$('#ucretTur').on('change', function(){
+    if ( $(this).children('option:selected').val() === "{{ \App\Models\AyarEkKalem::FIELD_UCRET_ORAN }}" )
+    {
+        $('#oranContainer').show(250);
+    }
+    else {
+        $('#oranContainer').hide(250);
+    }
+})
+.trigger('change');
+</script>
 @stop

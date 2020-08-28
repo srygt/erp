@@ -18,8 +18,9 @@ class CreateAyarlarEkKalemlerTable extends Migration
         Schema::create('ayarlar_ek_kalemler', function (Blueprint $table) {
             $table->id();
             $table->enum(AyarEkKalem::COLUMN_TUR, array_keys(Abone::TUR_LIST))->index();
+            $table->enum(AyarEkKalem::COLUMN_UCRET_TUR, array_keys(AyarEkKalem::LIST_UCRET_TUR))->index();
             $table->string(AyarEkKalem::COLUMN_BASLIK);
-            $table->decimal(AyarEkKalem::COLUMN_DEGER, 12, 9);
+            $table->decimal(AyarEkKalem::COLUMN_DEGER, 12, 9)->nullable();
             $table->timestamps();
         });
     }

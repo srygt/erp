@@ -27,39 +27,41 @@ class AyarEkKalemRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'                        => 'nullable|exists:App\Models\AyarEkKalem,id',
-            AyarEkKalem::COLUMN_TUR     => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
-            AyarEkKalem::COLUMN_BASLIK  => 'required|min:3',
-            AyarEkKalem::COLUMN_DEGER   => 'required|numeric|min:0.000000001|max:999.999999999',
+            'id'                            => 'nullable|exists:App\Models\AyarEkKalem,id',
+            AyarEkKalem::COLUMN_TUR         => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
+            AyarEkKalem::COLUMN_UCRET_TUR   => ['required', Rule::in(array_keys(AyarEkKalem::LIST_UCRET_TUR))],
+            AyarEkKalem::COLUMN_BASLIK      => 'required|min:3',
+            AyarEkKalem::COLUMN_DEGER       => 'nullable|required_if:'
+                                                . AyarEkKalem::COLUMN_UCRET_TUR . ','
+                                                . AyarEkKalem::FIELD_UCRET_ORAN
+                                                .'|numeric|min:0.000000001|max:999.999999999',
         ];
     }
 
     public function attributes()
     {
         return [
-            AyarEkKalem::COLUMN_TUR     => 'Tür',
-            AyarEkKalem::COLUMN_BASLIK  => 'Başlık',
-            AyarEkKalem::COLUMN_DEGER   => 'Oran',
+            AyarEkKalem::COLUMN_TUR         => 'Tür',
+            AyarEkKalem::COLUMN_UCRET_TUR   => 'Ücret Türü',
+            AyarEkKalem::COLUMN_BASLIK      => 'Başlık',
+            AyarEkKalem::COLUMN_DEGER       => 'Oran',
         ];
     }
 
     protected function prepareForValidation()
     {
-        $data = [
-            AyarEkKalem::COLUMN_TUR     => $this->{AyarEkKalem::COLUMN_TUR}     ?? null,
-            AyarEkKalem::COLUMN_BASLIK  => $this->{AyarEkKalem::COLUMN_BASLIK}  ?? null,
-            AyarEkKalem::COLUMN_DEGER   => $this->{AyarEkKalem::COLUMN_DEGER}   ?? null,
-        ];
-
-        foreach ($data as $key => $item) {
-            $data[$key] = str_replace(',', '.', $item);
+        if (!$this->{AyarEkKalem::COLUMN_DEGER} ?? '' || $this->{AyarEkKalem::COLUMN_UCRET_TUR} ?? '' === AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
+        {
+            $data = [
+                AyarEkKalem::COLUMN_DEGER   => null,
+            ];
+        }
+        else{
+            $data = [
+                AyarEkKalem::COLUMN_DEGER   => str_replace(',', '.', $this->{AyarEkKalem::COLUMN_DEGER}),
+            ];
         }
 
         $this->merge($data);
-    }
-
-    protected function convertPointsToDots($tabName, $fieldName)
-    {
-        return str_replace(',', '.', $this->{$tabName}[$fieldName]);
     }
 }

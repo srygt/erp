@@ -5,8 +5,12 @@
     <form action="{{route('fatura.ekle.post')}}" method="post">
         @csrf
         <input type="hidden" name="uuid" value="{{ $taslakUuid }}">
-        @foreach($ekKalemler as $ekKalem)
-            <input type="hidden" name="ek_kalemler[]" value="{{ $ekKalem }}">
+        @foreach($ekKalemler as $key => $ekKalem)
+            <input type="hidden" name="ek_kalemler[{{ $key }}][id]" value="{{ $ekKalem['id'] }}">
+            <input type="hidden" name="ek_kalemler[{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_UCRET_TUR }}]" value="{{ $ekKalem[\App\Models\AyarEkKalem::COLUMN_UCRET_TUR] }}">
+            @if ($ekKalem[\App\Models\AyarEkKalem::COLUMN_UCRET_TUR] === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
+                <input type="hidden" name="ek_kalemler[{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_DEGER }}]" value="{{ $ekKalem[\App\Models\AyarEkKalem::COLUMN_DEGER] }}">
+            @endif
         @endforeach
         <div class="col-sm-12">
             <div class="card">
