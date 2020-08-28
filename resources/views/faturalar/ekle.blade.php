@@ -108,16 +108,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>İlk Endeks<span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="ilk_endeks" name="ilk_endeks" value="{{old("ilk_endeks")}}" min="0.000000" step="0.001">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>Son Endeks<span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="son_endeks" value="{{old("son_endeks")}}" min="0.000000" step="0.001">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div id="ilkEndeksContainer" class="col-lg-6 col-md-12" style="display: none">
+                                    <div class="form-group">
+                                        <label>İlk Endeks<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="ilk_endeks" name="ilk_endeks" value="{{old("ilk_endeks")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Son Endeks<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="son_endeks" value="{{old("son_endeks")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12">
@@ -140,44 +144,44 @@
                                         </tr>
                                     </thead>
                                     @foreach(array_keys(\App\Models\Abone::TUR_LIST) as $tur)
-                                    <tbody id="ekKalemList-{{ $tur }}" class="ekKalemList" style="display: none;">
-                                    @foreach(($ekKalemler[$tur] ?? []) as $key => $ekKalem)
-                                        <tr>
-                                            <td scope="row">
-                                                <div class="fancy-checkbox">
-                                                    <label>
-                                                        <input
-                                                            type="checkbox"
-                                                            name="ek_kalemler[{{ $key }}][id]"
-                                                            value="{{ $ekKalem->id }}"
-                                                            checked
-                                                        >
-                                                        <span>{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_BASLIK} }}</span>
-                                                    </label>
-                                                </div>
-                                                <input
-                                                    type="hidden"
-                                                    name="ek_kalemler[{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_UCRET_TUR }}]"
-                                                    value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} }}"
-                                                >
-                                            </td>
-                                            <td>
-                                                @if ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
+                                        <tbody id="ekKalemList-{{ $tur }}" class="ekKalemList" style="display: none;">
+                                        @foreach(($ekKalemler[$tur] ?? []) as $key => $ekKalem)
+                                            <tr>
+                                                <td scope="row">
+                                                    <div class="fancy-checkbox">
+                                                        <label>
+                                                            <input
+                                                                type="checkbox"
+                                                                name="ek_kalemler[{{ $tur }}][{{ $key }}][id]"
+                                                                value="{{ $ekKalem->id }}"
+                                                                checked
+                                                            >
+                                                            <span>{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_BASLIK} }}</span>
+                                                        </label>
+                                                    </div>
                                                     <input
-                                                        type="number"
-                                                        class="form-control"
-                                                        name="ek_kalemler[{{ $key }}][deger]"
-                                                        value="{{ old('ek_kalemler[' . $key . '][deger]') }}"
-                                                        min="0"
-                                                        step="0.01"
+                                                        type="hidden"
+                                                        name="ek_kalemler[{{ $tur }}][{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_UCRET_TUR }}]"
+                                                        value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} }}"
                                                     >
-                                                @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_ORAN)
-                                                    {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
+                                                </td>
+                                                <td>
+                                                    @if ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            name="ek_kalemler[{{ $tur }}][{{ $key }}][deger]"
+                                                            value="{{ old('ek_kalemler[' . $tur . '][' . $key . '][deger]') }}"
+                                                            min="0"
+                                                            step="0.01"
+                                                        >
+                                                    @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_ORAN)
+                                                        {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
                                     @endforeach
                                 </table>
                             </div>
@@ -230,7 +234,12 @@
                 },
                 function( sonFatura ) {
 
-                    $('#ilk_endeks').val(sonFatura.hasOwnProperty('son_endeks') ? sonFatura.son_endeks : '');
+                    if (tur === "{{ \App\Models\Abone::COLUMN_TUR_SU }}") {
+                        $('#ilk_endeks').val(sonFatura.hasOwnProperty('son_endeks') ? sonFatura.son_endeks : '');
+                    }
+                    else {
+                        $('#ilk_endeks').val('0');
+                    }
 
                     let birim_fiyat_baslik  = tur + '.tuketim_birim_fiyat';
                     $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
@@ -254,6 +263,14 @@
 
                     let tur = $(this).find(':selected').data('tur');
                     $('#tur').val(tur);
+
+                    if (tur === "{{ \App\Models\Abone::COLUMN_TUR_SU }}")
+                    {
+                        $('#ilkEndeksContainer').show(250);
+                    }
+                    else {
+                        $('#ilkEndeksContainer').hide(250);
+                    }
 
                     $('.ekKalemList').hide();
                     $('#ekKalemList-' + tur).show();

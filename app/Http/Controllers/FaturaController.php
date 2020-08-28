@@ -132,7 +132,10 @@ class FaturaController extends Controller
         $faturaService = FaturaFactory::getService($faturaTaslagi->abone->{Abone::COLUMN_TUR});
 
         try {
-            $response = $faturaService->getBill($fatura, $request->ek_kalemler);
+            $response = $faturaService->getBill(
+                $fatura,
+                $request->ek_kalemler[$faturaTaslagi->{Fatura::COLUMN_TUR}] ?? []
+            );
         } catch (GuzzleException $e) {
             return self::showErrorMessage($e);
         } catch (HizliTeknolojiIsSuccessException $e) {

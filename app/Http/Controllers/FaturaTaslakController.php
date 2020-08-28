@@ -55,7 +55,7 @@ class FaturaTaslakController extends Controller
                 Fatura::COLUMN_TUR                  => $abone->{Abone::COLUMN_TUR},
                 Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $request->birim_fiyat,
                 Fatura::COLUMN_SON_ODEME_TARIHI     => $request->son_odeme_tarihi,
-                Fatura::COLUMN_ENDEKS_ILK           => $request->ilk_endeks,
+                Fatura::COLUMN_ENDEKS_ILK           => $abone->{Abone::COLUMN_TUR} === Abone::COLUMN_TUR_SU ? $request->ilk_endeks : 0,
                 Fatura::COLUMN_ENDEKS_SON           => $request->son_endeks,
                 Fatura::COLUMN_NOT                  => $request->not,
             ]);
@@ -63,7 +63,10 @@ class FaturaTaslakController extends Controller
         $faturaService = FaturaFactory::getService($abone->{Abone::COLUMN_TUR});
 
         try {
-            $response = $faturaService->getPreview($faturaTaslagi, $request->ek_kalemler);
+            $response = $faturaService->getPreview(
+                $faturaTaslagi,
+                $request->ek_kalemler[$faturaTaslagi->{Fatura::COLUMN_TUR}] ?? []
+            );
         } catch (GuzzleException $e) {
             return self::showErrorMessage($e);
         } catch (HizliTeknolojiIsSuccessException $e) {
@@ -75,7 +78,9 @@ class FaturaTaslakController extends Controller
             [
                 'response'      => $response,
                 'taslakUuid'    => $faturaTaslagi->uuid,
-                'ekKalemler'    => $request->ek_kalemler,
+                'ekKalemTurleri'=> [
+                    $faturaTaslagi->{Fatura::COLUMN_TUR} => $request->ek_kalemler[$faturaTaslagi->{Fatura::COLUMN_TUR}] ?? []
+                ],
             ]
         );
     }
