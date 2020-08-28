@@ -29,8 +29,13 @@ $factory->state(Mukellef::class, Mukellef::COLUMN_VERGI_NO, function (Faker $fak
     ];
 });
 $factory->state(Mukellef::class, Mukellef::COLUMN_TC_KIMLIK_NO, function (Faker $faker) {
+    $firstName  = $faker->firstName();
+    $lastName   = $faker->lastName();
+
     return [
         Mukellef::COLUMN_TC_KIMLIK_NO   => $faker->tcNo(),
-        'unvan'                         => $faker->name()
+        'unvan'                         => $firstName . ' ' . $lastName,
+        Mukellef::COLUMN_AD             => $firstName,
+        Mukellef::COLUMN_SOYAD          => $lastName,
     ];
 });
