@@ -34,7 +34,7 @@ class AboneEkleRequest extends FormRequest
             'mukellef_id'           => 'required|numeric|exists:App\Models\Mukellef,id',
             'baslik'                => 'required',
             'abone_no'              => [
-                                        'required',
+                                        'nullable',
                                         'numeric',
                                         new UniqueWithAdditionalColumnsRule(
                                             Abone::class,
@@ -46,7 +46,7 @@ class AboneEkleRequest extends FormRequest
                                         )
                                         ],
             'sayac_no'              => [
-                                        'required',
+                                        'nullable',
                                         'numeric',
                                         new UniqueWithAdditionalColumnsRule(
                                             Abone::class,

@@ -25,8 +25,8 @@ class CreateAboneliklerTable extends Migration
                     Abone::COLUMN_TUR_DOGALGAZ,
                 ]);
             $table->string(Abone::COLUMN_BASLIK);
-            $table->string(Abone::COLUMN_ABONE_NO);
-            $table->string(Abone::COLUMN_SAYAC_NO);
+            $table->string(Abone::COLUMN_ABONE_NO)->nullable();
+            $table->string(Abone::COLUMN_SAYAC_NO)->nullable();
             $table->boolean(Abone::COLUMN_TRT_PAYI)->nullable();
 
             // aşağıdaki alanlarda yapılacak değişikliklerin

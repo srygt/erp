@@ -93,13 +93,13 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>Abone No<span class="text-danger">*</span></label>
+                                    <label>Abone No</label>
                                     <input class="form-control" name="abone_no" value="{{ old('abone_no', $abone->abone_no) }}" type="number">
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
-                                    <label>Sayaç No<span class="text-danger">*</span></label>
+                                    <label>Sayaç No</label>
                                     <input class="form-control" name="sayac_no" value="{{ old('sayac_no', $abone->sayac_no) }}" type="number">
                                 </div>
                             </div>
