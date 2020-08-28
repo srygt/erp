@@ -120,9 +120,9 @@ class ImportElektrikAboneNo
 
     /**
      * @param string $delimiter
-     * @return ImportMukellefler
+     * @return ImportElektrikAboneNo
      */
-    public function setDelimiter(string $delimiter): ImportMukellefler
+    public function setDelimiter(string $delimiter): ImportElektrikAboneNo
     {
         $this->delimiter = $delimiter;
         return $this;
@@ -138,9 +138,9 @@ class ImportElektrikAboneNo
 
     /**
      * @param int $headerOffset
-     * @return ImportMukellefler
+     * @return ImportElektrikAboneNo
      */
-    public function setHeaderOffset(int $headerOffset): ImportMukellefler
+    public function setHeaderOffset(int $headerOffset): ImportElektrikAboneNo
     {
         $this->headerOffset = $headerOffset;
         return $this;
