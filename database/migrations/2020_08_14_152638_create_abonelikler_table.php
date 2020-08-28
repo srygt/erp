@@ -27,6 +27,7 @@ class CreateAboneliklerTable extends Migration
             $table->string(Abone::COLUMN_BASLIK);
             $table->string(Abone::COLUMN_ABONE_NO);
             $table->string(Abone::COLUMN_SAYAC_NO);
+            $table->boolean(Abone::COLUMN_TRT_PAYI)->nullable();
 
             // aşağıdaki alanlarda yapılacak değişikliklerin
             // 2020_08_14_150814_create_mukellefler_table'da da yapılması lazım

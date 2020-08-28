@@ -28,6 +28,7 @@ class AboneController extends Controller
             Abone::COLUMN_BASLIK,
             Abone::COLUMN_ABONE_NO,
             Abone::COLUMN_SAYAC_NO,
+            Abone::COLUMN_TRT_PAYI,
             Mukellef::COLUMN_EMAIL,
             Mukellef::COLUMN_TELEFON,
             Mukellef::COLUMN_WEBSITE,

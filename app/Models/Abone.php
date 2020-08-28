@@ -24,6 +24,7 @@ class Abone extends Model
         Abone::COLUMN_BASLIK,
         Abone::COLUMN_ABONE_NO,
         Abone::COLUMN_SAYAC_NO,
+        Abone::COLUMN_TRT_PAYI,
         Mukellef::COLUMN_EMAIL,
         Mukellef::COLUMN_WEBSITE,
         Mukellef::COLUMN_ULKE,
@@ -42,12 +43,25 @@ class Abone extends Model
     const COLUMN_BASLIK         = 'baslik';
     const COLUMN_ABONE_NO       = 'abone_no';
     const COLUMN_SAYAC_NO       = 'sayac_no';
+    const COLUMN_TRT_PAYI       = 'trt_payi';
 
     const TUR_LIST              = [
         self::COLUMN_TUR_ELEKTRIK   => 'Elektrik',
         self::COLUMN_TUR_SU         => 'Su',
         self::COLUMN_TUR_DOGALGAZ   => 'Doğalgaz',
     ];
+
+    /**
+     * @return bool|null
+     */
+    public function getTrtPayiAttribute($value) : ?bool
+    {
+        if (is_null($value)) {
+            return null;
+        }
+
+        return $value > 0;
+    }
 
     public function mukellef()
     {

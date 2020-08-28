@@ -45,7 +45,7 @@
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label>Abonelik Türü<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="tur">
+                                    <select id="tur" name="tur" class="form-control">
                                         <option value="">Seçin...</option>
                                         @foreach(\App\Models\Abone::TUR_LIST as $slug => $title)
                                             <option
@@ -101,6 +101,30 @@
                                 <div class="form-group">
                                     <label>Sayaç No<span class="text-danger">*</span></label>
                                     <input class="form-control" name="sayac_no" value="{{ old('sayac_no', $abone->sayac_no) }}" type="number">
+                                </div>
+                            </div>
+                            <div id="trtPayiContainer" class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Trt Payı Uygulanacak<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="trt_payi" id="trt_payi">
+                                        <option value="">Seçin</option>
+                                        <option
+                                            value="1"
+                                            @if (old("trt_payi", $abone->trt_payi) == '1')
+                                            selected
+                                            @endif
+                                        >
+                                            Evet
+                                        </option>
+                                        <option
+                                            value="0"
+                                            @if (old("trt_payi", $abone->trt_payi) == '0')
+                                            selected
+                                            @endif
+                                        >
+                                            Hayır
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -247,6 +271,18 @@
                     })
                     .trigger('change')
                     .select2();
+
+                $('#tur').on('change', function(){
+
+                    if ( $(this).children('option:selected').val() === "{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}" )
+                    {
+                        $('#trtPayiContainer').show(250);
+                    }
+                    else {
+                        $('#trtPayiContainer').hide(250);
+                    }
+                })
+                .trigger('change');
 
                 function fillContactInfo(mukellefId) {
                     var url = '{{ route('mukellef.detay', ['id' => ':id']) }}';

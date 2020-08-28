@@ -21,22 +21,22 @@ use Throwable;
 class ElektrikFaturasiService extends AbstractFatura
 {
     /**
-     * @param FaturaInterface $faturaTaslagi
+     * @param FaturaInterface $fatura
      * @param int[] $selectedEkKalemler
      * @return Invoice
      * @throws Throwable
      */
-    protected function getInvoice(FaturaInterface $faturaTaslagi, array $selectedEkKalemler)
+    protected function getInvoice(FaturaInterface $fatura, array $selectedEkKalemler)
     {
         $values = [
             'tuketim'   =>
-                $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON} - $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
+                $fatura->{Fatura::COLUMN_ENDEKS_SON} - $fatura->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
             'bedel'     => [
-                'elektrikTuketim'   => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                'elektrikTuketim'   => $fatura->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
             ]
         ];
 
-        $invoiceKalemElektrikTuketim        = $this->getElektrikTuketim($values);
+        $invoiceKalemElektrikTuketim        = $this->getElektrikTuketim($fatura, $values);
         $invoiceEkKalemler                   = $this->getEkKalemler(
                                                 $values['tuketim'],
                                                 Abone::COLUMN_TUR_ELEKTRIK,
@@ -48,17 +48,18 @@ class ElektrikFaturasiService extends AbstractFatura
         // Invoice Lines
         $invoiceLines = new InvoiceLines($invoiceKalemler);
 
-        $invoice = parent::createInvoice($faturaTaslagi, $invoiceLines);
+        $invoice = parent::createInvoice($fatura, $invoiceLines);
 
         return $invoice;
     }
 
     /**
+     * @param FaturaInterface $fatura
      * @param $values
      * @return InvoiceLine
      * @throws Throwable
      */
-    protected function getElektrikTuketim($values)
+    protected function getElektrikTuketim(FaturaInterface $fatura, $values)
     {
         // Elektrik Tüketim Bedeli
         $invoiceLineElektrikTuketim = new InvoiceLine();
@@ -95,11 +96,18 @@ class ElektrikFaturasiService extends AbstractFatura
             ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
             ->setTaxName('KDV');
 
-        $elektrikTuketimTaxes = new LineTaxes([
-            $taxTrt,
+        $lineTaxes  = [];
+
+        if ($fatura->abone->{Abone::COLUMN_TRT_PAYI}) {
+            $lineTaxes[] = $taxTrt;
+        }
+
+        $lineTaxes  = array_merge($lineTaxes, [
             $taxEnergy,
             $taxKdv,
         ]);
+
+        $elektrikTuketimTaxes = new LineTaxes($lineTaxes);
 
         $invoiceLineElektrikTuketim->setLineTaxes($elektrikTuketimTaxes);
 
