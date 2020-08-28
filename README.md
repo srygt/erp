@@ -18,3 +18,8 @@
 *   `php artisan import:ht-mukellefler <filePath> --delimiter[=DELIMITER] --headerOffset[=HEADEROFFSET]`
 *   `php artisan import:ht-mukellefler "/var/www/file.csv"`
 *   `php artisan import:ht-mukellefler "/var/www/file.csv" --delimiter=";" --headerOffset=5`
+
+# OSB Elektrik Aboneleri CSV Import
+*   `php artisan import:osb-elektrik-aboneler <filePath> --delimiter[=DELIMITER] --headerOffset[=HEADEROFFSET]`
+*   `php artisan import:osb-elektrik-aboneler "/var/www/file.csv"`
+*   `php artisan import:osb-elektrik-aboneler "/var/www/file.csv" --delimiter=";" --headerOffset=5`
