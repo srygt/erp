@@ -25,29 +25,50 @@ class AyarGuncelleRequest extends FormRequest
     public function rules()
     {
         $rules  = [
-            'birim_fiyat'   => 'required|numeric|min:0.000001',
-            'son_odeme_gun' => 'required|digits_between:1,29',
+            'banka_hesap_adi'   => 'required',
+            'iban'              => 'required',
+            'birim_fiyat'       => 'required|numeric|min:0.000001',
+            'son_odeme_gun'     => 'required|digits_between:1,29',
+            'fatura_aciklama'   => 'nullable'
         ];
 
         return [
+            Ayar::FIELD_ELEKTRIK_BANKA_HESAP_ADI        => $rules['banka_hesap_adi'],
+            Ayar::FIELD_ELEKTRIK_BANKA_IBAN             => $rules['iban'],
             Ayar::FIELD_ELEKTRIK_SON_ODEME_GUN          => $rules['son_odeme_gun'],
             Ayar::FIELD_ELEKTRIK_TUKETIM_BIRIM_FIYAT    => $rules['birim_fiyat'],
+            Ayar::FIELD_ELEKTRIK_FATURA_ACIKLAMA        => $rules['fatura_aciklama'],
+            Ayar::FIELD_SU_BANKA_HESAP_ADI              => $rules['banka_hesap_adi'],
+            Ayar::FIELD_SU_BANKA_IBAN                   => $rules['iban'],
             Ayar::FIELD_SU_SON_ODEME_GUN                => $rules['son_odeme_gun'],
             Ayar::FIELD_SU_TUKETIM_BIRIM_FIYAT          => $rules['birim_fiyat'],
+            Ayar::FIELD_SU_FATURA_ACIKLAMA              => $rules['fatura_aciklama'],
+            Ayar::FIELD_DOGALGAZ_BANKA_HESAP_ADI        => $rules['banka_hesap_adi'],
+            Ayar::FIELD_DOGALGAZ_BANKA_IBAN             => $rules['iban'],
             Ayar::FIELD_DOGALGAZ_SON_ODEME_GUN          => $rules['son_odeme_gun'],
             Ayar::FIELD_DOGALGAZ_TUKETIM_BIRIM_FIYAT    => $rules['birim_fiyat'],
+            Ayar::FIELD_DOGALGAZ_FATURA_ACIKLAMA        => $rules['fatura_aciklama'],
         ];
     }
 
     public function attributes()
     {
         return [
+            Ayar::FIELD_ELEKTRIK_BANKA_HESAP_ADI        => 'Elektrik Faturası Banka Hesap Adı',
+            Ayar::FIELD_ELEKTRIK_BANKA_IBAN             => 'Elektrik Faturası Banka IBAN',
             Ayar::FIELD_ELEKTRIK_SON_ODEME_GUN          => 'Elektrik Faturası Son Ödeme Günü',
             Ayar::FIELD_ELEKTRIK_TUKETIM_BIRIM_FIYAT    => 'Elektrik Faturası Birim Tüketim Fiyatı',
+            Ayar::FIELD_ELEKTRIK_FATURA_ACIKLAMA        => 'Elektrik Faturası Açıklama',
+            Ayar::FIELD_SU_BANKA_HESAP_ADI              => 'Su Faturası Banka Hesap Adı',
+            Ayar::FIELD_SU_BANKA_IBAN                   => 'Su Faturası Banka IBAN',
             Ayar::FIELD_SU_SON_ODEME_GUN                => 'Su Faturası Son Ödeme Günü',
             Ayar::FIELD_SU_TUKETIM_BIRIM_FIYAT          => 'Su Faturası Birim Tüketim Fiyatı',
+            Ayar::FIELD_SU_FATURA_ACIKLAMA              => 'Su Faturası Açıklama',
+            Ayar::FIELD_DOGALGAZ_BANKA_HESAP_ADI        => 'Doğalgaz Faturası Banka Hesap Adı',
+            Ayar::FIELD_DOGALGAZ_BANKA_IBAN             => 'Doğalgaz Faturası Banka IBAN',
             Ayar::FIELD_DOGALGAZ_SON_ODEME_GUN          => 'Doğalgaz Faturası Son Ödeme Günü',
             Ayar::FIELD_DOGALGAZ_TUKETIM_BIRIM_FIYAT    => 'Doğalgaz Faturası Birim Tüketim Fiyatı',
+            Ayar::FIELD_DOGALGAZ_FATURA_ACIKLAMA        => 'Doğalgaz Faturası Açıklama',
         ];
     }
 
@@ -55,16 +76,25 @@ class AyarGuncelleRequest extends FormRequest
     {
         $this->merge([
             'elektrik'  => [
+                'banka_hesap_adi'                   => $this->elektrik['banka_hesap_adi'],
+                'banka_iban'                        => $this->elektrik['banka_iban'],
                 'son_odeme_gun'                     => $this->elektrik['son_odeme_gun'],
                 'tuketim_birim_fiyat'               => $this->convertPointsToDots('elektrik', 'tuketim_birim_fiyat'),
+                'fatura_aciklama'                   => $this->elektrik['fatura_aciklama'],
             ],
             'su' => [
+                'banka_hesap_adi'                   => $this->su['banka_hesap_adi'],
+                'banka_iban'                        => $this->su['banka_iban'],
                 'son_odeme_gun'                     => $this->su['son_odeme_gun'],
                 'tuketim_birim_fiyat'               => $this->convertPointsToDots('su', 'tuketim_birim_fiyat'),
+                'fatura_aciklama'                   => $this->su['fatura_aciklama'],
             ],
             'dogalgaz' => [
+                'banka_hesap_adi'                   => $this->dogalgaz['banka_hesap_adi'],
+                'banka_iban'                        => $this->dogalgaz['banka_iban'],
                 'son_odeme_gun'                     => $this->dogalgaz['son_odeme_gun'],
                 'tuketim_birim_fiyat'               => $this->convertPointsToDots('dogalgaz', 'tuketim_birim_fiyat'),
+                'fatura_aciklama'                   => $this->dogalgaz['fatura_aciklama'],
             ]
         ]);
     }

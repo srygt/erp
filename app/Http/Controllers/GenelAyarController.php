@@ -13,16 +13,7 @@ class GenelAyarController extends Controller
     }
     public function update(AyarGuncelleRequest $request)
     {
-        $payload = $request->only([
-            'elektrik.son_odeme_gun',
-            'elektrik.tuketim_birim_fiyat',
-            'elektrik.dagitim_birim_fiyat',
-            'elektrik.sistem_birim_fiyat',
-            'su.son_odeme_gun',
-            'su.tuketim_birim_fiyat',
-            'dogalgaz.son_odeme_gun',
-            'dogalgaz.tuketim_birim_fiyat',
-        ]);
+        $payload = $request->only(Ayar::LIST_FIELDS);
 
         foreach ($payload as $fatura => $fields) {
             foreach ($fields as $name => $value) {

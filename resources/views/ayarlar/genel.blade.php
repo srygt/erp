@@ -70,6 +70,32 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
+                                                <label>Banka Hesap Adı<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="elektrik[banka_hesap_adi]"
+                                                        value="{{ old("elektrik.banka_hesap_adi", $ayarlar['elektrik.banka_hesap_adi'] ?? '') }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>IBAN<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="elektrik[banka_iban]"
+                                                        value="{{ old("elektrik.banka_iban", $ayarlar['elektrik.banka_iban'] ?? '') }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
                                                 <label>Varsayılan Son Ödeme Günü<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <input
@@ -97,10 +123,45 @@
                                                 >
                                             </div>
                                         </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Varsayılan Fatura Açıklaması<span class="text-danger">*</span></label>
+                                                <textarea
+                                                    class="form-control"
+                                                    name="elektrik[fatura_aciklama]"
+                                                >{{ old("elektrik.fatura_aciklama", $ayarlar['elektrik.fatura_aciklama'] ?? '') }}</textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="v-pills-su" role="tabpanel" aria-labelledby="v-pills-su-tab">
                                     <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Banka Hesap Adı<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="su[banka_hesap_adi]"
+                                                        value="{{ old("su.banka_hesap_adi", $ayarlar['su.banka_hesap_adi'] ?? '') }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>IBAN<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="su[banka_iban]"
+                                                        value="{{ old("su.banka_iban", $ayarlar['su.banka_iban'] ?? '') }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Varsayılan Son Ödeme Günü<span class="text-danger">*</span></label>
@@ -130,10 +191,45 @@
                                                 >
                                             </div>
                                         </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Varsayılan Fatura Açıklaması<span class="text-danger">*</span></label>
+                                                <textarea
+                                                    class="form-control"
+                                                    name="su[fatura_aciklama]"
+                                                >{{ old("su.fatura_aciklama", $ayarlar['su.fatura_aciklama'] ?? '') }}</textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="v-pills-dogalgaz" role="tabpanel" aria-labelledby="v-pills-dogalgaz-tab">
                                     <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Banka Hesap Adı<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="dogalgaz[banka_hesap_adi]"
+                                                        value="{{ old("dogalgaz.banka_hesap_adi", $ayarlar['dogalgaz.banka_hesap_adi'] ?? '') }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>IBAN<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="dogalgaz[banka_iban]"
+                                                        value="{{ old("dogalgaz.banka_iban", $ayarlar['dogalgaz.banka_iban'] ?? '') }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Varsayılan Son Ödeme Günü<span class="text-danger">*</span></label>
@@ -161,6 +257,15 @@
                                                     min="0.000000"
                                                     step="0.000001"
                                                 >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Varsayılan Fatura Açıklaması<span class="text-danger">*</span></label>
+                                                <textarea
+                                                    class="form-control"
+                                                    name="dogalgaz[fatura_aciklama]"
+                                                >{{ old("dogalgaz.fatura_aciklama", $ayarlar['dogalgaz.fatura_aciklama'] ?? '') }}</textarea>
                                             </div>
                                         </div>
                                     </div>

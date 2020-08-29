@@ -127,7 +127,13 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
                                 <label>Fatura Açıklaması</label>
-                                <textarea rows="4" type="text" class="form-control" name="not"></textarea>
+                                <textarea
+                                    id="faturaAciklama"
+                                    name="not"
+                                    type="text"
+                                    rows="4"
+                                    class="form-control"
+                                ></textarea>
                             </div>
                         </div>
                         <div class="border bg-info col-md-12 mb-3"></div>
@@ -246,6 +252,8 @@
 
                     let son_odeme_baslik    = tur + '.son_odeme_gun'
                     $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
+
+                    $('#faturaAciklama').val( ayarlar[tur + '.fatura_aciklama'] );
                 }
             );
         }
