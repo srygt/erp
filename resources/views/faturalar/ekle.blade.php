@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label>Son Endeks<span class="text-danger">*</span></label>
+                                        <label><span id="sonEndeksLabel">Toplam Tüketim</span><span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="son_endeks" value="{{old("son_endeks")}}" min="0.000000" step="0.001">
                                     </div>
                                 </div>
@@ -267,9 +267,11 @@
                     if (tur === "{{ \App\Models\Abone::COLUMN_TUR_SU }}")
                     {
                         $('#ilkEndeksContainer').show(250);
+                        $('#sonEndeksLabel').html('Son Endeks');
                     }
                     else {
                         $('#ilkEndeksContainer').hide(250);
+                        $('#sonEndeksLabel').html('Toplam Tüketim');
                     }
 
                     $('.ekKalemList').hide();
