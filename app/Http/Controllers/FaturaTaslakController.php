@@ -29,7 +29,7 @@ class FaturaTaslakController extends Controller
                         ->groupBy(AyarEkKalem::COLUMN_TUR);
 
         $ayarlar    = Ayar::allFormatted();
-        $aboneler   = Abone::with('mukellef')->get();
+        $aboneler   = Abone::whereNotNull(Abone::COLUMN_SAYAC_NO)->with('mukellef')->get();
 
 
         return view(
