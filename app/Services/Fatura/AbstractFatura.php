@@ -153,16 +153,25 @@ abstract class AbstractFatura
      */
     protected function getCustomerIdentificationOthers(Abone $abone): array
     {
-        return [
-            new CustomerIdentificationOther(
-                new CustomerIdentificationSchemeId('ABONENO'),
-                $abone->{Abone::COLUMN_ABONE_NO}
-            ),
-            new CustomerIdentificationOther(
-                new CustomerIdentificationSchemeId('SAYACNO'),
-                $abone->{Abone::COLUMN_SAYAC_NO}
-            )
-        ];
+        $identifications = [];
+
+        if ($abone->{Abone::COLUMN_ABONE_NO})
+        {
+            $identifications[]  = new CustomerIdentificationOther(
+                    new CustomerIdentificationSchemeId('ABONENO'),
+                    $abone->{Abone::COLUMN_ABONE_NO}
+                );
+        }
+
+        if ($abone->{Abone::COLUMN_SAYAC_NO})
+        {
+            $identifications[]  = new CustomerIdentificationOther(
+                    new CustomerIdentificationSchemeId('SAYACNO'),
+                    $abone->{Abone::COLUMN_SAYAC_NO}
+                );
+        }
+
+        return $identifications;
     }
 
     /**
