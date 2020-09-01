@@ -82,4 +82,17 @@ class Utils
             config('fatura.aboneNoPadDirection')
         );
     }
+
+    /**
+     * @param string|null $value
+     * @return string|null
+     */
+    static public function getFloatValue(?string $value) : ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        return preg_replace('~[^0-9.]~', '', $value);
+    }
 }

@@ -9,7 +9,7 @@
 @append
 
 @section('content')
-    <form action="{{ route("faturataslak.ekle.post") }}" method="post">
+    <form id="mainForm" action="{{ route("faturataslak.ekle.post") }}" method="post">
         @csrf
         <input type="hidden" id="tur" name="tur" value="">
         <div class="col-lg-8 col-md-12">
@@ -75,15 +75,13 @@
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group">
-                                <label>Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
+                                <label>Birim Tüketim Fiyatı{{ old("birim_fiyat") }}<span class="text-danger">*</span></label>
                                 <input
                                     id="birim_fiyat"
                                     name="birim_fiyat"
-                                    value="{{old("birim_fiyat")}}"
-                                    min="0.000000"
-                                    step="0.000001"
-                                    type="number"
-                                    class="form-control"
+                                    value="{{ old("birim_fiyat") }}"
+                                    type="text"
+                                    class="ucret form-control"
                                 >
                             </div>
                         </div>
@@ -174,12 +172,10 @@
                                                 <td>
                                                     @if ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
                                                         <input
-                                                            type="number"
-                                                            class="form-control"
+                                                            type="text"
+                                                            class="ucret form-control"
                                                             name="ek_kalemler[{{ $tur }}][{{ $key }}][deger]"
                                                             value="{{ old('ek_kalemler[' . $tur . '][' . $key . '][deger]') }}"
-                                                            min="0"
-                                                            step="0.01"
                                                         >
                                                     @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_ORAN)
                                                         {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
@@ -206,6 +202,7 @@
 
 @section('page-script')
     <script src="{{ asset('assets/bundles/c3.bundle.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-turk-lirasi-maskesi/jquery.turkLirasi.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
@@ -248,7 +245,7 @@
                     }
 
                     let birim_fiyat_baslik  = tur + '.tuketim_birim_fiyat';
-                    $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
+                    $('#birim_fiyat').trigger( 'setAgain', [ayarlar[birim_fiyat_baslik]] );
 
                     let son_odeme_baslik    = tur + '.son_odeme_gun'
                     $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
@@ -264,6 +261,19 @@
                 format: 'dd.mm.yyyy',
                 language: 'tr'
             });
+
+            $('#mainForm').on('submit', function(){
+                $('.ucret')
+                    .each(function(){
+                        $(this).val($(this).val().replace(/[^0-9,]/g, '').replace(',', '.'));
+                    });
+            });
+
+            $('.ucret')
+                .turkLirasi({
+                    maxDecimalCount: 6,
+                })
+                .trigger('keydown');
 
             $('#abone_id')
                 .on('change', function(){

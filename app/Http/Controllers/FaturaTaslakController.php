@@ -90,6 +90,8 @@ class FaturaTaslakController extends Controller
         return view(
             'faturalar.taslak',
             [
+                'taslakUuid'    => null,
+                'ekKalemTurleri'=> [],
                 'error'         => $e->getMessage(),
             ]
         );

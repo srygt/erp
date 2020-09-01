@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Utils;
 use App\Models\Ayar;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -101,6 +102,6 @@ class AyarGuncelleRequest extends FormRequest
 
     protected function convertPointsToDots($tabName, $fieldName)
     {
-        return str_replace(',', '.', $this->{$tabName}[$fieldName]);
+        return Utils::getFloatValue($this->{$tabName}[$fieldName]);
     }
 }

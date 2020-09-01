@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('title', 'Ayarlar')
 @section('content')
-    <form action="{{route("ayar.genel.update")}}" method="post">
+    <form id="mainForm" action="{{route("ayar.genel.update")}}" method="post">
         @csrf
         <div class="col-lg-8 col-md-12">
             <div class="card">
@@ -114,12 +114,10 @@
                                             <div class="form-group">
                                                 <label>Varsayılan Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
                                                 <input
-                                                    type="number"
-                                                    class="form-control"
+                                                    type="text"
+                                                    class="ucret form-control"
                                                     name="elektrik[tuketim_birim_fiyat]"
                                                     value="{{ old("elektrik.tuketim_birim_fiyat", $ayarlar['elektrik.tuketim_birim_fiyat'] ?? '') }}"
-                                                    min="0.000000"
-                                                    step="0.000001"
                                                 >
                                             </div>
                                         </div>
@@ -182,12 +180,10 @@
                                             <div class="form-group">
                                                 <label>Varsayılan Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
                                                 <input
-                                                    type="number"
-                                                    class="form-control"
+                                                    type="text"
+                                                    class="ucret form-control"
                                                     name="su[tuketim_birim_fiyat]"
                                                     value="{{ old("su.tuketim_birim_fiyat", $ayarlar['su.tuketim_birim_fiyat'] ?? '') }}"
-                                                    min="0.000000"
-                                                    step="0.000001"
                                                 >
                                             </div>
                                         </div>
@@ -250,12 +246,10 @@
                                             <div class="form-group">
                                                 <label>Varsayılan Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
                                                 <input
-                                                    type="number"
-                                                    class="form-control"
+                                                    type="text"
+                                                    class="ucret form-control"
                                                     name="dogalgaz[tuketim_birim_fiyat]"
                                                     value="{{ old("dogalgaz.tuketim_birim_fiyat", $ayarlar['dogalgaz.tuketim_birim_fiyat'] ?? '') }}"
-                                                    min="0.000000"
-                                                    step="0.000001"
                                                 >
                                             </div>
                                         </div>
@@ -292,6 +286,7 @@
 
 @section('page-script')
     <script src="{{ asset('assets/bundles/c3.bundle.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-turk-lirasi-maskesi/jquery.turkLirasi.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js') }}"></script>
     <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
@@ -305,6 +300,19 @@
                 format: 'dd.mm.yyyy',
                 language: 'tr'
             });
+
+            $('#mainForm').on('submit', function(){
+                $('.ucret')
+                    .each(function(){
+                        $(this).val($(this).val().replace(/[^0-9,]/g, '').replace(',', '.'));
+                    });
+            });
+
+            $('.ucret')
+                .turkLirasi({
+                    maxDecimalCount: 6,
+                })
+                .trigger('keydown');
 
         });
     </script>

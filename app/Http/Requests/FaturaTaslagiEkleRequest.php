@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Utils;
 use App\Models\Abone;
 use App\Models\AyarEkKalem;
 use App\Models\Fatura;
@@ -50,8 +51,8 @@ class FaturaTaslagiEkleRequest extends FormRequest
             'tur'                                   => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
             Fatura::COLUMN_BIRIM_FIYAT_TUKETIM      => 'required|numeric',
             Fatura::COLUMN_SON_ODEME_TARIHI         => 'required|date_format:d.m.Y',
-            Fatura::COLUMN_ENDEKS_ILK               => 'required_if:tur,' . Abone::COLUMN_TUR_SU . '|numeric',
-            Fatura::COLUMN_ENDEKS_SON               => 'required|numeric|gte:' . Fatura::COLUMN_ENDEKS_ILK,
+            Fatura::COLUMN_ENDEKS_ILK               => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_SU . '|numeric|min:0|lte:' . Fatura::COLUMN_ENDEKS_SON,
+            Fatura::COLUMN_ENDEKS_SON               => 'required|numeric|min:0',
             Fatura::COLUMN_NOT                      => 'nullable',
             'ek_kalemler'                           => 'required|array',
             'ek_kalemler.' . $tur                   => 'nullable|array',
@@ -73,7 +74,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_BIRIM_FIYAT_TUKETIM      => 'Birim Tüketim Fiyatı',
             Fatura::COLUMN_SON_ODEME_TARIHI         => 'Son Ödeme Tarihi',
             Fatura::COLUMN_ENDEKS_ILK               => 'İlk Endeks',
-            Fatura::COLUMN_ENDEKS_SON               => 'Son Endeks',
+            Fatura::COLUMN_ENDEKS_SON               => '(Son Endeks / Toplam Tüketim)',
             Fatura::COLUMN_NOT                      => 'Fatura Açıklaması',
             'ek_kalemler'                           => 'Ek Kalem Türleri',
             'ek_kalemler.' . $tur                   => 'Ek Kalemler',
@@ -86,13 +87,14 @@ class FaturaTaslagiEkleRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $payload = [
-            Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => str_replace(',', '.', $this->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM}),
-            Fatura::COLUMN_ENDEKS_ILK           => str_replace(',', '.', $this->{Fatura::COLUMN_ENDEKS_ILK ?? null}),
-            Fatura::COLUMN_ENDEKS_SON           => str_replace(',', '.', $this->{Fatura::COLUMN_ENDEKS_SON}),
-        ];
+        $payload = [];
 
-        $payload['ek_kalemler']             = $this->convertPointsToDots();
+        $payload[Fatura::COLUMN_BIRIM_FIYAT_TUKETIM]    = Utils::getFloatValue($this->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM} ?? null);
+        $payload[Fatura::COLUMN_ENDEKS_ILK]             = Utils::getFloatValue($this->{Fatura::COLUMN_ENDEKS_ILK} ?? null);
+        $payload[Fatura::COLUMN_ENDEKS_SON]             = Utils::getFloatValue($this->{Fatura::COLUMN_ENDEKS_SON} ?? null);
+
+
+        $payload['ek_kalemler']                         = $this->convertPointsToDots();
 
         $this->merge($payload);
     }
@@ -114,7 +116,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
                 }
 
                 if ($ek_kalem['deger'] ?? '') {
-                    $ek_kalem['deger']      = str_replace(',', '.', $ek_kalem['deger']);
+                    $ek_kalem['deger']      = Utils::getFloatValue($ek_kalem['deger']);
                 }
 
                 $ekKalemList[$tur][$key]    = $ek_kalem;

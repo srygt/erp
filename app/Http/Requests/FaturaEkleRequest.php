@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Utils;
 use App\Models\AyarEkKalem;
 use App\Models\Fatura;
 use App\Models\FaturaTaslagi;
@@ -76,7 +77,7 @@ class FaturaEkleRequest extends FormRequest
                 }
 
                 if ($ek_kalem['deger'] ?? '') {
-                    $ek_kalem['deger']      = str_replace(',', '.', $ek_kalem['deger']);
+                    $ek_kalem['deger']      = Utils::getFloatValue($ek_kalem['deger']);
                 }
 
                 $ekKalemList[$tur][$key]    = $ek_kalem;
