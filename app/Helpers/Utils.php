@@ -64,4 +64,22 @@ class Utils
         return config('fatura.faturaNoPrefix') . date('Y')
             . str_pad($id, $padLength, $padString, STR_PAD_LEFT);
     }
+
+    /**
+     * @param string|null $aboneNo
+     * @return string|null
+     */
+    static public function getFormattedAboneNo(?string $aboneNo) : ?string
+    {
+        if (!$aboneNo) {
+            return null;
+        }
+
+        return str_pad(
+            $aboneNo,
+            config('fatura.aboneNoPadLength'),
+            config('fatura.aboneNoPadString'),
+            config('fatura.aboneNoPadDirection')
+        );
+    }
 }

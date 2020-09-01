@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Utils;
 use App\Models\Abone;
 use App\Rules\UniqueWithAdditionalColumnsRule;
 use App\Rules\UrnRule;
@@ -92,6 +93,13 @@ class AboneEkleRequest extends FormRequest
     protected function prepareForValidation()
     {
         $parameters = [];
+
+        // abone no
+        // unique validatation rule'unun düzgün çalışması için
+        // eloquent mutators'dan önce str_pad() left yapmamız gerekiyor
+        if ( isset($this->{Abone::COLUMN_ABONE_NO}) ) {
+            $parameters[Abone::COLUMN_ABONE_NO] = Utils::getFormattedAboneNo($this->{Abone::COLUMN_ABONE_NO});
+        }
 
         // telefon
         if ( isset($this->telefon) ) {

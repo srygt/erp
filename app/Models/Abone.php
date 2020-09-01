@@ -92,16 +92,7 @@ class Abone extends Model
      */
     public function setAboneNoAttribute($value)
     {
-        if (!$value) {
-            return;
-        }
-
-        $this->attributes[self::COLUMN_ABONE_NO]    = str_pad(
-                                                        $value,
-                                                        config('fatura.aboneNoPadLength'),
-                                                        config('fatura.aboneNoPadString'),
-                                                        config('fatura.aboneNoPadDirection')
-                                                    );
+        $this->attributes[self::COLUMN_ABONE_NO]    = Utils::getFormattedAboneNo($value);
     }
 
     /**
