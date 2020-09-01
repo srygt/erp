@@ -40,8 +40,8 @@ class AboneController extends Controller
         ]);
 
         if ($request->id) {
-            Abone::where('id', $request->id)
-                ->update($payload);
+            $abone = Abone::where('id', $request->id)->first();
+            $abone->update($payload);
 
             return redirect()->back()->with('message', 'Başarıyla Güncellendi');
         }

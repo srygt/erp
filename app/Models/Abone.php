@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use App\Helpers\Utils;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -52,6 +55,57 @@ class Abone extends Model
     ];
 
     /**
+     * @return BelongsTo
+     */
+    public function mukellef()
+    {
+        return $this->belongsTo(Mukellef::class,'mukellef_id','id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function faturalar()
+    {
+        return $this->hasMany(Fatura::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function faturaTaslaklari()
+    {
+        return $this->hasMany(FaturaTaslagi::class);
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function getFormattedTelephone() : string
+    {
+        return Utils::getFormattedTelephoneNumber($this->{Mukellef::COLUMN_TELEFON});
+    }
+
+    /**
+     * @param $value
+     */
+    public function setAboneNoAttribute($value)
+    {
+        if (!$value) {
+            return;
+        }
+
+        $this->attributes[self::COLUMN_ABONE_NO]    = str_pad(
+                                                        $value,
+                                                        config('fatura.aboneNoPadLength'),
+                                                        config('fatura.aboneNoPadString'),
+                                                        config('fatura.aboneNoPadDirection')
+                                                    );
+    }
+
+    /**
+     * @param $value
      * @return bool|null
      */
     public function getTrtPayiAttribute($value) : ?bool
@@ -61,25 +115,5 @@ class Abone extends Model
         }
 
         return $value > 0;
-    }
-
-    public function mukellef()
-    {
-        return $this->belongsTo(Mukellef::class,'mukellef_id','id');
-    }
-
-    public function faturalar()
-    {
-        return $this->hasMany(Fatura::class);
-    }
-
-    public function faturaTaslaklari()
-    {
-        return $this->hasMany(FaturaTaslagi::class);
-    }
-
-    public function getFormattedTelephone() : string
-    {
-        return Utils::getFormattedTelephoneNumber($this->{Mukellef::COLUMN_TELEFON});
     }
 }
