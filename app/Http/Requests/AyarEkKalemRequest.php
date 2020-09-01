@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\Utils;
 use App\Models\Abone;
 use App\Models\AyarEkKalem;
 use Illuminate\Foundation\Http\FormRequest;
@@ -58,7 +59,7 @@ class AyarEkKalemRequest extends FormRequest
         }
         else{
             $data = [
-                AyarEkKalem::COLUMN_DEGER   => str_replace(',', '.', $this->{AyarEkKalem::COLUMN_DEGER}),
+                AyarEkKalem::COLUMN_DEGER   => Utils::getFloatValue($this->{AyarEkKalem::COLUMN_DEGER}),
             ];
         }
 
