@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('parentPageTitle', 'Fatura İşlemleri')
-@section('title', 'Su Faturası Ekle')
+@section('title', 'Fatura Ekle')
 
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}">
