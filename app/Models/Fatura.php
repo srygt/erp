@@ -18,16 +18,18 @@ class Fatura extends Model implements FaturaInterface
         self::COLUMN_DURUM,
         self::COLUMN_TUR,
         self::COLUMN_INVOICE_ID,
-        self::COLUMN_BIRIM_FIYAT_TUKETIM,
+        self::COLUMN_FATURA_TARIH,
         self::COLUMN_SON_ODEME_TARIHI,
         self::COLUMN_ENDEKS_ILK,
         self::COLUMN_ENDEKS_SON,
+        self::COLUMN_BIRIM_FIYAT_TUKETIM,
         self::COLUMN_NOT,
         self::COLUMN_TOPLAM_ODENECEK_UCRET,
         self::COLUMN_ABONE_ID,
     ];
 
     protected $casts = [
+        self::COLUMN_FATURA_TARIH       => 'datetime',
         self::COLUMN_SON_ODEME_TARIHI   => 'date',
     ];
 
@@ -40,10 +42,11 @@ class Fatura extends Model implements FaturaInterface
     const COLUMN_DURUM_BASARILI         = 'basarili';
     const COLUMN_INVOICE_ID             = 'fatura_no';
     const COLUMN_TUR                    = 'tur';
-    const COLUMN_BIRIM_FIYAT_TUKETIM    = 'birim_fiyat';
+    const COLUMN_FATURA_TARIH           = 'fatura_tarih';
     const COLUMN_SON_ODEME_TARIHI       = 'son_odeme_tarihi';
     const COLUMN_ENDEKS_ILK             = 'ilk_endeks';
     const COLUMN_ENDEKS_SON             = 'son_endeks';
+    const COLUMN_BIRIM_FIYAT_TUKETIM    = 'birim_fiyat';
     const COLUMN_NOT                    = 'not';
     const COLUMN_TOPLAM_ODENECEK_UCRET  = 'toplam_odenecek_ucret';
     const COLUMN_ABONE_ID               = 'abone_id';

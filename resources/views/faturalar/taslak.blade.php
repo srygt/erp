@@ -93,7 +93,8 @@
 @section('page-script')
     <script>
         $(function () {
-            $('.page-loader-wrapper').css('display', 'none');
+            $('#main-menu > li:not(.active) > ul').css('display', 'none');
+            $('.page-loader-wrapper').fadeOut();
         });
     </script>
 @stop

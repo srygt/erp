@@ -26,16 +26,18 @@ class FaturaTaslagi extends Model implements FaturaInterface
         Fatura::COLUMN_UUID,
         Fatura::COLUMN_INVOICE_ID,
         Fatura::COLUMN_TUR,
-        Fatura::COLUMN_BIRIM_FIYAT_TUKETIM,
+        Fatura::COLUMN_FATURA_TARIH,
         Fatura::COLUMN_SON_ODEME_TARIHI,
         Fatura::COLUMN_ENDEKS_ILK,
         Fatura::COLUMN_ENDEKS_SON,
+        Fatura::COLUMN_BIRIM_FIYAT_TUKETIM,
         Fatura::COLUMN_TOPLAM_ODENECEK_UCRET,
         Fatura::COLUMN_NOT,
     ];
 
     protected $casts = [
-        Fatura::COLUMN_SON_ODEME_TARIHI   => 'date',
+        Fatura::COLUMN_FATURA_TARIH         => 'datetime',
+        Fatura::COLUMN_SON_ODEME_TARIHI     => 'date',
     ];
 
     public function fatura()
@@ -54,10 +56,11 @@ class FaturaTaslagi extends Model implements FaturaInterface
             ->create([
                 Fatura::COLUMN_UUID                 => $this->{Fatura::COLUMN_UUID},
                 Fatura::COLUMN_INVOICE_ID           => $this->{Fatura::COLUMN_INVOICE_ID},
-                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $this->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_FATURA_TARIH         => $this->{Fatura::COLUMN_FATURA_TARIH},
                 Fatura::COLUMN_SON_ODEME_TARIHI     => $this->{Fatura::COLUMN_SON_ODEME_TARIHI},
                 Fatura::COLUMN_ENDEKS_ILK           => $this->{Fatura::COLUMN_ENDEKS_ILK},
                 Fatura::COLUMN_ENDEKS_SON           => $this->{Fatura::COLUMN_ENDEKS_SON},
+                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $this->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
                 Fatura::COLUMN_NOT                  => $this->{Fatura::COLUMN_NOT},
                 Fatura::COLUMN_ABONE_ID             => $this->{Fatura::COLUMN_ABONE_ID},
             ]);

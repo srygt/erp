@@ -21,10 +21,11 @@ class CreateFaturalarTable extends Migration
             $table->enum(Fatura::COLUMN_DURUM, Fatura::LIST_DURUM)->index();
             $table->string(Fatura::COLUMN_INVOICE_ID, 100)->index();
             $table->enum(Fatura::COLUMN_TUR, array_keys(Abone::TUR_LIST))->index();
-            $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM, 12, 9)->unsigned();
+            $table->dateTime(Fatura::COLUMN_FATURA_TARIH)->index();
             $table->date(Fatura::COLUMN_SON_ODEME_TARIHI)->index();
             $table->string(Fatura::COLUMN_ENDEKS_ILK);
             $table->string(Fatura::COLUMN_ENDEKS_SON);
+            $table->decimal(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM, 12, 9)->unsigned();
             $table->text(Fatura::COLUMN_NOT)->nullable();
             $table->integer(Fatura::COLUMN_APP_TYPE)->nullable()->index();
             $table->decimal(Fatura::COLUMN_TOPLAM_ODENECEK_UCRET, 12, 2)
