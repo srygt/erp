@@ -2,7 +2,6 @@
 
 use App\Models\Ayar;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class AyarSeeder extends Seeder
 {
@@ -33,11 +32,13 @@ class AyarSeeder extends Seeder
 
         $data = collect($data)->map(function($value, $key){
             return [
-                Ayar::COLUMN_BASLIK     => $key,
-                Ayar::COLUMN_DEGER      => $value,
+                'attributes'    => [Ayar::COLUMN_BASLIK     => $key],
+                'values'        => [Ayar::COLUMN_DEGER      => $value],
             ];
         })->sort();
 
-        DB::table((new Ayar)->getTable())->insert($data->toArray());
+        $data->each(function($item){
+            Ayar::updateOrCreate($item['attributes'], $item['values']);
+        });
     }
 }
