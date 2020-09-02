@@ -79,4 +79,25 @@ class SuFaturasiService extends AbstractFatura
 
         return $invoiceLine;
     }
+
+    /**
+     * @param FaturaInterface $fatura
+     * @return string
+     */
+    protected function getAboneAndSayacNotes(FaturaInterface $fatura) : string
+    {
+        $note = '';
+
+        if ($fatura->abone->{Abone::COLUMN_ABONE_NO})
+        {
+            $note   .= 'Abone No: ' . $fatura->abone->{Abone::COLUMN_ABONE_NO} . "\n";
+        }
+
+        if ($fatura->abone->{Abone::COLUMN_SAYAC_NO} )
+        {
+            $note   .= 'Sayaç No: ' . $fatura->abone->{Abone::COLUMN_SAYAC_NO} . "\n";
+        }
+
+        return $note;
+    }
 }

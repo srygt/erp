@@ -16,7 +16,7 @@ class CreateAyarlarTable extends Migration
     {
         Schema::create('ayarlar', function (Blueprint $table) {
             $table->string(Ayar::COLUMN_BASLIK, 100)->unique();
-            $table->text(Ayar::COLUMN_DEGER);
+            $table->text(Ayar::COLUMN_DEGER)->nullable();
         });
     }
 

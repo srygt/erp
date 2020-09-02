@@ -77,31 +77,35 @@ class AyarGuncelleRequest extends FormRequest
     {
         $this->merge([
             'elektrik'  => [
-                'banka_hesap_adi'                   => $this->elektrik['banka_hesap_adi'],
-                'banka_iban'                        => $this->elektrik['banka_iban'],
-                'son_odeme_gun'                     => $this->elektrik['son_odeme_gun'],
-                'tuketim_birim_fiyat'               => $this->convertPointsToDots('elektrik', 'tuketim_birim_fiyat'),
-                'fatura_aciklama'                   => $this->elektrik['fatura_aciklama'],
+                'banka_hesap_adi'                   => $this->elektrik['banka_hesap_adi'] ?? null,
+                'banka_iban'                        => $this->elektrik['banka_iban'] ?? null,
+                'son_odeme_gun'                     => $this->elektrik['son_odeme_gun'] ?? null,
+                'tuketim_birim_fiyat'               => $this->convertPointsToDots('elektrik', 'tuketim_birim_fiyat') ?? null,
+                'fatura_aciklama'                   => $this->elektrik['fatura_aciklama'] ?? null,
             ],
             'su' => [
-                'banka_hesap_adi'                   => $this->su['banka_hesap_adi'],
-                'banka_iban'                        => $this->su['banka_iban'],
-                'son_odeme_gun'                     => $this->su['son_odeme_gun'],
-                'tuketim_birim_fiyat'               => $this->convertPointsToDots('su', 'tuketim_birim_fiyat'),
-                'fatura_aciklama'                   => $this->su['fatura_aciklama'],
+                'banka_hesap_adi'                   => $this->su['banka_hesap_adi'] ?? null,
+                'banka_iban'                        => $this->su['banka_iban'] ?? null,
+                'son_odeme_gun'                     => $this->su['son_odeme_gun'] ?? null,
+                'tuketim_birim_fiyat'               => $this->convertPointsToDots('su', 'tuketim_birim_fiyat') ?? null,
+                'fatura_aciklama'                   => $this->su['fatura_aciklama'] ?? null,
             ],
             'dogalgaz' => [
-                'banka_hesap_adi'                   => $this->dogalgaz['banka_hesap_adi'],
-                'banka_iban'                        => $this->dogalgaz['banka_iban'],
-                'son_odeme_gun'                     => $this->dogalgaz['son_odeme_gun'],
-                'tuketim_birim_fiyat'               => $this->convertPointsToDots('dogalgaz', 'tuketim_birim_fiyat'),
-                'fatura_aciklama'                   => $this->dogalgaz['fatura_aciklama'],
+                'banka_hesap_adi'                   => $this->dogalgaz['banka_hesap_adi'] ?? null,
+                'banka_iban'                        => $this->dogalgaz['banka_iban'] ?? null,
+                'son_odeme_gun'                     => $this->dogalgaz['son_odeme_gun'] ?? null,
+                'tuketim_birim_fiyat'               => $this->convertPointsToDots('dogalgaz', 'tuketim_birim_fiyat') ?? null,
+                'fatura_aciklama'                   => $this->dogalgaz['fatura_aciklama'] ?? null,
             ]
         ]);
     }
 
-    protected function convertPointsToDots($tabName, $fieldName)
+    protected function convertPointsToDots($tabName, $fieldName) : ?string
     {
+        if ( ! $this->{$tabName}[$fieldName] ?? null ) {
+            return null;
+        }
+
         return Utils::getFloatValue($this->{$tabName}[$fieldName]);
     }
 }
