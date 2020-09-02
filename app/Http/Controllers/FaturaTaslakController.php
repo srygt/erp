@@ -53,11 +53,12 @@ class FaturaTaslakController extends Controller
                 Fatura::COLUMN_UUID                 => (string) Uuid::uuid4(),
                 Fatura::COLUMN_ABONE_ID             => $abone->id,
                 Fatura::COLUMN_TUR                  => $abone->{Abone::COLUMN_TUR},
-                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $request->birim_fiyat,
-                Fatura::COLUMN_SON_ODEME_TARIHI     => $request->son_odeme_tarihi,
+                Fatura::COLUMN_FATURA_TARIH         => $request->{Fatura::COLUMN_FATURA_TARIH},
+                Fatura::COLUMN_SON_ODEME_TARIHI     => $request->{Fatura::COLUMN_SON_ODEME_TARIHI},
                 Fatura::COLUMN_ENDEKS_ILK           => $abone->{Abone::COLUMN_TUR} === Abone::COLUMN_TUR_SU ? $request->ilk_endeks : 0,
-                Fatura::COLUMN_ENDEKS_SON           => $request->son_endeks,
-                Fatura::COLUMN_NOT                  => $request->not,
+                Fatura::COLUMN_ENDEKS_SON           => $request->{Fatura::COLUMN_ENDEKS_SON},
+                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $request->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_NOT                  => $request->{Fatura::COLUMN_NOT},
             ]);
 
         $faturaService = FaturaFactory::getService($abone->{Abone::COLUMN_TUR});

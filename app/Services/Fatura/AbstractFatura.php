@@ -106,12 +106,12 @@ abstract class AbstractFatura
             ->setDocumentCurrencyCode(new CurrencyCode('TRY'))
             ->setInvoiceTypeCode(new Satis())
             ->setInvoiceID(Fatura::getNextInvoiceId())
-            ->setIssueDate($fatura->created_at->toDateString())
+            ->setIssueDate($fatura->{Fatura::COLUMN_FATURA_TARIH}->toDateString())
             ->setIssueTime(
                 new Time(
-                    $fatura->created_at->hour,
-                    $fatura->created_at->minute,
-                    $fatura->created_at->second
+                    $fatura->{Fatura::COLUMN_FATURA_TARIH}->hour,
+                    $fatura->{Fatura::COLUMN_FATURA_TARIH}->minute,
+                    $fatura->{Fatura::COLUMN_FATURA_TARIH}->second
                 )
             )
             ->setLineExtensionAmount($invoiceLines->getPriceTotalWithoutTaxes())
@@ -128,7 +128,7 @@ abstract class AbstractFatura
                 )
             )
 //            ->setNotes(new Notes([new Note('test')]))
-            ->setOrderReferenceDate($fatura->created_at->toDateString())
+            ->setOrderReferenceDate($fatura->{Fatura::COLUMN_FATURA_TARIH}->toDateString())
             ->setOrderReferenceId($fatura->{Fatura::COLUMN_ID})
             ->setPayableAmount($invoiceLines->getPriceTotal())
             ->setTaxInclusiveAmount($invoiceLines->getPriceTotal())

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-select2/css/select2.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datetimepicker/jquery.datetimepicker.min.css') }}"/>
 @append
 
 @section('content')
@@ -75,16 +76,21 @@
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group">
-                                <label>Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
-                                <input
-                                    id="birim_fiyat"
-                                    name="birim_fiyat"
-                                    value="{{old("birim_fiyat")}}"
-                                    min="0.000000"
-                                    step="0.000001"
-                                    type="number"
-                                    class="form-control"
-                                >
+                                <label>Fatura Tarihi<span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="icon-calendar"></i>
+                                    </span>
+                                    </div>
+                                    <input
+                                        id="fatura_tarih"
+                                        name="fatura_tarih"
+                                        value="{{ old("fatura_tarih") }}"
+                                        placeholder="Seçin"
+                                        class="form-control datetime"
+                                    >
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
@@ -120,6 +126,20 @@
                                     <div class="form-group">
                                         <label><span id="sonEndeksLabel">Toplam Tüketim</span><span class="text-danger">*</span></label>
                                         <input type="number" class="form-control" name="son_endeks" value="{{old("son_endeks")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
+                                        <input
+                                            id="birim_fiyat"
+                                            name="birim_fiyat"
+                                            value="{{old("birim_fiyat")}}"
+                                            min="0.000000"
+                                            step="0.000001"
+                                            type="number"
+                                            class="form-control"
+                                        >
                                     </div>
                                 </div>
                             </div>
@@ -206,8 +226,7 @@
 
 @section('page-script')
     <script src="{{ asset('assets/bundles/c3.bundle.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-datetimepicker/jquery.datetimepicker.full.js') }}"></script>
     <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/index.js') }}"></script>
     <script src="{{ asset('assets/vendor/toastr/toastr.js') }}"></script>
@@ -229,6 +248,19 @@
                 + '.' + ("0" + possibleDate.getFullYear()).slice(-4);
         }
 
+        function getCurrentDatetime() {
+            let dateObj = new Date();
+
+            let year    = dateObj.getFullYear();
+            let month   = String(dateObj.getMonth() + 1).padStart(2, '0');
+            let day     = String(dateObj.getDate()).padStart(2, '0');
+
+            let hour    = String(dateObj.getHours()).padStart(2, '0');
+            let minute  = String(dateObj.getMinutes()).padStart(2, '0');
+
+            return [day, month, year].join('.') + ' ' + [hour,minute].join(':');
+        }
+
         function fillDefaults() {
             let seciliAbone         = $('#abone_id').find(':selected');
             let tur                 = seciliAbone.data('tur');
@@ -239,6 +271,10 @@
                     'abone_id': seciliAbone.val()
                 },
                 function( sonFatura ) {
+                    $('#fatura_tarih').val( getCurrentDatetime() );
+
+                    let son_odeme_baslik    = tur + '.son_odeme_gun'
+                    $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
 
                     if (tur === "{{ \App\Models\Abone::COLUMN_TUR_SU }}") {
                         $('#ilk_endeks').val(sonFatura.hasOwnProperty('son_endeks') ? sonFatura.son_endeks : '');
@@ -250,9 +286,6 @@
                     let birim_fiyat_baslik  = tur + '.tuketim_birim_fiyat';
                     $('#birim_fiyat').val( ayarlar[birim_fiyat_baslik] );
 
-                    let son_odeme_baslik    = tur + '.son_odeme_gun'
-                    $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )
-
                     $('#faturaAciklama').val( ayarlar[tur + '.fatura_aciklama'] );
                 }
             );
@@ -260,9 +293,15 @@
 
         $(function () {
 
-            $('.date').datepicker({
-                format: 'dd.mm.yyyy',
-                language: 'tr'
+            $.datetimepicker.setLocale('tr');
+
+            $('.date').datetimepicker({
+                timepicker: false,
+                format: 'd.m.Y',
+            });
+
+            $('.datetime').datetimepicker({
+                format: 'd.m.Y H:i',
             });
 
             $('#abone_id')

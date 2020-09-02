@@ -122,10 +122,11 @@ class FaturaController extends Controller
                 Fatura::COLUMN_TUR                  => $faturaTaslagi->{Fatura::COLUMN_TUR},
                 Fatura::COLUMN_INVOICE_ID           => Fatura::getNextInvoiceId(),
                 Fatura::COLUMN_ABONE_ID             => $faturaTaslagi->{Fatura::COLUMN_ABONE_ID},
-                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_FATURA_TARIH         => $faturaTaslagi->{Fatura::COLUMN_FATURA_TARIH},
                 Fatura::COLUMN_SON_ODEME_TARIHI     => $faturaTaslagi->{Fatura::COLUMN_SON_ODEME_TARIHI},
                 Fatura::COLUMN_ENDEKS_ILK           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK},
                 Fatura::COLUMN_ENDEKS_SON           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON},
+                Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
                 Fatura::COLUMN_NOT                  => $faturaTaslagi->{Fatura::COLUMN_NOT},
             ]);
 
