@@ -90,4 +90,20 @@ class DogalgazFaturasiService extends AbstractFatura
 
         return $invoiceLine;
     }
+
+    /**
+     * @param FaturaInterface $fatura
+     * @return string
+     */
+    protected function getAboneAndSayacNotes(FaturaInterface $fatura) : string
+    {
+        $note = '';
+
+        if ($fatura->abone->{Abone::COLUMN_ABONE_NO})
+        {
+            $note   .= 'Abone No: ' . $fatura->abone->{Abone::COLUMN_ABONE_NO} . "\n";
+        }
+
+        return $note;
+    }
 }

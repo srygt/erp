@@ -44,6 +44,12 @@ abstract class AbstractFatura
 {
     /**
      * @param FaturaInterface $fatura
+     * @return string
+     */
+    abstract protected function getAboneAndSayacNotes(FaturaInterface $fatura) : string;
+
+    /**
+     * @param FaturaInterface $fatura
      * @param InvoiceLines $invoiceLines
      * @return Invoice
      * @throws Throwable
@@ -196,27 +202,6 @@ abstract class AbstractFatura
         $jsonResponse   = $this->_updateDBAfterRequest($fatura, $response);
 
         return $jsonResponse;
-    }
-
-    /**
-     * @param FaturaInterface $fatura
-     * @return string
-     */
-    protected function getAboneAndSayacNotes(FaturaInterface $fatura) : string
-    {
-        $note = '';
-
-        if ($fatura->abone->{Abone::COLUMN_ABONE_NO})
-        {
-            $note   .= 'Abone No: ' . $fatura->abone->{Abone::COLUMN_ABONE_NO} . "\n";
-        }
-
-        if ($fatura->abone->{Abone::COLUMN_SAYAC_NO})
-        {
-            $note   .= 'Sayaç No: ' . $fatura->abone->{Abone::COLUMN_SAYAC_NO} . "\n";
-        }
-
-        return $note;
     }
 
     /**
