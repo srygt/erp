@@ -87,10 +87,10 @@ class ElektrikFaturasiService extends AbstractFatura
         $taxKdv = (new LineTax())
             ->setTax(
                 new Percentage(
-                    0.18,
+                    $this->getKdvPercentage(),
                     $invoiceLineElektrikTuketim->getPriceTotalWithoutTaxes()
-                    + $taxEnergy->getTaxAmnt()
-                    + $taxTrt->getTaxAmnt()
+                        + $taxEnergy->getTaxAmnt()
+                        + $taxTrt->getTaxAmnt()
                 )
             )
             ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
@@ -133,5 +133,13 @@ class ElektrikFaturasiService extends AbstractFatura
         }
 
         return $note;
+    }
+
+    /**
+     * @return float
+     */
+    protected function getKdvPercentage(): float
+    {
+        return 0.18;
     }
 }

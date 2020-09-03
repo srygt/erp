@@ -70,7 +70,12 @@ class SuFaturasiService extends AbstractFatura
 
         $lineTaxes = new LineTaxes([
             (new LineTax())
-                ->setTax(new Percentage(0.18, $invoiceLine->getPriceTotalWithoutTaxes()))
+                ->setTax(
+                    new Percentage(
+                        $this->getKdvPercentage(),
+                        $invoiceLine->getPriceTotalWithoutTaxes()
+                    )
+                )
                 ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
                 ->setTaxName('KDV')
         ]);
@@ -99,5 +104,13 @@ class SuFaturasiService extends AbstractFatura
         }
 
         return $note;
+    }
+
+    /**
+     * @return float
+     */
+    protected function getKdvPercentage(): float
+    {
+        return 0.08;
     }
 }

@@ -49,6 +49,11 @@ abstract class AbstractFatura
     abstract protected function getAboneAndSayacNotes(FaturaInterface $fatura) : string;
 
     /**
+     * @return float
+     */
+    abstract protected function getKdvPercentage() : float;
+
+    /**
      * @param FaturaInterface $fatura
      * @param InvoiceLines $invoiceLines
      * @return Invoice
@@ -311,7 +316,7 @@ abstract class AbstractFatura
                 ->setQuantityUnitUser($ekKalemAdapter->getMiktarTuru());
 
             $taxKdv = (new LineTax())
-                ->setTax(new Percentage(0.18, $invoiceLine->getPriceTotalWithoutTaxes()))
+                ->setTax(new Percentage($this->getKdvPercentage(), $invoiceLine->getPriceTotalWithoutTaxes()))
                 ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
                 ->setTaxName('KDV');
 
