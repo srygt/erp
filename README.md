@@ -5,6 +5,7 @@
 *   Change the content of the `env.example` file according to your config,
     and save as `.env`
     ```
+    HT_EFATURA_URL="https://econnecttest.hizliteknoloji.com.tr"
     HT_EFATURA_USERNAME="xxx"
     HT_EFATURA_PASSWORD="xxx"
     
