@@ -1,17 +1,17 @@
 <?php
 
 return [
-    'ulke'                  => 'TÜRKİYE',
-    'il'                    => 'ADANA',
-    'ilce'                  => 'SEYHAN',
-    'adres'                 => 'ADRES',
-    'email'                 => 'tunahan@hizliteknoloji.com.tr',
-    'unvan'                 => 'HIZLI BİLİŞİM TEKNOLOJİLERİ ANONİM ŞİRKETİ WS',
-    'vergiNo'               => '4620553774',
-    'vergiDairesi'          => 'VERGİ DARESİ',
-    'telefon'               => \App\Helpers\Utils::getFormattedTelephoneNumber('905554443322'),
+    'ulke'                  => 'Türkiye',
+    'il'                    => 'Diyarbakır',
+    'ilce'                  => 'Yenişehir',
+    'adres'                 => 'Elazığ Karayolu 22.KM OSB İdari Bina YENİŞEHİR/DİYARBAKIR OSB ',
+    'email'                 => 'info@diyarbakirosb.org.tr',
+    'unvan'                 => 'Diyarbakır Organize Sanayi Bölgesi Teşebbüs Teşvik Başkanlığı',
+    'vergiNo'               => '3010074708',
+    'vergiDairesi'          => 'Gökalp',
+    'telefon'               => \App\Helpers\Utils::getFormattedTelephoneNumber('904123450021'),
 
-    'urn'                   => 'urn:mail:defaultgb@hizlibilisimteknolojileri.net',
+    'urn'                   => 'urn:mail:info@diyarbakirosb.org.tr',
     'faturaNoPrefix'        => env('FATURA_CODE_PREFIX'),
     'faturaNoStart'         => env('FATURA_CODE_START'),
     'aboneNoPadLength'      => 3,
