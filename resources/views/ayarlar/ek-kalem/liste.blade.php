@@ -15,7 +15,7 @@
                                 <th>#</th>
                                 <th>Tür</th>
                                 <th>Başlık</th>
-                                <th>Oran</th>
+                                <th>Birim Fiyat</th>
                                 <th></th>
                             </tr>
                             </thead>

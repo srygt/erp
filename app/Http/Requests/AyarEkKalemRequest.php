@@ -34,7 +34,7 @@ class AyarEkKalemRequest extends FormRequest
             AyarEkKalem::COLUMN_BASLIK      => 'required|min:3',
             AyarEkKalem::COLUMN_DEGER       => 'nullable|required_if:'
                                                 . AyarEkKalem::COLUMN_UCRET_TUR . ','
-                                                . AyarEkKalem::FIELD_UCRET_ORAN
+                                                . AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT
                                                 .'|numeric|min:0.000000001|max:999.999999999',
         ];
     }
@@ -45,7 +45,7 @@ class AyarEkKalemRequest extends FormRequest
             AyarEkKalem::COLUMN_TUR         => 'Tür',
             AyarEkKalem::COLUMN_UCRET_TUR   => 'Ücret Türü',
             AyarEkKalem::COLUMN_BASLIK      => 'Başlık',
-            AyarEkKalem::COLUMN_DEGER       => 'Oran',
+            AyarEkKalem::COLUMN_DEGER       => 'Birim Fiyat',
         ];
     }
 

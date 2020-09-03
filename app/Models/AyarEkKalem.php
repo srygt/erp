@@ -20,11 +20,11 @@ class AyarEkKalem extends Model
     const COLUMN_TUR                    = 'tur';
     const COLUMN_UCRET_TUR              = 'ucret_tur';
 
-    const FIELD_UCRET_ORAN              = 'oran';
+    const FIELD_UCRET_BIRIM_FIYAT       = 'birim_fiyat';
     const FIELD_UCRET_DEGISKEN_TUTAR    = 'degisken_tutar';
 
     const LIST_UCRET_TUR                = [
-        self::FIELD_UCRET_ORAN              => 'Oran',
+        self::FIELD_UCRET_BIRIM_FIYAT       => 'Birim Fiyat',
         self::FIELD_UCRET_DEGISKEN_TUTAR    => 'Değişken Tutar',
     ];
 }

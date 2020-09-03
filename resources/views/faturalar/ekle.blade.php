@@ -197,7 +197,7 @@
                                                             name="ek_kalemler[{{ $tur }}][{{ $key }}][deger]"
                                                             value="{{ old('ek_kalemler[' . $tur . '][' . $key . '][deger]') }}"
                                                         >
-                                                    @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_ORAN)
+                                                    @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT)
                                                         {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
                                                     @endif
                                                 </td>

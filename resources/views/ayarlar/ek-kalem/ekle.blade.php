@@ -81,7 +81,7 @@
                             </div>
                             <div id="oranContainer" class="col-sm-12" style="display: none;">
                                 <div class="form-group">
-                                    <label>Oran</label>
+                                    <label>Birim Fiyat</label>
                                     <input
                                         type="number"
                                         step="0.000000001"
@@ -114,7 +114,7 @@
 <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
 <script>
 $('#ucretTur').on('change', function(){
-    if ( $(this).children('option:selected').val() === "{{ \App\Models\AyarEkKalem::FIELD_UCRET_ORAN }}" )
+    if ( $(this).children('option:selected').val() === "{{ \App\Models\AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT }}" )
     {
         $('#oranContainer').show(250);
     }
