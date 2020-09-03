@@ -13,6 +13,7 @@
     ```
 *   `composer install`
 *   `php artisan migrate --seed`
+*   `php artisan key:generate`
 
 # HT-Mukellef CSV Import
 *   `php artisan import:ht-mukellefler <filePath> --delimiter[=DELIMITER] --headerOffset[=HEADEROFFSET]`
