@@ -3,6 +3,7 @@
 
 namespace App\Services\Import\Osb;
 
+use App\Helpers\Utils;
 use App\Models\Abone;
 use App\Models\Mukellef;
 use League\Csv\Exception;
@@ -94,7 +95,7 @@ class ImportElektrikAboneNo
                 Abone::COLUMN_TUR               => Abone::COLUMN_TUR_ELEKTRIK,
                 Abone::COLUMN_MUKELLEF_ID       => $mukellef->id,
                 Abone::COLUMN_BASLIK            => 'Merkez Şube',
-                Abone::COLUMN_ABONE_NO          => (int)($aboneNo),
+                Abone::COLUMN_ABONE_NO          => Utils::getFormattedAboneNo((int)($aboneNo)),
                 Abone::COLUMN_TRT_PAYI          => 0,
                 Mukellef::COLUMN_EMAIL          => $mukellef->{Mukellef::COLUMN_EMAIL},
                 Mukellef::COLUMN_TELEFON        => $mukellef->{Mukellef::COLUMN_TELEFON},
