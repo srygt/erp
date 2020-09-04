@@ -7,6 +7,7 @@ namespace App\Services\Fatura;
 use App\Adapters\AyarEkKalemAdapter;
 use App\Contracts\FaturaInterface;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
+use App\Exceptions\UnsupportedAppTypeException;
 use App\Models\Abone;
 use App\Models\Ayar;
 use App\Models\AyarEkKalem;
@@ -110,7 +111,6 @@ abstract class AbstractFatura
         $invoiceHeader
             ->setDocumentCurrencyCode(new CurrencyCode('TRY'))
             ->setInvoiceTypeCode(new Satis())
-            ->setInvoiceID(Fatura::getNextInvoiceId())
             ->setIssueDate($fatura->{Fatura::COLUMN_FATURA_TARIH}->toDateString())
             ->setIssueTime(
                 new Time(
@@ -254,9 +254,13 @@ abstract class AbstractFatura
 
     /**
      * @param Invoice $invoice
+     * @param FaturaInterface $fatura
      * @return Invoice
+     * @throws GuzzleException
+     * @throws Throwable
+     * @throws UnsupportedAppTypeException
      */
-    protected function setTargetType(Invoice $invoice) : Invoice
+    protected function setTargetType(Invoice $invoice, FaturaInterface $fatura) : Invoice
     {
         $restRequest = new RestRequest();
 
@@ -268,12 +272,22 @@ abstract class AbstractFatura
             );
 
         if ($isEFaturaUser) {
+            $invoiceId  = Fatura::getNextInvoiceId(new EFatura());
             $invoice->setAppType(new EFatura());
             $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new TicariFatura());
         }
         else {
+            $invoiceId  = Fatura::getNextInvoiceId(new EArsiv());
             $invoice->setAppType(new EArsiv());
             $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new EArsivFatura());
+        }
+
+        $invoice->getInvoiceModel()->getInvoiceheader()->setInvoiceID($invoiceId);
+
+        if ( get_class($fatura) === Fatura::class )
+        {
+            $fatura->{Fatura::COLUMN_INVOICE_ID}    = $invoiceId;
+            $fatura->save();
         }
 
         return $invoice;
@@ -356,7 +370,7 @@ abstract class AbstractFatura
         try
         {
             $invoice    = $this->getInvoice($faturaTaslagi, $selectedEkKalemler);
-            $invoice    = $this->setTargetType($invoice);
+            $invoice    = $this->setTargetType($invoice, $faturaTaslagi);
 
             return $this->getResponse($faturaTaslagi, $invoice, true);
         }
@@ -379,7 +393,7 @@ abstract class AbstractFatura
         try
         {
             $invoice    = $this->getInvoice($fatura, $selectedEkKalemler);
-            $invoice    = $this->setTargetType($invoice);
+            $invoice    = $this->setTargetType($invoice, $fatura);
 
             return $this->getResponse($fatura, $invoice, false);
         }

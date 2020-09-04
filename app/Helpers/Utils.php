@@ -4,7 +4,11 @@
 namespace App\Helpers;
 
 
+use App\Exceptions\UnsupportedAppTypeException;
 use Exception;
+use Onrslu\HtEfatura\Types\Enums\AppType\BaseAppType;
+use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
+use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
 
 class Utils
 {
@@ -44,11 +48,13 @@ class Utils
     }
 
     /**
+     * @param BaseAppType $appType
      * @param null|string $invoiceId
      *
      * @return string
+     * @throws UnsupportedAppTypeException
      */
-    static public function getInvoiceId(?string $invoiceId)
+    static public function getInvoiceId(BaseAppType $appType, ?string $invoiceId)
     {
         $padLength = 9;
         $padString = '0';
@@ -58,10 +64,10 @@ class Utils
             $id++;
         }
         else {
-            $id = config('fatura.faturaNoStart');
+            $id = Utils::getFaturaConfig($appType)['start'];
         }
 
-        return config('fatura.faturaNoPrefix') . date('Y')
+        return Utils::getFaturaConfig($appType)['prefix'] . date('Y')
             . str_pad($id, $padLength, $padString, STR_PAD_LEFT);
     }
 
@@ -94,5 +100,31 @@ class Utils
         }
 
         return preg_replace('~[^0-9.]~', '', $value);
+    }
+
+    /**
+     * @param BaseAppType $appType
+     * @return array
+     * @throws UnsupportedAppTypeException
+     */
+    static public function getFaturaConfig(BaseAppType $appType)
+    {
+        if ( (string)($appType) === (string)(new EFatura) )
+        {
+            return [
+                'prefix'   => config('fatura.eFaturaNoPrefix'),
+                'start'    => config('fatura.eFaturaNoStart'),
+            ];
+        }
+        else if ( (string)($appType) === (string)(new EArsiv()) )
+        {
+            return [
+                'prefix'   => config('fatura.eArsivNoPrefix'),
+                'start'    => config('fatura.eArsivNoStart'),
+            ];
+        }
+
+        throw new UnsupportedAppTypeException('The given "app_type" isn\'t supported!');
+
     }
 }

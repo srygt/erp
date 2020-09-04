@@ -8,8 +8,13 @@
     HT_EFATURA_USERNAME="xxx"
     HT_EFATURA_PASSWORD="xxx"
     
-    FATURA_CODE_PREFIX="xxx"
-    FATURA_CODE_START="000"
+    HT_EFATURA_URL="https://econnecttest.hizliteknoloji.com.tr"
+    
+    EFATURA_CODE_PREFIX="XXX"
+    EFATURA_CODE_START="000"
+    
+    EARSIV_CODE_PREFIX="YYY"
+    EARSIV_CODE_START="000"
     ```
 *   `composer install`
 *   `php artisan migrate --seed`

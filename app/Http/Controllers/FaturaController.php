@@ -120,7 +120,6 @@ class FaturaController extends Controller
             ->create([
                 Fatura::COLUMN_UUID                 => $faturaTaslagi->{Fatura::COLUMN_UUID},
                 Fatura::COLUMN_TUR                  => $faturaTaslagi->{Fatura::COLUMN_TUR},
-                Fatura::COLUMN_INVOICE_ID           => Fatura::getNextInvoiceId(),
                 Fatura::COLUMN_ABONE_ID             => $faturaTaslagi->{Fatura::COLUMN_ABONE_ID},
                 Fatura::COLUMN_FATURA_TARIH         => $faturaTaslagi->{Fatura::COLUMN_FATURA_TARIH},
                 Fatura::COLUMN_SON_ODEME_TARIHI     => $faturaTaslagi->{Fatura::COLUMN_SON_ODEME_TARIHI},

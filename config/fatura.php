@@ -12,8 +12,10 @@ return [
     'telefon'               => \App\Helpers\Utils::getFormattedTelephoneNumber('905554443322'),
 
     'urn'                   => 'urn:mail:defaultgb@hizlibilisimteknolojileri.net',
-    'faturaNoPrefix'        => env('FATURA_CODE_PREFIX'),
-    'faturaNoStart'         => env('FATURA_CODE_START'),
+    'eFaturaNoPrefix'       => env('EFATURA_CODE_PREFIX'),
+    'eFaturaNoStart'        => env('EFATURA_CODE_START'),
+    'eArsivNoPrefix'        => env('EARSIV_CODE_PREFIX'),
+    'eArsivNoStart'         => env('EARSIV_CODE_START'),
     'aboneNoPadLength'      => 3,
     'aboneNoPadString'      => '0',
     'aboneNoPadDirection'   => STR_PAD_LEFT,

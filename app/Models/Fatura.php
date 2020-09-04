@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Contracts\FaturaInterface;
+use App\Exceptions\UnsupportedAppTypeException;
 use App\Helpers\Utils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Onrslu\HtEfatura\Types\Enums\AppType\BaseAppType;
 
 class Fatura extends Model implements FaturaInterface
 {
@@ -69,18 +71,24 @@ class Fatura extends Model implements FaturaInterface
         return $this->belongsTo(Abone::class,self::COLUMN_ABONE_ID,'id');
     }
 
-    public static function getNextInvoiceId() : string
+    /**
+     * @param BaseAppType $appType
+     * @return string
+     * @throws UnsupportedAppTypeException
+     */
+    public static function getNextInvoiceId(BaseAppType $appType) : string
     {
         $lastFatura = self::orderBy('id', 'desc')
             ->where(self::COLUMN_DURUM, self::COLUMN_DURUM_BASARILI)
+            ->where(self::COLUMN_APP_TYPE, (string)($appType))
             ->where(
                 self::COLUMN_INVOICE_ID,
                 'LIKE',
-                config('fatura.faturaNoPrefix') . date('Y') . '%'
+                Utils::getFaturaConfig($appType)['prefix'] . date('Y') . '%'
             )
             ->first();
 
-        $nextInvoiceId  = Utils::getInvoiceId($lastFatura->{self::COLUMN_INVOICE_ID} ?? null);
+        $nextInvoiceId  = Utils::getInvoiceId($appType, $lastFatura->{self::COLUMN_INVOICE_ID} ?? null);
 
         return $nextInvoiceId;
     }
