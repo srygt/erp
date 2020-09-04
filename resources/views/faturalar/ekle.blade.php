@@ -237,7 +237,7 @@
 
             if (day > possibleDate.getDay()) {
                 // getMonth() Ocak'ı  "0" kabul ediyor, setMonth() Ocak'ı "1" kabul ediyor :)
-                possibleDate.setMonth( possibleDate.getMonth() + 2);
+                possibleDate.setMonth( possibleDate.getMonth() + 1);
             }
 
             return ("0" + day).slice(-2)
