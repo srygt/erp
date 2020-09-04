@@ -268,7 +268,14 @@
                     'abone_id': seciliAbone.val()
                 },
                 function( sonFatura ) {
-                    $('#fatura_tarih').val( getCurrentDatetime() );
+
+                    let fatura_tarih_baslik = tur + '.fatura_tarih'
+                    if (ayarlar[fatura_tarih_baslik]) {
+                        $('#fatura_tarih').val( ayarlar[fatura_tarih_baslik] );
+                    }
+                    else {
+                        $('#fatura_tarih').val( getCurrentDatetime() );
+                    }
 
                     let son_odeme_baslik    = tur + '.son_odeme_gun'
                     $('#son_odeme_tarihi').val( getComingDayDate(ayarlar[son_odeme_baslik]) )

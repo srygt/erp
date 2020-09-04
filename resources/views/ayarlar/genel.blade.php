@@ -1,5 +1,12 @@
 @extends('layout.master')
 @section('title', 'Ayarlar')
+
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datetimepicker/jquery.datetimepicker.min.css') }}"/>
+@stop
+
 @section('content')
     <form id="mainForm" action="{{route("ayar.genel.update")}}" method="post">
         @csrf
@@ -96,6 +103,24 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
+                                                <label>Varsayılan Fatura Tarihi<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="icon-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input
+                                                        name="elektrik[fatura_tarih]"
+                                                        value="{{ old("elektrik.fatura_tarih", $ayarlar['elektrik.fatura_tarih'] ?? '') }}"
+                                                        placeholder="Seçin"
+                                                        class="form-control datetime"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
                                                 <label>Varsayılan Son Ödeme Günü<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <input
@@ -104,7 +129,7 @@
                                                         name="elektrik[son_odeme_gun]"
                                                         value="{{ old("elektrik.son_odeme_gun", $ayarlar['elektrik.son_odeme_gun'] ?? '') }}"
                                                         min="1"
-                                                        max="29"
+                                                        max="31"
                                                         step="1"
                                                     >
                                                 </div>
@@ -162,6 +187,24 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
+                                                <label>Varsayılan Fatura Tarihi<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="icon-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input
+                                                        name="su[fatura_tarih]"
+                                                        value="{{ old("su.fatura_tarih", $ayarlar['su.fatura_tarih'] ?? '') }}"
+                                                        placeholder="Seçin"
+                                                        class="form-control datetime"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
                                                 <label>Varsayılan Son Ödeme Günü<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <input
@@ -170,7 +213,7 @@
                                                         name="su[son_odeme_gun]"
                                                         value="{{ old("su.son_odeme_gun", $ayarlar['su.son_odeme_gun'] ?? '') }}"
                                                         min="1"
-                                                        max="29"
+                                                        max="31"
                                                         step="1"
                                                     >
                                                 </div>
@@ -228,6 +271,24 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
+                                                <label>Varsayılan Fatura Tarihi<span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="icon-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input
+                                                        name="dogalgaz[fatura_tarih]"
+                                                        value="{{ old("dogalgaz.fatura_tarih", $ayarlar['dogalgaz.fatura_tarih'] ?? '') }}"
+                                                        placeholder="Seçin"
+                                                        class="form-control datetime"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
                                                 <label>Varsayılan Son Ödeme Günü<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <input
@@ -236,7 +297,7 @@
                                                         name="dogalgaz[son_odeme_gun]"
                                                         value="{{ old("dogalgaz.son_odeme_gun", $ayarlar['dogalgaz.son_odeme_gun'] ?? '') }}"
                                                         min="1"
-                                                        max="29"
+                                                        max="31"
                                                         step="1"
                                                     >
                                                 </div>
@@ -279,16 +340,10 @@
     </form>
 @stop
 
-@section('page-styles')
-    <link rel="stylesheet" href="{{ asset('assets/vendor/c3/c3.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
-@stop
-
 @section('page-script')
     <script src="{{ asset('assets/bundles/c3.bundle.js') }}"></script>
     <script src="{{ asset('assets/vendor/jquery-turk-lirasi-maskesi/jquery.turkLirasi.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-datetimepicker/jquery.datetimepicker.full.js') }}"></script>
     <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/index.js') }}"></script>
     <script src="{{ asset('assets/vendor/toastr/toastr.js') }}"></script>
@@ -296,9 +351,15 @@
     <script>
         $(function () {
 
-            $('.date').datepicker({
-                format: 'dd.mm.yyyy',
-                language: 'tr'
+            $.datetimepicker.setLocale('tr');
+
+            $('.date').datetimepicker({
+                timepicker: false,
+                format: 'd.m.Y',
+            });
+
+            $('.datetime').datetimepicker({
+                format: 'd.m.Y H:i',
             });
 
             $('#mainForm').on('submit', function(){
