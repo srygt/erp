@@ -150,7 +150,6 @@ abstract class AbstractFatura
 
         $invoice
             ->setDestinationIdentifier($fatura->abone->mukellef->getIdentificationId())
-            ->setDestinationUrn($fatura->abone->{Mukellef::COLUMN_URN})
             ->setSourceUrn(config('fatura.urn'))
             ->setInvoiceModel($invoiceModel);
 
@@ -264,20 +263,23 @@ abstract class AbstractFatura
     {
         $restRequest = new RestRequest();
 
-        $isEFaturaUser  = $restRequest->isGibUser(
+        $efaturaUrn  = $restRequest->getAvailableUrn(
                 new EFatura(),
                 new TargetCode(TargetCode::RECEIVER),
                 $invoice->getInvoiceModel()->getCustomerAgent()->getIdentificationID(),
-                $invoice->getDestinationUrn()
+                $fatura->abone->{Mukellef::COLUMN_URN}
             );
 
-        if ($isEFaturaUser) {
+        if ($efaturaUrn) {
             $invoiceId  = Fatura::getNextInvoiceId(new EFatura());
+
             $invoice->setAppType(new EFatura());
             $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new TicariFatura());
+            $invoice->setDestinationUrn($efaturaUrn);
         }
         else {
             $invoiceId  = Fatura::getNextInvoiceId(new EArsiv());
+
             $invoice->setAppType(new EArsiv());
             $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new EArsivFatura());
         }
