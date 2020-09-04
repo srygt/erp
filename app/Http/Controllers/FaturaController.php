@@ -90,7 +90,7 @@ class FaturaController extends Controller
             ])
             ->validate();
 
-        $response = (new RestRequest)->getDocumentFile($uuid)->getBody()->getContents();
+        $response = (new RestRequest)->getDocumentFile($appType, $uuid)->getBody()->getContents();
         $response = json_decode($response);
 
         if (!$response->IsSucceeded) {
