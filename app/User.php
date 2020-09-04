@@ -11,6 +11,11 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * @var string $table
+     */
+    protected $table = 'admins';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -36,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @var bool $timestamps
+     */
+    public $timestamps = false;
 }
