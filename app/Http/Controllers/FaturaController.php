@@ -23,6 +23,7 @@ use Onrslu\HtEfatura\Models\DocumentList\DocumentList;
 use Onrslu\HtEfatura\Services\RestRequest;
 use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
 use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
+use Onrslu\HtEfatura\Types\Enums\AppType\EFaturaGiden;
 use Onrslu\HtEfatura\Types\Enums\DateType\CreatedDate;
 use Throwable;
 
@@ -85,7 +86,7 @@ class FaturaController extends Controller
                 'uuid'      => $uuid
             ],
             [
-                'appType'   => Rule::in([EFatura::TYPE, EArsiv::TYPE]),
+                'appType'   => Rule::in([EFatura::TYPE, EFaturaGiden::TYPE, EArsiv::TYPE]),
                 'uuid'      => 'required|uuid',
             ])
             ->validate();
