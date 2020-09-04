@@ -11,7 +11,7 @@ return [
     'vergiDairesi'          => 'Gökalp',
     'telefon'               => \App\Helpers\Utils::getFormattedTelephoneNumber('904123450021'),
 
-    'urn'                   => 'urn:mail:info@diyarbakirosb.org.tr',
+    'urn'                   => 'urn:mail:defaultgb@diyarbakirosb.org.tr',
     'eFaturaNoPrefix'       => env('EFATURA_CODE_PREFIX'),
     'eFaturaNoStart'        => env('EFATURA_CODE_START'),
     'eArsivNoPrefix'        => env('EARSIV_CODE_PREFIX'),
