@@ -53,7 +53,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_SON_ODEME_TARIHI         => 'required|date_format:d.m.Y',
             Fatura::COLUMN_ENDEKS_ILK               => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_SU . '|numeric|min:0|lte:' . Fatura::COLUMN_ENDEKS_SON,
             Fatura::COLUMN_ENDEKS_SON               => 'required|numeric|min:0',
-            Fatura::COLUMN_BIRIM_FIYAT_TUKETIM      => 'required|numeric',
+            Fatura::COLUMN_BIRIM_FIYAT_TUKETIM      => 'required|numeric|min:0.000000001',
             Fatura::COLUMN_NOT                      => 'nullable',
             'ek_kalemler'                           => 'required|array',
             'ek_kalemler.' . $tur                   => 'nullable|array',
