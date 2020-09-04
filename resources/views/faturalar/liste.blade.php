@@ -31,7 +31,12 @@
                                 <td>{{ $fatura->created_at->toDateString() }}</td>
                                 <td class="text-right">{{ $fatura->toplam_odenecek_ucret }}TL</td>
                                 <td>
-                                    <a href="{{ route('fatura.detay', ['appType' => $fatura->app_type, 'uuid' => $fatura->uuid]) }}" class="btn btn-sm btn-default" ><i class="fa fa-download text-blue"></i></a>
+                                    <a href="{{
+                                        route('fatura.detay', [
+                                            'appType' => $fatura->app_type !== \Onrslu\HtEfatura\Types\Enums\AppType\EFatura::TYPE ? $fatura->app_type : \Onrslu\HtEfatura\Types\Enums\AppType\EFaturaGiden::TYPE,
+                                            'uuid' => $fatura->uuid
+                                            ])
+                                            }}" class="btn btn-sm btn-default" ><i class="fa fa-download text-blue"></i></a>
                                     <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
                                 </td>
                             </tr>
