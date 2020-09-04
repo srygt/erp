@@ -53,6 +53,7 @@
                                                     {{
                                                         $abone->mukellef->unvan
                                                         . ' - ' . \App\Models\Abone::TUR_LIST[$abone->tur]
+                                                        . ' - ' . $abone->{\App\Models\Abone::COLUMN_ABONE_NO}
                                                         . ' - ' . $abone->baslik
                                                     }}
                                                 </option>
