@@ -92,7 +92,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
         $payload = [];
 
         $payload[Fatura::COLUMN_BIRIM_FIYAT_TUKETIM]    = Utils::getFloatValue($this->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM} ?? null);
-        $payload[Fatura::COLUMN_ENDEKS_ILK]             = Utils::getFloatValue($this->{Fatura::COLUMN_ENDEKS_ILK} ?? null);
+        $payload[Fatura::COLUMN_ENDEKS_ILK]             = Utils::getFloatValue($this->{Fatura::COLUMN_ENDEKS_ILK} ?? null) ?? 0;
         $payload[Fatura::COLUMN_ENDEKS_SON]             = Utils::getFloatValue($this->{Fatura::COLUMN_ENDEKS_SON} ?? null);
 
 
