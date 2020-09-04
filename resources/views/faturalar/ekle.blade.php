@@ -193,10 +193,12 @@
                                                 <td>
                                                     @if ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
                                                         <input
-                                                            type="text"
-                                                            class="ucret form-control"
+                                                            type="number"
+                                                            class="form-control"
                                                             name="ek_kalemler[{{ $tur }}][{{ $key }}][deger]"
                                                             value="{{ old('ek_kalemler[' . $tur . '][' . $key . '][deger]') }}"
+                                                            min="0.000000000"
+                                                            step="0.01"
                                                         >
                                                     @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT)
                                                         {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
