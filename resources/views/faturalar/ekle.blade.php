@@ -317,7 +317,7 @@
 
             $('.ucret')
                 .turkLirasi({
-                    maxDecimalCount: 6,
+                    maxDecimalCount: 9,
                 })
                 .trigger('keydown');
 
