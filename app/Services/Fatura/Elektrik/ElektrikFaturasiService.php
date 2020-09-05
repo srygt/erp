@@ -29,10 +29,13 @@ class ElektrikFaturasiService extends AbstractFatura
     protected function getInvoice(FaturaInterface $fatura, array $selectedEkKalemler)
     {
         $values = [
-            'tuketim'   =>
-                $fatura->{Fatura::COLUMN_ENDEKS_SON} - $fatura->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
-            'bedel'     => [
+            'tuketim'   => $fatura->{Fatura::COLUMN_ENDEKS_SON} - $fatura->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
+            'enduktifTuketim'   => $fatura->{Fatura::COLUMN_ENDUKTIF_TUKETIM},
+            'kapasitifTuketim'  => $fatura->{Fatura::COLUMN_KAPASITIF_TUKETIM},
+            'bedel'             => [
                 'elektrikTuketim'   => $fatura->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                'enduktif'          => $fatura->{Fatura::COLUMN_ENDUKTIF_BIRIM_FIYAT},
+                'kapasitif'         => $fatura->{Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT},
             ]
         ];
 
@@ -44,6 +47,14 @@ class ElektrikFaturasiService extends AbstractFatura
                                                 new QuantityUnitUser('KWH')
                                                 );
         $invoiceKalemler                    = array_merge([$invoiceKalemElektrikTuketim], $invoiceEkKalemler);
+
+        if ($fatura->abone->{Abone::COLUMN_ENDUKTIF_BEDEL}) {
+            $invoiceKalemler[]              = $this->getEnduktifBedel($values, (count($invoiceKalemler) + 1));
+        }
+
+        if ($fatura->abone->{Abone::COLUMN_KAPASITIF_BEDEL}) {
+            $invoiceKalemler[]              = $this->getKapasitifBedel($values, (count($invoiceKalemler) + 1));
+        }
 
         // Invoice Lines
         $invoiceLines = new InvoiceLines($invoiceKalemler);
@@ -112,6 +123,74 @@ class ElektrikFaturasiService extends AbstractFatura
         $invoiceLineElektrikTuketim->setLineTaxes($elektrikTuketimTaxes);
 
         return $invoiceLineElektrikTuketim;
+    }
+
+    /**
+     * @param FaturaInterface $fatura
+     * @param $values
+     * @param $id
+     * @return InvoiceLine
+     * @throws Throwable
+     */
+    protected function getEnduktifBedel($values, $id)
+    {
+        $invoiceLine = new InvoiceLine();
+        $invoiceLine
+            ->setId($id)
+            ->setItemName('Endüktif Bedel')
+            ->setPriceAmount($values['bedel']['enduktif'])
+            ->setQuantityAmount($values['enduktifTuketim'])
+            ->setQuantityUnitUser(new QuantityUnitUser('KWH'));
+
+        $lineTaxes = new LineTaxes([
+            (new LineTax())
+                ->setTax(
+                    new Percentage(
+                        $this->getKdvPercentage(),
+                        $invoiceLine->getPriceTotalWithoutTaxes()
+                    )
+                )
+                ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
+                ->setTaxName('KDV')
+        ]);
+
+        $invoiceLine->setLineTaxes($lineTaxes);
+
+        return $invoiceLine;
+    }
+
+    /**
+     * @param FaturaInterface $fatura
+     * @param $values
+     * @param $id
+     * @return InvoiceLine
+     * @throws Throwable
+     */
+    protected function getKapasitifBedel($values, $id)
+    {
+        $invoiceLine = new InvoiceLine();
+        $invoiceLine
+            ->setId($id)
+            ->setItemName('Kapasitif Bedel')
+            ->setPriceAmount($values['bedel']['kapasitif'])
+            ->setQuantityAmount($values['kapasitifTuketim'])
+            ->setQuantityUnitUser(new QuantityUnitUser('KWH'));
+
+        $lineTaxes = new LineTaxes([
+            (new LineTax())
+                ->setTax(
+                    new Percentage(
+                        $this->getKdvPercentage(),
+                        $invoiceLine->getPriceTotalWithoutTaxes()
+                    )
+                )
+                ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
+                ->setTaxName('KDV')
+        ]);
+
+        $invoiceLine->setLineTaxes($lineTaxes);
+
+        return $invoiceLine;
     }
 
     /**
