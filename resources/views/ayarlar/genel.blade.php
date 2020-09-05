@@ -148,6 +148,28 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
+                                                <label>Varsayılan Endüktif Bedel Birim Fiyatı<span class="text-danger">*</span></label>
+                                                <input
+                                                    type="text"
+                                                    class="ucret form-control"
+                                                    name="elektrik[enduktif_birim_fiyat]"
+                                                    value="{{ old("elektrik.enduktif_birim_fiyat", $ayarlar['elektrik.enduktif_birim_fiyat'] ?? '') }}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Varsayılan Kapasitif Bedel Birim Fiyatı<span class="text-danger">*</span></label>
+                                                <input
+                                                    type="text"
+                                                    class="ucret form-control"
+                                                    name="elektrik[kapasitif_birim_fiyat]"
+                                                    value="{{ old("elektrik.kapasitif_birim_fiyat", $ayarlar['elektrik.kapasitif_birim_fiyat'] ?? '') }}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
                                                 <label>Varsayılan Fatura Açıklaması<span class="text-danger">*</span></label>
                                                 <textarea
                                                     class="form-control"

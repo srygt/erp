@@ -26,6 +26,8 @@ class Ayar extends Model
     const FIELD_ELEKTRIK_FATURA_TARIH           = 'elektrik.fatura_tarih';
     const FIELD_ELEKTRIK_SON_ODEME_GUN          = 'elektrik.son_odeme_gun';
     const FIELD_ELEKTRIK_TUKETIM_BIRIM_FIYAT    = 'elektrik.tuketim_birim_fiyat';
+    const FIELD_ELEKTRIK_ENDUKTIF_BIRIM_FIYAT   = 'elektrik.enduktif_birim_fiyat';
+    const FIELD_ELEKTRIK_KAPASITIF_BIRIM_FIYAT  = 'elektrik.kapasitif_birim_fiyat';
     const FIELD_ELEKTRIK_FATURA_ACIKLAMA        = 'elektrik.fatura_aciklama';
     const FIELD_SU_BANKA_HESAP_ADI              = 'su.banka_hesap_adi';
     const FIELD_SU_BANKA_IBAN                   = 'su.banka_iban';
@@ -46,6 +48,8 @@ class Ayar extends Model
         self::FIELD_ELEKTRIK_FATURA_TARIH,
         self::FIELD_ELEKTRIK_SON_ODEME_GUN,
         self::FIELD_ELEKTRIK_TUKETIM_BIRIM_FIYAT,
+        self::FIELD_ELEKTRIK_ENDUKTIF_BIRIM_FIYAT,
+        self::FIELD_ELEKTRIK_KAPASITIF_BIRIM_FIYAT,
         self::FIELD_ELEKTRIK_FATURA_ACIKLAMA,
         self::FIELD_SU_BANKA_HESAP_ADI,
         self::FIELD_SU_BANKA_IBAN,

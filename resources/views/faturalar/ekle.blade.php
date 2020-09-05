@@ -339,6 +339,11 @@
                     let birim_fiyat_baslik  = tur + '.tuketim_birim_fiyat';
                     $('#birim_fiyat').trigger( 'setAgain', [ayarlar[birim_fiyat_baslik]] );
 
+                    if (tur === "{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}") {
+                        $('#enduktif_birim_fiyat').trigger('setAgain', ayarlar['elektrik.enduktif_birim_fiyat']);
+                        $('#kapasitif_birim_fiyat').trigger('setAgain', ayarlar['elektrik.kapasitif_birim_fiyat']);
+                    }
+
                     $('#faturaAciklama').val( ayarlar[tur + '.fatura_aciklama'] );
                 }
             );
