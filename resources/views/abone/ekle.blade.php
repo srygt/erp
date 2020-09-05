@@ -103,7 +103,55 @@
                                     <input class="form-control" name="sayac_no" value="{{ old('sayac_no', $abone->sayac_no) }}" type="number">
                                 </div>
                             </div>
-                            <div id="trtPayiContainer" class="col-md-4 col-sm-12">
+                            <div id="enduktifContainer" class="elektrik-specific col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Endüktif Bedel Uygulanacak<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="enduktif_bedel" id="enduktif_bedel">
+                                        <option value="">Seçin</option>
+                                        <option
+                                            value="1"
+                                            @if (old("enduktif_bedel", $abone->enduktif_bedel) == '1')
+                                            selected
+                                            @endif
+                                        >
+                                            Evet
+                                        </option>
+                                        <option
+                                            value="0"
+                                            @if (old("enduktif_bedel", $abone->enduktif_bedel) == '0')
+                                            selected
+                                            @endif
+                                        >
+                                            Hayır
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="kapasitifContainer" class="elektrik-specific col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Kapasitif Bedel Uygulanacak<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="kapasitif_bedel" id="kapasitif_bedel">
+                                        <option value="">Seçin</option>
+                                        <option
+                                            value="1"
+                                            @if (old("kapasitif_bedel", $abone->kapasitif_bedel) == '1')
+                                            selected
+                                            @endif
+                                        >
+                                            Evet
+                                        </option>
+                                        <option
+                                            value="0"
+                                            @if (old("kapasitif_bedel", $abone->kapasitif_bedel) == '0')
+                                            selected
+                                            @endif
+                                        >
+                                            Hayır
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="trtPayiContainer" class="elektrik-specific col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label>Trt Payı Uygulanacak<span class="text-danger">*</span></label>
                                     <select class="form-control" name="trt_payi" id="trt_payi">
@@ -276,10 +324,10 @@
 
                     if ( $(this).children('option:selected').val() === "{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}" )
                     {
-                        $('#trtPayiContainer').show(250);
+                        $('.elektrik-specific').show(250);
                     }
                     else {
-                        $('#trtPayiContainer').hide(250);
+                        $('.elektrik-specific').hide(250);
                     }
                 })
                 .trigger('change');

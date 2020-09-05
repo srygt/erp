@@ -30,43 +30,45 @@ class AboneEkleRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'                    => 'nullable|numeric|exists:App\Models\Abone,id',
-            'tur'                   => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
-            'mukellef_id'           => 'required|numeric|exists:App\Models\Mukellef,id',
-            'baslik'                => 'required',
-            'abone_no'              => [
-                                        'nullable',
-                                        'numeric',
-                                        new UniqueWithAdditionalColumnsRule(
-                                            Abone::class,
-                                            Abone::COLUMN_ABONE_NO,
-                                            $this->id,
-                                            'id',
-                                            Abone::COLUMN_TUR,
-                                            $this->{Abone::COLUMN_TUR}
-                                        )
-                                        ],
-            'sayac_no'              => [
-                                        'nullable',
-                                        'numeric',
-                                        new UniqueWithAdditionalColumnsRule(
-                                            Abone::class,
-                                            Abone::COLUMN_SAYAC_NO,
-                                            $this->id,
-                                            'id',
-                                            Abone::COLUMN_TUR,
-                                            $this->{Abone::COLUMN_TUR}
-                                        )
-                                    ],
-            'trt_payi'              => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|boolean',
-            'email'                 => 'nullable|email',
-            'telefon'               => 'nullable',
-            'website'               => 'nullable|url',
-            'ulke'                  => 'required',
-            'il'                    => 'required',
-            'ilce'                  => 'required',
-            'urn'                   => ['nullable', new UrnRule],
-            'adres'                 => 'nullable',
+            'id'                            => 'nullable|numeric|exists:App\Models\Abone,id',
+            'tur'                           => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
+            'mukellef_id'                   => 'required|numeric|exists:App\Models\Mukellef,id',
+            'baslik'                        => 'required',
+            'abone_no'                      => [
+                                                'nullable',
+                                                'numeric',
+                                                new UniqueWithAdditionalColumnsRule(
+                                                    Abone::class,
+                                                    Abone::COLUMN_ABONE_NO,
+                                                    $this->id,
+                                                    'id',
+                                                    Abone::COLUMN_TUR,
+                                                    $this->{Abone::COLUMN_TUR}
+                                                )
+                                                ],
+            'sayac_no'                      => [
+                                                'nullable',
+                                                'numeric',
+                                                new UniqueWithAdditionalColumnsRule(
+                                                    Abone::class,
+                                                    Abone::COLUMN_SAYAC_NO,
+                                                    $this->id,
+                                                    'id',
+                                                    Abone::COLUMN_TUR,
+                                                    $this->{Abone::COLUMN_TUR}
+                                                )
+                                            ],
+            'trt_payi'                      => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|boolean',
+            Abone::COLUMN_ENDUKTIF_BEDEL    => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|boolean',
+            Abone::COLUMN_KAPASITIF_BEDEL   => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|boolean',
+            'email'                         => 'nullable|email',
+            'telefon'                       => 'nullable',
+            'website'                       => 'nullable|url',
+            'ulke'                          => 'required',
+            'il'                            => 'required',
+            'ilce'                          => 'required',
+            'urn'                           => ['nullable', new UrnRule],
+            'adres'                         => 'nullable',
         ];
     }
 
@@ -112,7 +114,9 @@ class AboneEkleRequest extends FormRequest
         }
 
         if ( isset($this->tur) && $this->tur !== Abone::COLUMN_TUR_ELEKTRIK ) {
-            $parameters['trt_payi'] = null;
+            $parameters[Abone::COLUMN_TRT_PAYI]         = null;
+            $parameters[Abone::COLUMN_KAPASITIF_BEDEL]  = null;
+            $parameters[Abone::COLUMN_ENDUKTIF_BEDEL]   = null;
         }
 
         $this->merge($parameters);
