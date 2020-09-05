@@ -46,6 +46,8 @@
                                                 <option
                                                     value="{{ $abone->id }}"
                                                     data-tur="{{ $abone->tur }}"
+                                                    data-enduktif="{{ $abone->{\App\Models\Abone::COLUMN_ENDUKTIF_BEDEL} ?? 0 }}"
+                                                    data-kapasitif="{{ $abone->{\App\Models\Abone::COLUMN_KAPASITIF_BEDEL} ?? 0 }}"
                                                     @if(old('abone_id') == $abone->id)
                                                     selected
                                                     @endif
@@ -131,11 +133,55 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label>Birim Tüketim Fiyatı{{ old("birim_fiyat") }}<span class="text-danger">*</span></label>
+                                        <label>Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
                                         <input
                                             id="birim_fiyat"
                                             name="birim_fiyat"
                                             value="{{ old("birim_fiyat") }}"
+                                            type="text"
+                                            class="ucret form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="enduktifContainer" class="col-sm-12" style="display: none;">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label><span>Endüktif Toplam Tüketim</span><span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="enduktif_tuketim" value="{{old("enduktif_tuketim")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Endüktif Birim Fiyat<span class="text-danger">*</span></label>
+                                        <input
+                                            id="enduktif_birim_fiyat"
+                                            name="enduktif_birim_fiyat"
+                                            value="{{ old("enduktif_birim_fiyat") }}"
+                                            type="text"
+                                            class="ucret form-control"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="kapasitifContainer" class="col-sm-12" style="display: none;">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label><span>Kapasitif Toplam Tüketim</span><span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="kapasitif_tuketim" value="{{old("kapasitif_tuketim")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Kapasitif Birim Fiyat<span class="text-danger">*</span></label>
+                                        <input
+                                            id="kapasitif_birim_fiyat"
+                                            name="kapasitif_birim_fiyat"
+                                            value="{{ old("kapasitif_birim_fiyat") }}"
                                             type="text"
                                             class="ucret form-control"
                                         >
@@ -328,17 +374,38 @@
                 .on('change', function(){
                     $('#fillDefaultsButton').prop('disabled', !$(this).val());
 
-                    let tur = $(this).find(':selected').data('tur');
+                    const selected      = $(this).find(':selected');
+
+                    const tur           = selected.data('tur');
+                    const isEnduktif    = selected.data('enduktif');
+                    const isKapasitif   = selected.data('kapasitif');
+
                     $('#tur').val(tur);
+
+                    const elLabelSonEndeks      = $('#sonEndeksLabel');
+                    const elContainerIlkEndeks  = $('#ilkEndeksContainer');
+                    const elContainerEnduktif   = $('#enduktifContainer');
+                    const elContainerKapasitif  = $('#kapasitifContainer');
+
 
                     if (tur === "{{ \App\Models\Abone::COLUMN_TUR_SU }}")
                     {
-                        $('#ilkEndeksContainer').show(250);
-                        $('#sonEndeksLabel').html('Son Endeks');
+                        elContainerIlkEndeks.show(250);
+                        elLabelSonEndeks.html('Son Endeks');
                     }
                     else {
-                        $('#ilkEndeksContainer').hide(250);
-                        $('#sonEndeksLabel').html('Toplam Tüketim');
+                        elContainerIlkEndeks.hide(250);
+                        elLabelSonEndeks.html('Toplam Tüketim');
+                    }
+
+                    if (tur === "{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}")
+                    {
+                        isEnduktif ? elContainerEnduktif.show(250) : elContainerEnduktif.hide(250);
+                        isKapasitif ? elContainerKapasitif.show(250) : elContainerKapasitif.hide(250);
+                    }
+                    else {
+                        elContainerEnduktif.hide(250);
+                        elContainerKapasitif.hide(250);
                     }
 
                     $('.ekKalemList').hide();

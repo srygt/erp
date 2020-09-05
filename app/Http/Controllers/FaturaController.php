@@ -14,7 +14,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -127,6 +126,10 @@ class FaturaController extends Controller
                 Fatura::COLUMN_ENDEKS_ILK           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_ILK},
                 Fatura::COLUMN_ENDEKS_SON           => $faturaTaslagi->{Fatura::COLUMN_ENDEKS_SON},
                 Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $faturaTaslagi->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_ENDUKTIF_TUKETIM     => $faturaTaslagi->{Fatura::COLUMN_ENDUKTIF_TUKETIM},
+                Fatura::COLUMN_ENDUKTIF_BIRIM_FIYAT => $faturaTaslagi->{Fatura::COLUMN_ENDUKTIF_BIRIM_FIYAT},
+                Fatura::COLUMN_KAPASITIF_TUKETIM    => $faturaTaslagi->{Fatura::COLUMN_KAPASITIF_TUKETIM},
+                Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT=> $faturaTaslagi->{Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT},
                 Fatura::COLUMN_NOT                  => $faturaTaslagi->{Fatura::COLUMN_NOT},
             ]);
 

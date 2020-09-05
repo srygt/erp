@@ -58,6 +58,10 @@ class FaturaTaslakController extends Controller
                 Fatura::COLUMN_ENDEKS_ILK           => $abone->{Abone::COLUMN_TUR} === Abone::COLUMN_TUR_SU ? $request->ilk_endeks : 0,
                 Fatura::COLUMN_ENDEKS_SON           => $request->{Fatura::COLUMN_ENDEKS_SON},
                 Fatura::COLUMN_BIRIM_FIYAT_TUKETIM  => $request->{Fatura::COLUMN_BIRIM_FIYAT_TUKETIM},
+                Fatura::COLUMN_ENDUKTIF_TUKETIM     => $request->{Fatura::COLUMN_ENDUKTIF_TUKETIM},
+                Fatura::COLUMN_ENDUKTIF_BIRIM_FIYAT => $request->{Fatura::COLUMN_ENDUKTIF_BIRIM_FIYAT},
+                Fatura::COLUMN_KAPASITIF_TUKETIM    => $request->{Fatura::COLUMN_KAPASITIF_TUKETIM},
+                Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT=> $request->{Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT},
                 Fatura::COLUMN_NOT                  => $request->{Fatura::COLUMN_NOT},
             ]);
 
