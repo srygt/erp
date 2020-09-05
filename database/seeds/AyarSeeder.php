@@ -17,6 +17,8 @@ class AyarSeeder extends Seeder
             Ayar::FIELD_ELEKTRIK_BANKA_IBAN             => 'TR57 0001 2001 7270 0016 1000 04',
             Ayar::FIELD_ELEKTRIK_SON_ODEME_GUN          => 15,
             Ayar::FIELD_ELEKTRIK_TUKETIM_BIRIM_FIYAT    => 0.451779,
+            Ayar::FIELD_ELEKTRIK_ENDUKTIF_BIRIM_FIYAT   => 0.349125,
+            Ayar::FIELD_ELEKTRIK_KAPASITIF_BIRIM_FIYAT  => 0.234988,
             Ayar::FIELD_ELEKTRIK_FATURA_ACIKLAMA        => 'Varsayılan Elektrik Faturası Açıklaması',
             Ayar::FIELD_SU_BANKA_HESAP_ADI              => 'DİYARBAKIR ORGANİZE SANAYİ TEŞEBBÜS TEŞVİK BAŞKANLIĞI',
             Ayar::FIELD_SU_BANKA_IBAN                   => 'TR57 0001 2001 7270 0016 1000 03',
