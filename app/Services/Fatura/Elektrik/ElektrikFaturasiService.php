@@ -84,23 +84,23 @@ class ElektrikFaturasiService extends AbstractFatura
             ->setTaxCode(new TaxTypeCode(TaxTypeCode::ENERJI_FONU))
             ->setTaxName('Enerji Fonu');
 
+        $lineTaxes          = [];
+        $totalTaxablePrice  = $invoiceLineElektrikTuketim->getPriceTotalWithoutTaxes() + $taxEnergy->getTaxAmnt();
+
+        if ($fatura->abone->{Abone::COLUMN_TRT_PAYI}) {
+            $lineTaxes[]        = $taxTrt;
+            $totalTaxablePrice += $taxTrt->getTaxAmnt();
+        }
+
         $taxKdv = (new LineTax())
             ->setTax(
                 new Percentage(
                     $this->getKdvPercentage(),
-                    $invoiceLineElektrikTuketim->getPriceTotalWithoutTaxes()
-                        + $taxEnergy->getTaxAmnt()
-                        + $taxTrt->getTaxAmnt()
+                    $totalTaxablePrice
                 )
             )
             ->setTaxCode(new TaxTypeCode(TaxTypeCode::KDV_GERCEK))
             ->setTaxName('KDV');
-
-        $lineTaxes  = [];
-
-        if ($fatura->abone->{Abone::COLUMN_TRT_PAYI}) {
-            $lineTaxes[] = $taxTrt;
-        }
 
         $lineTaxes  = array_merge($lineTaxes, [
             $taxEnergy,
