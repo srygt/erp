@@ -8,6 +8,7 @@ use App\Adapters\AyarEkKalemAdapter;
 use App\Contracts\FaturaInterface;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Exceptions\UnsupportedAppTypeException;
+use App\Helpers\Utils;
 use App\Models\Abone;
 use App\Models\Ayar;
 use App\Models\AyarEkKalem;
@@ -16,6 +17,7 @@ use App\Models\FaturaTaslagi;
 use App\Models\Mukellef;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use Onrslu\HtEfatura\Contracts\AppType;
 use Onrslu\HtEfatura\Models\CustomerIdentificationOther;
 use Onrslu\HtEfatura\Models\Invoice;
 use Onrslu\HtEfatura\Models\InvoiceHeader;
@@ -271,14 +273,14 @@ abstract class AbstractFatura
             );
 
         if ($efaturaUrn) {
-            $invoiceId  = Fatura::getNextInvoiceId(new EFatura());
+            $invoiceId  = self::getNextInvoiceId(new EFatura());
 
             $invoice->setAppType(new EFatura());
             $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new TicariFatura());
             $invoice->setDestinationUrn($efaturaUrn);
         }
         else {
-            $invoiceId  = Fatura::getNextInvoiceId(new EArsiv());
+            $invoiceId  = self::getNextInvoiceId(new EArsiv());
 
             $invoice->setAppType(new EArsiv());
             $invoice->getInvoiceModel()->getInvoiceheader()->setProfileID(new EArsivFatura());
@@ -358,6 +360,32 @@ abstract class AbstractFatura
 
         $fatura->{Fatura::COLUMN_DURUM} = Fatura::COLUMN_DURUM_HATA;
         $fatura->save();
+    }
+
+    /**
+     * @param AppType $appType
+     * @return string
+     * @throws GuzzleException
+     * @throws HizliTeknolojiIsSuccessException
+     * @throws UnsupportedAppTypeException
+     */
+    public static function getNextInvoiceId(AppType $appType) : string
+    {
+        $response   = (new RestRequest())
+                        ->getLastInvoiceIdAndDate(
+                            $appType,
+                            Utils::getFaturaConfig($appType)['prefix'] . date('Y')
+                        )
+                        ->getBody()
+                        ->getContents();
+
+        $response   = json_decode($response);
+
+        if (!($response->IsSucceeded ?? false)) {
+            throw new HizliTeknolojiIsSuccessException($response->Message);
+        }
+
+        return Utils::getInvoiceId($response->InvoiceId);
     }
 
     /**

@@ -6,7 +6,7 @@ namespace App\Helpers;
 
 use App\Exceptions\UnsupportedAppTypeException;
 use Exception;
-use Onrslu\HtEfatura\Types\Enums\AppType\BaseAppType;
+use Onrslu\HtEfatura\Contracts\AppType;
 use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
 use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
 
@@ -48,27 +48,20 @@ class Utils
     }
 
     /**
-     * @param BaseAppType $appType
-     * @param null|string $invoiceId
+     * @param string $previousInvoiceId
      *
      * @return string
-     * @throws UnsupportedAppTypeException
      */
-    static public function getInvoiceId(BaseAppType $appType, ?string $invoiceId)
+    static public function getInvoiceId(string $previousInvoiceId)
     {
-        $padLength = 9;
-        $padString = '0';
+        $prefix     = mb_substr($previousInvoiceId, 0, 3);
+        $id         = (int) mb_substr($previousInvoiceId, 7, mb_strlen($previousInvoiceId) - 7);
+        $nextId     = $id + 1;
 
-        if ($invoiceId) {
-            $id = (int) mb_substr($invoiceId, 7, mb_strlen($invoiceId) - 7);
-            $id++;
-        }
-        else {
-            $id = Utils::getFaturaConfig($appType)['start'];
-        }
+        $padLength  = 9;
+        $padString  = '0';
 
-        return Utils::getFaturaConfig($appType)['prefix'] . date('Y')
-            . str_pad($id, $padLength, $padString, STR_PAD_LEFT);
+        return $prefix . date('Y') . str_pad($nextId, $padLength, $padString, STR_PAD_LEFT);
     }
 
     /**
@@ -103,24 +96,22 @@ class Utils
     }
 
     /**
-     * @param BaseAppType $appType
+     * @param AppType $appType
      * @return array
      * @throws UnsupportedAppTypeException
      */
-    static public function getFaturaConfig(BaseAppType $appType)
+    static public function getFaturaConfig(AppType $appType)
     {
         if ( (string)($appType) === (string)(new EFatura) )
         {
             return [
                 'prefix'   => config('fatura.eFaturaNoPrefix'),
-                'start'    => config('fatura.eFaturaNoStart'),
             ];
         }
         else if ( (string)($appType) === (string)(new EArsiv()) )
         {
             return [
                 'prefix'   => config('fatura.eArsivNoPrefix'),
-                'start'    => config('fatura.eArsivNoStart'),
             ];
         }
 

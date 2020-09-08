@@ -13,9 +13,7 @@ return [
 
     'urn'                   => 'urn:mail:defaultgb@diyarbakirosb.org.tr',
     'eFaturaNoPrefix'       => env('EFATURA_CODE_PREFIX'),
-    'eFaturaNoStart'        => env('EFATURA_CODE_START'),
     'eArsivNoPrefix'        => env('EARSIV_CODE_PREFIX'),
-    'eArsivNoStart'         => env('EARSIV_CODE_START'),
     'aboneNoPadLength'      => 3,
     'aboneNoPadString'      => '0',
     'aboneNoPadDirection'   => STR_PAD_LEFT,

@@ -78,26 +78,4 @@ class Fatura extends Model implements FaturaInterface
     {
         return $this->belongsTo(Abone::class,self::COLUMN_ABONE_ID,'id');
     }
-
-    /**
-     * @param BaseAppType $appType
-     * @return string
-     * @throws UnsupportedAppTypeException
-     */
-    public static function getNextInvoiceId(BaseAppType $appType) : string
-    {
-        $lastFatura = self::orderBy('id', 'desc')
-            ->where(self::COLUMN_DURUM, self::COLUMN_DURUM_BASARILI)
-            ->where(self::COLUMN_APP_TYPE, (string)($appType))
-            ->where(
-                self::COLUMN_INVOICE_ID,
-                'LIKE',
-                Utils::getFaturaConfig($appType)['prefix'] . date('Y') . '%'
-            )
-            ->first();
-
-        $nextInvoiceId  = Utils::getInvoiceId($appType, $lastFatura->{self::COLUMN_INVOICE_ID} ?? null);
-
-        return $nextInvoiceId;
-    }
 }
