@@ -40,7 +40,7 @@
                             <div class="icon-in-bg bg-indigo text-white rounded-circle"><i class="fa fa-arrow-down"></i></div>
                             <div class="ml-4">
                                 <span>Gelen e-Fatura</span>
-                                <h4 class="mb-0 font-weight-medium">{{ $toplamGelenEFatura }}</h4>
+                                <h4 class="mb-0 font-weight-medium">{{ $harcananGelenFaturaMiktari }}</h4>
                             </div>
                         </div>
                     </a>
@@ -55,7 +55,7 @@
                             <div class="icon-in-bg bg-azura text-white rounded-circle"><i class="fa fa-arrow-up"></i></div>
                             <div class="ml-4">
                                 <span>Giden e-Fatura</span>
-                                <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEFatura }}</h4>
+                                <h4 class="mb-0 font-weight-medium">{{ $harcananGidenFaturaMiktari }}</h4>
                             </div>
                         </div>
                     </a>
@@ -70,7 +70,7 @@
                             <div class="icon-in-bg bg-orange text-white rounded-circle"><i class="fa fa-file"></i></div>
                             <div class="ml-4">
                                 <span>Giden e-Arşiv</span>
-                                <h4 class="mb-0 font-weight-medium">{{ $toplamGidenEArsiv }}</h4>
+                                <h4 class="mb-0 font-weight-medium">{{ $harcananEArsivFaturaMiktari }}</h4>
                             </div>
                         </div>
                     </a>
@@ -80,12 +80,12 @@
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="body">
-                    <a href="{{ route('aboneler.liste') }}">
+                    <a href="javascript:;">
                         <div class="d-flex align-items-center">
                             <div class="icon-in-bg bg-pink text-white rounded-circle"><i class="fa fa-life-ring"></i></div>
                             <div class="ml-4">
-                                <span>Abone Sayısı</span>
-                                <h4 class="mb-0 font-weight-medium">{{ $toplamAbone }}</h4>
+                                <span>Kalan Kontör</span>
+                                <h4 class="mb-0 font-weight-medium">{{ $kalanKontor }}</h4>
                             </div>
                         </div>
                     </a>

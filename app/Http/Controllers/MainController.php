@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\HizliTeknolojiIsSuccessException;
-use App\Models\Abone;
 use App\Models\Fatura;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Onrslu\HtEfatura\Models\DocumentList\DocumentList;
 use Onrslu\HtEfatura\Services\RestRequest;
-use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
 use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
 use Onrslu\HtEfatura\Types\Enums\DateType\CreatedDate;
 
@@ -28,23 +27,43 @@ class MainController extends Controller
             $documentList       = (new DocumentList)
                                     ->setAppType(new EFatura)
                                     ->setDateType(new CreatedDate)
-                                    ->setStartDate(date('Y-m-d', strtotime('-6 months')))
+                                    ->setStartDate(date('Y-m-d', strtotime('-1 months')))
                                     ->setEndDate(date('Y-m-d', strtotime('+1 minutes')));
 
-            $cevap              = json_decode(
+            $dlCevap            = json_decode(
                                     (new RestRequest)->getDocumentList($documentList)->getBody()->getContents()
                                     );
 
-            throw_if(!$cevap->IsSucceeded, new HizliTeknolojiIsSuccessException($cevap->Message));
+            throw_if(!$dlCevap->IsSucceeded, new HizliTeknolojiIsSuccessException($dlCevap->Message));
+
+            // TODO: Hizliteknoloji, "KalanKontorSorgula" fonksiyonunu test ortamında çalışır hale getirdiğinde if bloğu kaldır
+            if (Str::contains(config('ht-efatura.api.url'), 'econnecttest'))
+            {
+                $kksCevap           = json_decode('{"kalanKontor": "99999","sonucVerisi": {"toplamFaturaAdedi":'
+                                        . '99999,"toplamAlanBoyutu": 0,"harcananGelenFaturaMiktari": 9999,'
+                                        . '"harcananGidenFaturaMiktari": 9999,"harcananEArsivFaturaMiktari": 9999,'
+                                        . '"harcananAlanMiktari": 0},"IsSucceeded": true,"Message": "Başarılı"}');
+            }
+            else {
+                $kksCevap           = json_decode(
+                    (new RestRequest)->getKalanKontorSorgula(config('fatura.vergiNo'), '0')->getBody()->getContents()
+                );
+
+                throw_if(!$kksCevap->IsSucceeded, new HizliTeknolojiIsSuccessException($kksCevap->Message));
+            }
 
             return [
-                'toplamGelenEFatura'=> count($cevap->documents),
-                'yeniFaturalar'     => array_slice(
-                                            array_reverse($cevap->documents),
-                                            0,
-                                            5,
-                                            false
-                                        ),
+                'yeniFaturalar'                 => array_slice(
+                                                        array_reverse($dlCevap->documents),
+                                                        0,
+                                                        5,
+                                                        false
+                                                    ),
+                'kalanKontor'                   => $kksCevap->kalanKontor,
+                'harcananGelenFaturaMiktari'    => $kksCevap->sonucVerisi->harcananGelenFaturaMiktari,
+                'harcananGidenFaturaMiktari'    => $kksCevap->sonucVerisi->harcananGidenFaturaMiktari,
+                'harcananEArsivFaturaMiktari'   => $kksCevap->sonucVerisi->harcananEArsivFaturaMiktari,
+
             ];
         });
 
@@ -61,13 +80,6 @@ class MainController extends Controller
                 ])
                 ->get();
 
-            $tumZamanGroupedByAppType   = $tumZaman->countBy(function($fatura){
-                return $fatura->{Fatura::COLUMN_APP_TYPE};
-            })->all();
-
-            $toplamGidenEFatura = $tumZamanGroupedByAppType[EFatura::TYPE]  ?? 0;
-            $toplamGidenEArsiv  = $tumZamanGroupedByAppType[EArsiv::TYPE]   ?? 0;
-
             $buAy               = $tumZaman->where('created_at', '>=', Carbon::now()->startOfMonth());
 
             $faturaGroupedByTur = $buAy->groupBy(Fatura::COLUMN_TUR);
@@ -78,14 +90,8 @@ class MainController extends Controller
                 });
             });
 
-            /** @var Collection $toplamAbone */
-            $toplamAbone        = Abone::count();
-
             return [
-                'toplamGidenEFatura'=> $toplamGidenEFatura,
-                'toplamGidenEArsiv' => $toplamGidenEArsiv,
                 'turlereGoreToplam' => $turlereGoreToplam->toArray(),
-                'toplamAbone'       => $toplamAbone,
             ];
         });
 
