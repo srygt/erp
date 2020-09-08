@@ -95,7 +95,7 @@
     </div>
 
     <div class="row clearfix">
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -111,15 +111,27 @@
                             <div class="d-flex justify-content-start mt-3">
                                 <div class="mr-5">
                                     <label class="mb-0">Elektrik</label>
-                                    <h4>{{ $turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_ELEKTRIK] ?? 0 }}TL</h4>
+                                    <h4>
+                                        <abbr title="{{ getMoneyFormat($turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_ELEKTRIK] ?? 0)}}TL">
+                                            {{ getMoneyFormat(($turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_ELEKTRIK] ?? 0)/(1000*1000)) }}M TL
+                                        </abbr>
+                                    </h4>
                                 </div>
                                 <div class="mr-5">
                                     <label class="mb-0">Su</label>
-                                    <h4>{{ $turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_SU] ?? 0 }}TL</h4>
+                                    <h4>
+                                        <abbr title="{{ getMoneyFormat($turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_SU] ?? 0)}}TL">
+                                            {{ getMoneyFormat(($turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_SU] ?? 0)/(1000*1000)) }}M TL
+                                        </abbr>
+                                    </h4>
                                 </div>
                                 <div>
                                     <label class="mb-0">Doğalgaz</label>
-                                    <h4>{{ $turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_DOGALGAZ] ?? 0 }}TL</h4>
+                                    <h4>
+                                        <abbr title="{{ getMoneyFormat($turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_DOGALGAZ] ?? 0)}}TL">
+                                            {{ getMoneyFormat(($turlereGoreToplam[\App\Models\Abone::COLUMN_TUR_DOGALGAZ] ?? 0)/(1000*1000)) }}M TL
+                                        </abbr>
+                                    </h4>
                                 </div>
                             </div>
                             <div id="chart-donut" style="height: 250px"></div>
@@ -129,7 +141,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-6">
             <div class="table-responsive">
                 <table class="table table-hover table-custom spacing5">
                     <thead>
@@ -150,7 +162,7 @@
                         <td>{{ $yeniFatura->PayableAmount . $yeniFatura->DocumentCurrencyCode }}</td>
                         <td><span class="badge badge-info ml-0 mr-0">{{ $yeniFatura->DocumentTypeCode }}</span></td>
                         <td>
-                            <a href="{{ route('fatura.detay', ['appType' => $yeniFatura->AppType, 'uuid' => $yeniFatura->UUID]) }}" class="btn btn-sm btn-default" title="Faturayı Görüntüle" data-toggle="tooltip" data-placement="top"><i class="fa fa-download text-blue"></i></button>
+                            <a href="{{ route('fatura.detay', ['appType' => $yeniFatura->AppType, 'uuid' => $yeniFatura->UUID]) }}" class="btn btn-sm btn-default" title="Faturayı Görüntüle" data-toggle="tooltip" data-placement="top"><i class="fa fa-download text-blue"></i></a>
                         </td>
                     </tr>
                     @endforeach
