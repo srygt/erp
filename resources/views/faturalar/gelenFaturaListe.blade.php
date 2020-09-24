@@ -47,6 +47,7 @@
                     <th>Doküman Türü</th>
                     <th>Doküman Profili</th>
                     <th>Durum</th>
+                    <th>Okundu mu</th>
                     <th>Miktar</th>
                     <th>Oluşturulma Tarihi</th>
                     <th></th>
@@ -59,6 +60,15 @@
                     <td>{{ $fatura->DocumentTypeCode }}</td>
                     <td>{{ $fatura->ProfileId }}</td>
                     <td>{{ $fatura->StatusExp }}</td>
+                    <td>
+                        @if ($fatura->IsRead === true )
+                            Evet
+                        @elseif ($fatura->IsRead === false)
+                            Hayır
+                        @else
+                            HATA!
+                        @endif
+                    </td>
                     <td>{{ $fatura->PayableAmount . $fatura->DocumentCurrencyCode }}</td>
                     <td>{{ $fatura->CreatedDate }}</td>
                     <td>
