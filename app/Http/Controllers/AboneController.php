@@ -23,7 +23,6 @@ class AboneController extends Controller
     public function eklePost(AboneEkleRequest $request)
     {
         $payload = $request->only([
-            Abone::COLUMN_AKTIF_MI,
             Abone::COLUMN_TUR,
             Abone::COLUMN_MUKELLEF_ID,
             Abone::COLUMN_BASLIK,
@@ -70,7 +69,7 @@ class AboneController extends Controller
     }
 
     public function index(){
-        $aboneler   = Abone::with('mukellef')->get();
+        $aboneler   = Abone::where(Abone::COLUMN_AKTIF_MI, true)->with('mukellef')->get();
 
         return view('abone.liste', ['aboneler' => $aboneler]);
     }

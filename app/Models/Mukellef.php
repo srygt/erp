@@ -12,6 +12,7 @@ class Mukellef extends Model
 
     protected $table = 'mukellefler';
     protected $fillable = [
+        self::COLUMN_AKTIF_MI,
         self::COLUMN_VERGI_NO,
         self::COLUMN_TC_KIMLIK_NO,
         self::COLUMN_UNVAN,
@@ -30,6 +31,7 @@ class Mukellef extends Model
     ];
 
     const COLUMN_ID                     = 'id';
+    const COLUMN_AKTIF_MI               = 'aktif_mi';
     const COLUMN_VERGI_NO               = 'vergi_no';
     const COLUMN_TC_KIMLIK_NO           = 'tc_kimlik_no';
     const COLUMN_UNVAN                  = 'unvan';

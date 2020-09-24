@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MukellefEkleRequest;
+use App\Http\Requests\MukellefPasiflestirRequest;
+use App\Models\Abone;
 use App\Models\Mukellef;
 
 class MukellefController extends Controller
 {
     public function index()
     {
-        $mukellefler = Mukellef::get();
+        $mukellefler = Mukellef::where(Mukellef::COLUMN_AKTIF_MI, true)->get();
 
         return view('mukellef.liste', ['mukellefler' => $mukellefler]);
     }
@@ -76,5 +78,20 @@ class MukellefController extends Controller
     public function detayApi(int $id)
     {
         return Mukellef::find($id);
+    }
+
+    public function pasiflestir(MukellefPasiflestirRequest $request)
+    {
+        $mukellef = Mukellef::findOrFail($request->id);
+
+        $mukellef->update([
+            Mukellef::COLUMN_AKTIF_MI => false,
+        ]);
+
+        $mukellef->abonelikler()->update([
+            Abone::COLUMN_AKTIF_MI => false,
+        ]);
+
+        return redirect()->back()->with('message', 'Mükellef Başarıyla Pasifleştirildi');
     }
 }

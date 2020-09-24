@@ -2,10 +2,27 @@
 @section('parentPageTitle', 'Mükellef İşlemleri ')
 @section('title', 'Mükellef Listesi')
 
-
 @section('content')
 
 <div class="row clearfix">
+    @if ($errors->any() || session()->has('message'))
+        <div class="col-sm-12" id="messages">
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message')}}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+    @endif
     <div class="col-lg-12">
 
                     <div class="table-responsive">
@@ -32,7 +49,11 @@
                                 <td>{{ $mukellef->il }}</td>
                                 <td>
                                     <a href="{{ route('mukellef.guncelle.get', $mukellef->id) }}" class="btn btn-sm btn-default" ><i class="fa fa-edit text-blue"></i></a>
-                                    <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
+                                    <form action="{{route('mukellef.pasiflestir')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $mukellef->id }}">
+                                        <button type="button" class="btn btn-sm btn-default pasiflestir"><i class="fa fa-trash-o text-danger"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                          @endforeach
@@ -47,6 +68,9 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <style>
+        .table-responsive form {
+            display: inline;
+        }
         .dataTables_length{display: none;}
         .dataTables_filter input {
             background-color: white;
@@ -68,5 +92,27 @@
                 "url":'{{asset('js/json/datatableturkish.json')}}',
             }
         } );
+
+        $(document).ready(function(){
+            $(".pasiflestir").on("click", function(e) {
+                var form = $(this).parents('form');
+
+                swal({
+                    title: "Pasifleştirme istediğinize emin misiniz?",
+                    // text: "Silinen verileri geri getiremezsiniz!",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: 'İptal',
+                    confirmButtonColor: "#dc3545",
+                    confirmButtonText: "Evet, pasifleştir!",
+                    closeOnConfirm: false
+                }, (confirmed) => {
+                    if( confirmed ){
+                        form.submit();
+                    }
+                });
+
+            });
+        })
     </script>
 @stop

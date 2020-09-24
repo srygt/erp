@@ -175,26 +175,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label>Abonelik Durumu<span class="text-danger">*</span></label>
-                                    <select id="aktif_mi" name="aktif_mi" class="form-control">
-                                        <option value="">Seçin...</option>
-                                        <option
-                                            value="1"
-                                            @if(old('tur', $abone->aktif_mi) > 0)
-                                            selected
-                                            @endif
-                                        >Aktif</option>
-                                        <option
-                                            value="0"
-                                            @if(old('tur', $abone->aktif_mi) == 0)
-                                            selected
-                                            @endif
-                                        >Pasif</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="border bg-info col-md-12 mb-3" ></div>
                         <div class="row">

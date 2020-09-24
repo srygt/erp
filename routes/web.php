@@ -33,6 +33,8 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('mukellef.ekle.get');
     Route::post('mukellefler/ekle','MukellefController@eklePost')
         ->name('mukellef.ekle.post');
+    Route::post('mukellefler/pasiflestir','MukellefController@pasiflestir')
+        ->name('mukellef.pasiflestir');
     Route::get('mukellefler/{id}','MukellefController@guncelleGet')
         ->name('mukellef.guncelle.get')
         ->where(['id' => '[0-9]+']);
