@@ -103,6 +103,9 @@ class SuFaturasiService extends AbstractFatura
             $note   .= 'Sayaç No: ' . $fatura->abone->{Abone::COLUMN_SAYAC_NO} . "\n";
         }
 
+        $note .= 'İlk Endeks: ' . $fatura->{Fatura::COLUMN_ENDEKS_ILK} . "\n";
+        $note .= 'Son Endeks: ' . $fatura->{Fatura::COLUMN_ENDEKS_SON} . "\n";
+
         return $note;
     }
 
