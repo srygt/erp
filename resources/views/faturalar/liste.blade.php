@@ -17,6 +17,7 @@
                                 <th>Mükellef</th>
                                 <th>Tür</th>
                                 <th>Tarih</th>
+                                <th>Fatura</th>
                                 <th>Ücret</th>
                                 <th>İşlemler</th>
                             </tr>
@@ -29,6 +30,7 @@
                                 <td>{{ $fatura->abone->mukellef->unvan }}</td>
                                 <td>{{ \Illuminate\Support\Str::ucfirst($fatura->abone->tur) }}</td>
                                 <td>{{ $fatura->created_at->toDateString() }}</td>
+                                <td>{{ \Onrslu\HtEfatura\Factories\AppTypeFactory::getTitle($fatura->app_type) }}</td>
                                 <td class="text-right">{{ $fatura->toplam_odenecek_ucret }}TL</td>
                                 <td>
                                     <a href="{{
