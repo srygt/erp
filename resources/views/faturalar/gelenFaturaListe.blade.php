@@ -44,6 +44,7 @@
                 <thead>
                 <tr>
                     <th>Fatura No</th>
+                    <th>Mükellef</th>
                     <th>Doküman Türü</th>
                     <th>Doküman Profili</th>
                     <th>Durum</th>
@@ -57,6 +58,7 @@
              @foreach($faturalar as $fatura)
                 <tr>
                     <td><div class="font-15">{{ $fatura->DocumentId }}</div></td>
+                    <td>{{ $fatura->TargetTitle }}</td>
                     <td>{{ $fatura->DocumentTypeCode }}</td>
                     <td>{{ $fatura->ProfileId }}</td>
                     <td>{{ $fatura->StatusExp }}</td>
