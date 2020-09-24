@@ -23,6 +23,7 @@ class AboneController extends Controller
     public function eklePost(AboneEkleRequest $request)
     {
         $payload = $request->only([
+            Abone::COLUMN_AKTIF_MI,
             Abone::COLUMN_TUR,
             Abone::COLUMN_MUKELLEF_ID,
             Abone::COLUMN_BASLIK,

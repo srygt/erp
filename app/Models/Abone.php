@@ -22,6 +22,7 @@ class Abone extends Model
     protected $table = 'abonelikler';
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $fillable = [
+        Abone::COLUMN_AKTIF_MI,
         Abone::COLUMN_MUKELLEF_ID,
         Abone::COLUMN_TUR,
         Abone::COLUMN_BASLIK,
@@ -40,6 +41,7 @@ class Abone extends Model
         Mukellef::COLUMN_URN,
     ];
 
+    const COLUMN_AKTIF_MI       = 'aktif_mi';
     const COLUMN_MUKELLEF_ID    = 'mukellef_id';
     const COLUMN_TUR            = 'tur';
     const COLUMN_TUR_SU         = 'su';

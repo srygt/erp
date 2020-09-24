@@ -53,7 +53,11 @@ class FaturaTaslagiEkleRequest extends FormRequest
 
         return [
             'id'                                    => 'nullable|numeric|exists:App\Models\FaturaTaslagi,id',
-            'abone_id'                              => 'required|numeric|exists:App\Models\Abone,id',
+            'abone_id'                              => [
+                                                            'required',
+                                                            'numeric',
+                                                            Rule::exists('App\Models\Abone', 'id')->where('aktif_mi', true),
+                                                        ],
             'tur'                                   => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
             Fatura::COLUMN_FATURA_TARIH             => 'required|date_format:d.m.Y H:i',
             Fatura::COLUMN_SON_ODEME_TARIHI         => 'required|date_format:d.m.Y',

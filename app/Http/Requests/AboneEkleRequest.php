@@ -31,6 +31,7 @@ class AboneEkleRequest extends FormRequest
     {
         return [
             'id'                            => 'nullable|numeric|exists:App\Models\Abone,id',
+            'aktif_mi'                      => 'required|boolean',
             'tur'                           => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
             'mukellef_id'                   => 'required|numeric|exists:App\Models\Mukellef,id',
             'baslik'                        => 'required',
@@ -76,6 +77,7 @@ class AboneEkleRequest extends FormRequest
     {
         return [
             'tur'                   => 'Abonelik Türü',
+            'aktif_mi'              => 'Abonelik Durumu',
             'mukellef_id'           => 'Mükellef',
             'baslik'                => 'Abonelik Adı',
             'abone_no'              => 'Abone No',
@@ -117,6 +119,11 @@ class AboneEkleRequest extends FormRequest
             $parameters[Abone::COLUMN_TRT_PAYI]         = null;
             $parameters[Abone::COLUMN_KAPASITIF_BEDEL]  = null;
             $parameters[Abone::COLUMN_ENDUKTIF_BEDEL]   = null;
+        }
+
+        // aktif_mi
+        if ( isset($this->aktif_mi) ) {
+            $parameters['aktif_mi'] = $this->aktif_mi ? true : false;
         }
 
         $this->merge($parameters);
