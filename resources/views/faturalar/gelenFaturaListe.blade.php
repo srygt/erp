@@ -56,7 +56,11 @@
                 </thead>
                 <tbody>
              @foreach($faturalar as $fatura)
-                <tr>
+                <tr
+                @if (!$fatura->IsRead)
+                    class="notRead"
+                @endif
+                >
                     <td><div class="font-15">{{ $fatura->DocumentId }}</div></td>
                     <td>{{ $fatura->TargetTitle }}</td>
                     <td>{{ $fatura->DocumentTypeCode }}</td>
@@ -94,6 +98,9 @@
         .dataTables_filter input {
             background-color: white;
         }
+        .notRead td {
+            background-color: rgb(255 192 192) !important;
+        }
     </style>
 @stop
 
@@ -109,7 +116,8 @@
         $('.dataTable').DataTable( {
             "language": {
                 "url":'{{asset('js/json/datatableturkish.json')}}',
-            }
+            },
+            "order": [[ 7, "desc" ]],
         } );
     </script>
 @stop
