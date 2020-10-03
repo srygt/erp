@@ -99,7 +99,7 @@
             background-color: white;
         }
         .notRead td {
-            background-color: rgb(255 192 192) !important;
+            background-color: rgb(192 215 255) !important;
         }
     </style>
 @stop
