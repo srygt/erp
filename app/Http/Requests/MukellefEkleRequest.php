@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\IbanRule;
 use App\Rules\TcknRule;
 use App\Rules\UrnRule;
 use App\Rules\VergiNoRule;
@@ -39,7 +38,6 @@ class MukellefEkleRequest extends FormRequest
             'vergi_dairesi_sehir'   => 'nullable',
             'vergi_dairesi'         => 'required',
             'urn'                   => ['nullable', new UrnRule],
-            'iban'                  => ['nullable', new IbanRule],
             'email'                 => 'nullable|email|unique:App\Models\Mukellef,email,' . $this->id,
             'telefon'               => 'nullable|unique:App\Models\Mukellef,telefon,' . $this->id,
             'website'               => 'nullable|url',
@@ -63,7 +61,6 @@ class MukellefEkleRequest extends FormRequest
             'vergi_dairesi_sehir'   => 'Vergi Dairesi Şehir',
             'vergi_dairesi'         => 'Vergi Dairesi',
             'urn'                   => 'Urn',
-            'iban'                  => 'IBAN',
             'email'                 => 'E-Posta',
             'telefon'               => 'Telefon Numarası',
             'website'               => 'Website Adresi',
@@ -99,11 +96,6 @@ class MukellefEkleRequest extends FormRequest
         // website
         if ( isset($this->website) && !Str::startsWith($this->website, 'http') ) {
             $parameters['website'] = 'http://' . $this->website;
-        }
-
-        // iban
-        if (isset($this->iban)) {
-            $parameters['iban'] = preg_replace('~[^a-zA-Z0-9]+~', '', $this->iban);
         }
 
         $this->merge($parameters);

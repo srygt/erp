@@ -28,7 +28,6 @@ class Mukellef extends Model
         self::COLUMN_ADRES,
         self::COLUMN_TELEFON,
         self::COLUMN_URN,
-        self::COLUMN_IBAN,
     ];
 
     const COLUMN_ID                     = 'id';
@@ -48,7 +47,6 @@ class Mukellef extends Model
     const COLUMN_ADRES                  = 'adres';
     const COLUMN_TELEFON                = 'telefon';
     const COLUMN_URN                    = 'urn';
-    const COLUMN_IBAN                   = 'iban';
 
     public function abonelikler()
     {
