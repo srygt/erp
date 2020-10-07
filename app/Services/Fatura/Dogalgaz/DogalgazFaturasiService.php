@@ -6,13 +6,16 @@ namespace App\Services\Fatura\Dogalgaz;
 
 use App\Contracts\FaturaInterface;
 use App\Models\Abone;
+use App\Models\Ayar;
 use App\Models\Fatura;
 use App\Services\Fatura\AbstractFatura;
+use Illuminate\Support\Carbon;
 use Onrslu\HtEfatura\Models\Invoice;
 use Onrslu\HtEfatura\Models\InvoiceLine;
 use Onrslu\HtEfatura\Models\InvoiceLines;
 use Onrslu\HtEfatura\Models\LineTax;
 use Onrslu\HtEfatura\Models\LineTaxes;
+use Onrslu\HtEfatura\Models\PaymentMeans;
 use Onrslu\HtEfatura\Types\Enums\QuantityUnitUser;
 use Onrslu\HtEfatura\Types\Enums\TaxTypeCode;
 use Onrslu\HtEfatura\Types\PriceModifiers\Percentage;
@@ -119,5 +122,18 @@ class DogalgazFaturasiService extends AbstractFatura
     protected function getKdvPercentage(): float
     {
         return 0.18;
+    }
+
+    /**
+     * @param Carbon $paymentDueDate
+     * @return PaymentMeans
+     */
+    protected function getPaymentMeans(Carbon $paymentDueDate) : PaymentMeans
+    {
+        return parent::generatePaymentMeans(
+            $paymentDueDate,
+            Ayar::where(Ayar::COLUMN_BASLIK, Ayar::FIELD_DOGALGAZ_BANKA_IBAN)
+                ->value(Ayar::COLUMN_DEGER)
+        );
     }
 }

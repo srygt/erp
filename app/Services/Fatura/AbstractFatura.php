@@ -17,6 +17,7 @@ use App\Models\FaturaTaslagi;
 use App\Models\Mukellef;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Carbon;
 use Onrslu\HtEfatura\Contracts\AppType;
 use Onrslu\HtEfatura\Models\CustomerIdentificationOther;
 use Onrslu\HtEfatura\Models\Invoice;
@@ -28,6 +29,7 @@ use Onrslu\HtEfatura\Models\LineTax;
 use Onrslu\HtEfatura\Models\LineTaxes;
 use Onrslu\HtEfatura\Models\Note;
 use Onrslu\HtEfatura\Models\Party;
+use Onrslu\HtEfatura\Models\PaymentMeans;
 use Onrslu\HtEfatura\Services\RestRequest;
 use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
 use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
@@ -55,6 +57,12 @@ abstract class AbstractFatura
      * @return float
      */
     abstract protected function getKdvPercentage() : float;
+
+    /**
+     * @param Carbon $paymentDueDate
+     * @return PaymentMeans
+     */
+    abstract protected function getPaymentMeans(Carbon $paymentDueDate) : PaymentMeans;
 
     /**
      * @param FaturaInterface $fatura
@@ -141,6 +149,14 @@ abstract class AbstractFatura
             ->setTaxInclusiveAmount($invoiceLines->getPriceTotal())
             ->setUUID($fatura->{Fatura::COLUMN_UUID});
 
+        // Payment Means
+        $paymentMeans = $this->getPaymentMeans(
+                            $fatura->{Fatura::COLUMN_SON_ODEME_TARIHI}
+                                ->hour(23)
+                                ->minute(59)
+                                ->second(59)
+                        );
+
         // Invoice Model
         $invoiceModel = new InvoiceModel();
         $invoiceModel
@@ -148,7 +164,8 @@ abstract class AbstractFatura
             ->setCustomerAgent($customerAgent)
             ->setSupplier($seller)
             ->setInvoiceLines($invoiceLines)
-            ->setInvoiceheader($invoiceHeader);
+            ->setInvoiceheader($invoiceHeader)
+            ->setPaymentMeans([$paymentMeans]);
 
         $invoice
             ->setDestinationIdentifier($fatura->abone->mukellef->getIdentificationId())
@@ -348,6 +365,25 @@ abstract class AbstractFatura
         }
 
         return $invoiceLines;
+    }
+
+    /**
+     * @param Carbon $paymentDueDate
+     * @param string $bankAccount
+     * @return PaymentMeans
+     */
+    protected function generatePaymentMeans(Carbon $paymentDueDate, string $bankAccount): PaymentMeans
+    {
+        $paymentMeans = new PaymentMeans();
+
+        $paymentMeans->setInstructionNote('-');
+        $paymentMeans->setPayeeFinancialAccount($bankAccount);
+        $paymentMeans->setPayeeFinancialCurrencyCode(new CurrencyCode('TRY'));
+        $paymentMeans->setPaymentChannelCode('');
+        $paymentMeans->setPaymentDueDate($paymentDueDate->toDateTimeString());
+        $paymentMeans->setPaymentMeansCode('ZZZ');
+
+        return $paymentMeans;
     }
 
     /**
