@@ -43,6 +43,7 @@ class MukellefController extends Controller
             Mukellef::COLUMN_ADRES,
             Mukellef::COLUMN_TELEFON,
             Mukellef::COLUMN_URN,
+            Mukellef::COLUMN_IBAN,
         ]);
 
         if ($request->id) {

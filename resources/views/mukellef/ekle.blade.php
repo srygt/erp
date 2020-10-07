@@ -82,6 +82,14 @@
                             </div>
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
+                                    <label>IBAN</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="iban" name="iban" value="{{ old('iban', $mukellef->iban) }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
                                     <label>Ad</label>
                                     <input class="form-control" name="ad" value="{{ old('ad', $mukellef->ad) }}" type="text">
                                 </div>
@@ -172,7 +180,13 @@
             <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
             <script src="{{ asset('js/abonejs.js') }}"></script>
             <script src="{{ asset('assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
+            <script src="{{ asset('assets/vendor/jquery-inputmask/inputmask/inputmask.js') }}"></script>
             <script>
+
+                $(document).ready(function() {
+                    const selector  = document.getElementById('iban');
+                    Inputmask("TR99 9999 9999 9999 9999 9999 99").mask(selector);
+                });
 
                 $.getJSON("{{ asset('js/json/il-bolge.json') }}",function (sonuc) {
                     $.each(sonuc, function(index, value){
