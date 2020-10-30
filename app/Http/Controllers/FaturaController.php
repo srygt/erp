@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Http\Requests\FaturaEkleRequest;
 use App\Http\Requests\GelenFaturaRequest;
+use App\Http\Requests\GidenFaturaRequest;
 use App\Models\Abone;
 use App\Models\Fatura;
 use App\Models\FaturaTaslagi;
 use App\Services\Fatura\FaturaFactory;
+use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -29,11 +31,28 @@ use Throwable;
 class FaturaController extends Controller
 {
     /**
+     * @param GidenFaturaRequest $request
      * @return Application|Factory|View
      */
-    public function index()
+    public function index(GidenFaturaRequest $request)
     {
-        $faturalar = Fatura::where(Fatura::COLUMN_DURUM, Fatura::COLUMN_DURUM_BASARILI)
+        $since = $request->input('since', GidenFaturaRequest::SINCE_DEFAULT);
+
+        if ($since > 0) {
+            $model = Fatura::where(Fatura::CREATED_AT, '>=', Carbon::parse('-' . $since . ' days'));
+        }
+        else {
+            $model = Fatura::query();
+        }
+
+        $appType = $request->input('app_type', GidenFaturaRequest::APP_TYPE_DEFAULT);
+
+        if ($appType > 0) {
+            $model = $model->where(Fatura::COLUMN_APP_TYPE, $appType);
+        }
+
+        $faturalar = $model
+            ->where(Fatura::COLUMN_DURUM, Fatura::COLUMN_DURUM_BASARILI)
             ->orderBy(Fatura::COLUMN_ID, 'DESC')
             ->with('abone.mukellef')
             ->get();
