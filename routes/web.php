@@ -95,5 +95,7 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->where(['id' => '[0-9]+']);
     Route::get('faturalar/api/son-fatura','FaturaApiController@sonFaturaDetay')
         ->name('fatura.api.son-fatura');
+    Route::post('faturalar/api/okuma-durumu','FaturaApiController@okumaDurumu')
+        ->name('fatura.api.okuma-durumu');
 });
 

@@ -66,7 +66,7 @@
                     <td>{{ $fatura->DocumentTypeCode }}</td>
                     <td>{{ $fatura->ProfileId }}</td>
                     <td>{{ $fatura->StatusExp }}</td>
-                    <td>
+                    <td class="readingStatus">
                         @if ($fatura->IsRead === true )
                             Evet
                         @elseif ($fatura->IsRead === false)
@@ -79,6 +79,13 @@
                     <td>{{ $fatura->CreatedDate }}</td>
                     <td>
                         <a href="{{ route('fatura.detay', ['appType' => $fatura->AppType, 'uuid' => $fatura->UUID]) }}" class="btn btn-sm btn-default" ><i class="fa fa-download text-blue"></i></a>
+                        @if ($fatura->IsRead === true )
+                            <a href="javascript:" onclick="javascript:changeReadStatus(this, '{{ $fatura->UUID }}')" data-is-mark-readed="0" class="btn btn-sm btn-default" ><i class="fa fa-envelope text-green"></i></a>
+                        @elseif ($fatura->IsRead === false)
+                            <a href="javascript:" onclick="javascript:changeReadStatus(this, '{{ $fatura->UUID }}')" data-is-mark-readed="1" class="btn btn-sm btn-default" ><i class="fa fa-envelope-open text-green"></i></a>
+                        @else
+                            HATA!
+                        @endif
                         <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
                     </td>
                 </tr>
@@ -119,5 +126,59 @@
             },
             "order": [[ 7, "desc" ]],
         } );
+
+        function changeReadStatus(element, uuid) {
+            const $element = $(element)
+            const isMarkReaded = $element.data('is-mark-readed');
+            const confirmationType = isMarkReaded ? 'Okundu' : 'Okunmadı'
+
+            swal({
+                title: "İşlem Onayı",
+                text: confirmationType + " olarak işaretlemek istediğiniz emin misiniz?",
+                type: "info",
+                showCancelButton: true,
+                cancelButtonText: 'İptal',
+                confirmButtonColor: "#dc3545",
+                confirmButtonText: "Evet",
+                closeOnConfirm: true
+            }, () => {
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: "POST",
+                    url: "{{ route('fatura.api.okuma-durumu') }}",
+                    data: {
+                        uuid: uuid,
+                        isMarkReaded: isMarkReaded,
+                    }
+                })
+                    .done(() => {
+                        const tr = $element.closest('tr')
+
+                        if (isMarkReaded) {
+                            tr.removeClass('notRead')
+                            tr.children('.readingStatus').html('Evet')
+                            $element.children('i').removeClass('fa-envelope').addClass('fa-envelope-open')
+                            $element.data('is-mark-readed', 0)
+                        }
+                        else {
+                            tr.addClass('notRead')
+                            tr.children('.readingStatus').html('Hayır')
+                            $element.children('i').removeClass('fa-envelope-open').addClass('fa-envelope')
+                            $element.data('is-mark-readed', 1)
+                        }
+
+                        swal(
+                            confirmationType + " olarak işaretlendi!",
+                            confirmationType + " olarak işaretleme işlemi başarı ile tamamlandı.", "success"
+                        );
+                    })
+                    .fail(( jqXHR, textStatus ) => {
+                        alert( "Request failed: " + textStatus );
+                    });
+            });
+        }
     </script>
 @stop
