@@ -50,7 +50,7 @@
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="body">
-                    <a href="{{ route('fatura.liste') }}?since=30&app_type=2">
+                    <a href="{{ route('fatura.liste') }}?since=30&app_type=1">
                         <div class="d-flex align-items-center">
                             <div class="icon-in-bg bg-azura text-white rounded-circle"><i class="fa fa-arrow-up"></i></div>
                             <div class="ml-4">

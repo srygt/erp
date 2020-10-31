@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
-use Onrslu\HtEfatura\Types\Enums\AppType\EFaturaGiden;
+use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
 
 class GidenFaturaRequest extends FormRequest
 {
@@ -19,7 +19,7 @@ class GidenFaturaRequest extends FormRequest
     const SINCE_DEFAULT         = 30;
 
     const APP_TYPE_LIST         = [
-        EFaturaGiden::TYPE  => 'eFatura',
+        EFatura::TYPE       => 'eFatura',
         EArsiv::TYPE        => 'eArşiv',
         -1                  => 'Tümü',
     ];
