@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Http\Requests\FaturaEkleRequest;
 use App\Http\Requests\GelenFaturaRequest;
+use App\Http\Requests\GidenFaturaRaporlariRequest;
 use App\Http\Requests\GidenFaturaRequest;
 use App\Models\Abone;
 use App\Models\Fatura;
@@ -20,8 +21,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Onrslu\HtEfatura\Factories\AppTypeFactory;
 use Onrslu\HtEfatura\Models\DocumentList\DocumentList;
 use Onrslu\HtEfatura\Services\RestRequest;
+use Onrslu\HtEfatura\Types\Enums\AppType\BaseAppType;
 use Onrslu\HtEfatura\Types\Enums\AppType\EArsiv;
 use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
 use Onrslu\HtEfatura\Types\Enums\AppType\EFaturaGiden;
@@ -83,6 +86,41 @@ class FaturaController extends Controller
 
         return view(
             'faturalar.gelenFaturaListe',
+            [
+                'faturalar' => array_reverse($response->documents),
+            ]
+        );
+    }
+
+    /**
+     * @param GidenFaturaRaporlariRequest $request
+     * @return Application|Factory|View
+     * @throws Throwable
+     */
+    public function gidenFaturaRaporlari(GidenFaturaRaporlariRequest $request)
+    {
+        $since = $request->input('since', GidenFaturaRaporlariRequest::SINCE_DEFAULT);
+        $appType = $request->input('app_type', GidenFaturaRaporlariRequest::APP_TYPE_DEFAULT);
+
+        $appTypeClassName = AppTypeFactory::create($appType);
+
+        /** @var BaseAppType $appTypeClass */
+        $appTypeClass = new $appTypeClassName;
+
+        $documentList       = (new DocumentList)
+            ->setAppType($appTypeClass)
+            ->setDateType(new CreatedDate)
+            ->setStartDate(date('Y-m-d', strtotime('-' . $since . ' days')))
+            ->setEndDate(date('Y-m-d', strtotime('+1 minutes')));
+
+        $response           = json_decode(
+            (new RestRequest)->getDocumentList($documentList)->getBody()->getContents()
+        );
+
+        throw_if(!$response->IsSucceeded, new HizliTeknolojiIsSuccessException($response->Message));
+
+        return view(
+            'faturalar.gidenFaturaRaporlari',
             [
                 'faturalar' => array_reverse($response->documents),
             ]

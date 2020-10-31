@@ -65,6 +65,8 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('fatura.detay');
     Route::get('faturalar/gelen','FaturaController@gelenFaturalar')
         ->name('fatura.gelen.liste');
+    Route::get('faturalar/giden-rapor','FaturaController@gidenFaturaRaporlari')
+        ->name('fatura.giden.rapor');
 
     // Genel Ayarlar
     Route::get('ayarlar/genel','GenelAyarController@index')

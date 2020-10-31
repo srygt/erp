@@ -20,7 +20,12 @@
                         <li
                             class="{{ Request::segment(2) === 'faturalar' && Request::segment(3) == 'gelen' ? 'active' : null }}"
                         >
-                            <a href="{{route('fatura.gelen.liste')}}">Gelen Fatura Listesi</a>
+                            <a href="{{route('fatura.gelen.liste')}}">Gelen Fatura Raporları</a>
+                        </li>
+                        <li
+                            class="{{ Request::segment(2) === 'faturalar' && Request::segment(3) == 'giden-rapor' ? 'active' : null }}"
+                        >
+                            <a href="{{route('fatura.giden.rapor')}}">Giden Fatura Raporları</a>
                         </li>
                         <li
                             class="{{ Request::segment(2) === 'faturalar' && Request::segment(3) == '' ? 'active' : null }}"
