@@ -83,10 +83,20 @@
                     <td>{{ $fatura->TargetTitle }}</td>
                     <td>{{ $fatura->DocumentTypeCode }}</td>
                     <td>{{ $fatura->ProfileId }}</td>
-                    <td>
+                    <td
+                    @if ($fatura->Status === 12 || $fatura->Status === 7)
+                        class="basarili"
+                    @elseif ($fatura->Status === 11 || $fatura->Status === 9)
+                        class="basarisiz"
+                    @endif
+                    >
                         {{ $fatura->StatusExp }}
                     </td>
-                    <td>
+                    <td
+                        @if ($fatura->EnvelopeStatus === 14000 || $fatura->EnvelopeStatus === 1300)
+                            class="basarili"
+                        @endif
+                    >
                         {{ $fatura->EnvelopeExp }}
                     </td>
                     <td>{{ $fatura->PayableAmount . $fatura->DocumentCurrencyCode }}</td>
@@ -111,6 +121,12 @@
         .dataTables_length{display: none;}
         .dataTables_filter input {
             background-color: white;
+        }
+        .basarili {
+            color: #00da00;
+        }
+        .basarisiz {
+            color: #FF0000;
         }
     </style>
 @stop
