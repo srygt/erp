@@ -29,7 +29,7 @@ class FaturaEkleRequest extends FormRequest
     public function rules()
     {
         return [
-            Fatura::COLUMN_UUID                 => 'required|uuid|exists:App\Models\FaturaTaslagi,uuid',
+            Fatura::COLUMN_UUID                 => 'required|uuid|exists:App\Models\FaturaTaslagi,uuid|unique:App\Models\Fatura,uuid',
             'ek_kalemler'                       => 'nullable|array',
             'ek_kalemler.*'                     => 'nullable|array',
             'ek_kalemler.*.*.id'                => 'required|numeric|exists:App\Models\AyarEkKalem,id',
