@@ -70,6 +70,16 @@
                         </li>
                     </ul>
                 </li>
+                <li class="{{ Request::segment(2) === 'import' ? 'active open' : null }}">
+                    <a href="#myPage" class="has-arrow"><i class="fa fa-upload"></i><span>İçeri Aktarma</span></a>
+                    <ul>
+                        <li
+                            class="{{ Request::segment(2) === 'fatura' && Request::segment(3) == '' ? 'active' : null }}"
+                        >
+                            <a href="{{route('import.fatura.get')}}">Fatura İçeri Aktarma</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="{{ Request::segment(2) === 'ayarlar' ? 'active' : null }}">
                     <a href="#myPage" class="has-arrow"><i class="fa fa-cogs"></i><span>Ayar İşlemleri</span></a>
                     <ul>

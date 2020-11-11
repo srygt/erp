@@ -91,6 +91,10 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('ayar.ek-kalem.destroy')
         ->where(['id' => '[0-9]+']);
 
+    // Import
+    Route::get('import/fatura','ImportController@faturaGet')
+        ->name('import.fatura.get');
+
     // Api
     Route::get('mukellefler/api/{id}','MukellefController@detayApi')
         ->name('mukellef.detay')
