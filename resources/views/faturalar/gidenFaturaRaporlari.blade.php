@@ -118,7 +118,6 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <style>
-        .dataTables_length{display: none;}
         .dataTables_filter input {
             background-color: white;
         }
