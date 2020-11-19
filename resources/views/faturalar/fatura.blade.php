@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="text-lg-right">
-                            <a href="{{ route('fatura.ekle.post') }}" class="btn btn-lg btn-primary">
+                            <a href="{{ route('faturataslak.ekle.get') }}" class="btn btn-lg btn-primary">
                                 Yeni Fatura Oluştur
                             </a>
                         </div>
