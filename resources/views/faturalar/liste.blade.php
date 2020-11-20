@@ -118,10 +118,11 @@
     <script>
 
         $('.dataTable').DataTable( {
-            "ordering": false,
             "language": {
                 "url":'{{asset('js/json/datatableturkish.json')}}',
-            }
+            },
+            "pageLength": 25,
+            "order": [[ 4, "desc" ]],
         } );
     </script>
 @stop

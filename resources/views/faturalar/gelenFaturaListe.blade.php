@@ -123,6 +123,7 @@
             "language": {
                 "url":'{{asset('js/json/datatableturkish.json')}}',
             },
+            "pageLength": 25,
             "order": [[ 7, "desc" ]],
         } );
 
