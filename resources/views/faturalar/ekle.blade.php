@@ -284,13 +284,15 @@
         function getComingDayDate(day) {
             var possibleDate                = new Date();
 
-            if (day > possibleDate.getDay()) {
-                // getMonth() Ocak'ı  "0" kabul ediyor, setMonth() Ocak'ı "1" kabul ediyor :)
-                possibleDate.setMonth( possibleDate.getMonth() + 1);
+            if (day < possibleDate.getDay()) {
+                possibleDate.setMonth(possibleDate.getMonth() + 1)
             }
 
+            // getMonth() Ocak'ı  "0" kabul ediyor, setMonth() Ocak'ı "1" kabul ediyor :)
+            let month                       = possibleDate.getMonth() + 1
+
             return ("0" + day).slice(-2)
-                + '.' + ("0" + possibleDate.getMonth()).slice(-2)
+                + '.' + ("0" + month).slice(-2)
                 + '.' + ("0" + possibleDate.getFullYear()).slice(-4);
         }
 
