@@ -135,9 +135,7 @@ abstract class AbstractFatura
                     $this->getAboneAndSayacNotes($fatura)
                     . 'Son Ödeme Tarihi: ' . $fatura->{Fatura::COLUMN_SON_ODEME_TARIHI}->format('d.m.Y') . "\n\n"
                     . 'Banka Hesap Adı: ' . Ayar::where(Ayar::COLUMN_BASLIK, $fatura->{Fatura::COLUMN_TUR} . '.banka_hesap_adi')
-                                                ->first()->{Ayar::COLUMN_DEGER} . "\n"
-                    . 'IBAN: ' . Ayar::where(Ayar::COLUMN_BASLIK, $fatura->{Fatura::COLUMN_TUR} . '.banka_iban')
-                                    ->first()->{Ayar::COLUMN_DEGER} . "\n\n"
+                                                ->first()->{Ayar::COLUMN_DEGER} . "\n\n"
                     . $fatura->{Fatura::COLUMN_NOT}
                     . "\n\n"
                 )
