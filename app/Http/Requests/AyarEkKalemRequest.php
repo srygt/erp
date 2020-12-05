@@ -36,6 +36,7 @@ class AyarEkKalemRequest extends FormRequest
                                                 . AyarEkKalem::COLUMN_UCRET_TUR . ','
                                                 . AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT
                                                 .'|numeric|min:0.000000001|max:999.999999999',
+            AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => 'required|boolean',
         ];
     }
 
@@ -46,6 +47,7 @@ class AyarEkKalemRequest extends FormRequest
             AyarEkKalem::COLUMN_UCRET_TUR   => 'Ücret Türü',
             AyarEkKalem::COLUMN_BASLIK      => 'Başlık',
             AyarEkKalem::COLUMN_DEGER       => 'Birim Fiyat',
+            AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => 'Varsayılan Durum',
         ];
     }
 

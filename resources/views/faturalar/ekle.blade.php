@@ -225,7 +225,9 @@
                                                                 type="checkbox"
                                                                 name="ek_kalemler[{{ $tur }}][{{ $key }}][id]"
                                                                 value="{{ $ekKalem->id }}"
-                                                                checked
+                                                                @if($ekKalem->varsayilan_durum ?? '' === true)
+                                                                    checked
+                                                                @endif
                                                             >
                                                             <span>{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_BASLIK} }}</span>
                                                         </label>

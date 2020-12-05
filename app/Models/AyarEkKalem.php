@@ -13,12 +13,18 @@ class AyarEkKalem extends Model
         self::COLUMN_DEGER,
         self::COLUMN_TUR,
         self::COLUMN_UCRET_TUR,
+        self::COLUMN_VARSAYILAN_DURUM,
+    ];
+
+    protected $casts = [
+        self::COLUMN_VARSAYILAN_DURUM   => 'boolean',
     ];
 
     const COLUMN_BASLIK                 = 'baslik';
     const COLUMN_DEGER                  = 'deger';
     const COLUMN_TUR                    = 'tur';
     const COLUMN_UCRET_TUR              = 'ucret_tur';
+    const COLUMN_VARSAYILAN_DURUM       = 'varsayilan_durum';
 
     const FIELD_UCRET_BIRIM_FIYAT       = 'birim_fiyat';
     const FIELD_UCRET_DEGISKEN_TUTAR    = 'degisken_tutar';

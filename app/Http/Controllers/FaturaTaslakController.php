@@ -24,6 +24,7 @@ class FaturaTaslakController extends Controller
                             AyarEkKalem::COLUMN_UCRET_TUR,
                             AyarEkKalem::COLUMN_DEGER,
                             AyarEkKalem::COLUMN_BASLIK,
+                            AyarEkKalem::COLUMN_VARSAYILAN_DURUM,
                         ])
                         ->get()
                         ->groupBy(AyarEkKalem::COLUMN_TUR);

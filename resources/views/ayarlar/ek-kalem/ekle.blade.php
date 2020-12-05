@@ -92,6 +92,30 @@
                                         value="{{ old('deger', $ekKalem->deger ?? '') }}">
                                 </div>
                             </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Varsayılan Durum<span class="text-danger">*</span></label>
+                                    <select id="varsayilan_durum" name="varsayilan_durum" class="form-control">
+                                        <option value="">Seçin</option>
+                                        <option
+                                            value="1"
+                                            @if(old('varsayilan_durum', $ekKalem->varsayilan_durum ?? '') === true)
+                                            selected
+                                            @endif
+                                        >
+                                            Fatura oluşturma sayfasında işaretli gelsin
+                                        </option>
+                                        <option
+                                            value="0"
+                                            @if(old('varsayilan_durum', $ekKalem->varsayilan_durum ?? '') === false)
+                                            selected
+                                            @endif
+                                        >
+                                            Fatura oluşturma sayfasında işaretli gelmesin
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-lg-right m-t-20">
