@@ -14,12 +14,12 @@ class AdminSeeder extends Seeder
     {
         DB::table('admins')->updateOrInsert(
             [
-                'username'=>'serdaryigitmatgis',
+                'username'=>'admin@admin.com',
             ],
             [
                 'name'      => 'Serdar',
                 'lastname'  => 'Yiğit',
-                'password'  => bcrypt('asd123456')
+                'password'  => bcrypt('admin')
             ]
         );
     }
