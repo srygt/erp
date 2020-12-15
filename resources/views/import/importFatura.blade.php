@@ -25,24 +25,33 @@
             <div class="card text-white bg-info">
                 <div class="card-header">CSV Fatura İçeri Aktarma</div>
                 <div class="card-body">
-                    <form action="?" method="post">
+                    <form action="{{route("import.fatura.post")}}" enctype="multipart/form-data" method="post">
                         @csrf
-                        @if(isset($mukellef->id))
-                            <input type="hidden" name="id" value="{{ $mukellef->id }}">
-                        @endif
                         <div class="row">
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
+                                    <label>Fatura Türü<span class="text-danger">*</span></label>
+                                    <select id="tur" name="tur" class="form-control">
+                                        <option value="">Seçin</option>
+                                        <option value="dogalgaz">Doğalgaz</option>
+                                        <option value="elektrik">Elektrik</option>
+                                        <option value="su">Su</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span></label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Dosya Seçin</label>
+                                        <input type="file" class="custom-file-input" id="faturaFile" name="dosya">
+                                        <label class="custom-file-label" for="faturaFile">Dosya Seçin</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 text-lg-right m-t-20">
-                                <button type="button" class="btn btn-primary btn-lg">Gönder</button>
+                            <div class="col-sm-12 m-t-20 text-right">
+                                <button type="submit" class="btn btn-primary btn-lg">Gönder</button>
                             </div>
                         </div>
                     </form>
