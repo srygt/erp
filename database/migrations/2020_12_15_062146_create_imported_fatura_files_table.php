@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Abone;
 use App\Models\ImportedFaturaFile;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +19,7 @@ class CreateImportedFaturaFilesTable extends Migration
             $table->id();
             $table->enum(ImportedFaturaFile::COLUMN_STATUS, ImportedFaturaFile::LIST_STATUS)
                 ->default(ImportedFaturaFile::FIELD_STATUS_UPLOADING);
-            $table->enum(ImportedFaturaFile::COLUMN_TYPE, ImportedFaturaFile::LIST_TYPES);
+            $table->enum(ImportedFaturaFile::COLUMN_TYPE, Abone::TUR_LIST);
             $table->string(ImportedFaturaFile::COLUMN_IP_ADDRESS);
             $table->timestamps();
         });
