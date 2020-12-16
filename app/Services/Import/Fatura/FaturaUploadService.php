@@ -9,7 +9,6 @@ use Illuminate\Http\UploadedFile;
 
 class FaturaUploadService
 {
-    const IMPORT_PATH       = 'import/fatura';
     const FILE_EXTENSION    = '.csv';
 
     /**
@@ -54,7 +53,7 @@ class FaturaUploadService
     protected function copyFile(UploadedFile $file, ImportedFaturaFile $importedFileModel)
     {
         return $file->storeAs(
-            self::IMPORT_PATH,
+            config('fatura.importPath'),
             $importedFileModel->{ImportedFaturaFile::COLUMN_ID} . self::FILE_EXTENSION
         );
     }

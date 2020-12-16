@@ -18,6 +18,7 @@ return [
     'aboneNoPadString'      => '0',
     'aboneNoPadDirection'   => STR_PAD_LEFT,
 
+    'importPath'            => 'import/fatura',
     'logPaths'              => [
         'error'                 => 'FaturaRRE/:yil/:ay/:gun/:id_:type_error.log',
         'request'               => 'FaturaRRE/:yil/:ay/:gun/:id_:type_request.log',
