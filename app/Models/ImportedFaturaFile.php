@@ -14,9 +14,13 @@ class ImportedFaturaFile extends Model
     const LIST_STATUS   = [
         self::FIELD_STATUS_UPLOADING,
         self::FIELD_STATUS_UPLOADED,
+        self::FIELD_STATUS_MALFORMED,
+        self::FIELD_STATUS_APPROVED,
     ];
 
     const FIELD_STATUS_UPLOADING    = 'uploading';
     const FIELD_STATUS_UPLOADED     = 'uploaded';
+    const FIELD_STATUS_MALFORMED    = 'malformed';
+    const FIELD_STATUS_APPROVED     = 'approved';
 
 }

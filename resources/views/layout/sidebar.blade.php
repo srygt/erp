@@ -76,7 +76,7 @@
                         <li
                             class="{{ Request::segment(2) === 'fatura' && Request::segment(3) == '' ? 'active' : null }}"
                         >
-                            <a href="{{route('import.fatura.get')}}">Fatura İçeri Aktarma</a>
+                            <a href="{{route('import.fatura.upload.get')}}">Fatura İçeri Aktarma</a>
                         </li>
                     </ul>
                 </li>

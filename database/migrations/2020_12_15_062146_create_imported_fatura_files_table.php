@@ -19,7 +19,7 @@ class CreateImportedFaturaFilesTable extends Migration
             $table->id();
             $table->enum(ImportedFaturaFile::COLUMN_STATUS, ImportedFaturaFile::LIST_STATUS)
                 ->default(ImportedFaturaFile::FIELD_STATUS_UPLOADING);
-            $table->enum(ImportedFaturaFile::COLUMN_TYPE, Abone::TUR_LIST);
+            $table->enum(ImportedFaturaFile::COLUMN_TYPE, array_keys(Abone::TUR_LIST));
             $table->string(ImportedFaturaFile::COLUMN_IP_ADDRESS);
             $table->timestamps();
         });

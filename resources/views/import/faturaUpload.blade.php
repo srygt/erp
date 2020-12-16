@@ -25,7 +25,7 @@
             <div class="card text-white bg-info">
                 <div class="card-header">CSV Fatura İçeri Aktarma</div>
                 <div class="card-body">
-                    <form action="{{route("import.fatura.post")}}" enctype="multipart/form-data" method="post">
+                    <form action="{{route("import.fatura.upload.post")}}" enctype="multipart/form-data" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-4 col-sm-12">
@@ -33,9 +33,9 @@
                                     <label>Fatura Türü<span class="text-danger">*</span></label>
                                     <select id="tur" name="tur" class="form-control">
                                         <option value="">Seçin</option>
-                                        <option value="dogalgaz">Doğalgaz</option>
-                                        <option value="elektrik">Elektrik</option>
-                                        <option value="su">Su</option>
+                                        @foreach(\App\Models\Abone::TUR_LIST as $slug => $title)
+                                            <option value="{{ $slug }}">{{ $title }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

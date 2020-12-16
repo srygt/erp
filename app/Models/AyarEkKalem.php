@@ -20,6 +20,7 @@ class AyarEkKalem extends Model
         self::COLUMN_VARSAYILAN_DURUM   => 'boolean',
     ];
 
+    const COLUMN_ID                     = 'id';
     const COLUMN_BASLIK                 = 'baslik';
     const COLUMN_DEGER                  = 'deger';
     const COLUMN_TUR                    = 'tur';

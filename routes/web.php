@@ -92,10 +92,17 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->where(['id' => '[0-9]+']);
 
     // Import
-    Route::get('import/fatura','Import\FaturaUploadController@index')
-        ->name('import.fatura.get');
-    Route::post('import/fatura','Import\FaturaUploadController@store')
-        ->name('import.fatura.post');
+    Route::get('import/fatura/upload','Import\FaturaUploadController@index')
+        ->name('import.fatura.upload.get');
+    Route::post('import/fatura/upload','Import\FaturaUploadController@store')
+        ->name('import.fatura.upload.post');
+    Route::get('import/fatura/upload/{fatura_file}','Import\FaturaUploadController@show')
+        ->name('import.fatura.upload.detay')
+        ->where(['id' => '[0-9]+']);
+
+    Route::get('import/fatura/validation/{fatura_file}','Import\FaturaValidationController@show')
+        ->name('import.fatura.validation.detay')
+        ->where(['id' => '[0-9]+']);
 
     // Api
     Route::get('mukellefler/api/{id}','MukellefController@detayApi')
