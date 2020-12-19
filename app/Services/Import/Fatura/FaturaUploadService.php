@@ -9,8 +9,6 @@ use Illuminate\Http\UploadedFile;
 
 class FaturaUploadService
 {
-    const FILE_EXTENSION    = '.csv';
-
     /**
      * @param string $type imported file type (Abone::TUR_LIST)
      * @param string $ip
@@ -19,7 +17,7 @@ class FaturaUploadService
      */
     public function uploadFile(string $type, string $ip, UploadedFile $file) : ImportedFaturaFile
     {
-        $importedFileModel  = $this->createModel($type, $ip);
+        $importedFileModel  = $this->createModel($type, $file->extension(), $ip);
 
         $this->copyFile($file, $importedFileModel);
 
@@ -30,14 +28,16 @@ class FaturaUploadService
 
     /**
      * @param string $type
+     * @param string $extension
      * @param string $ip
      * @return ImportedFaturaFile
      */
-    protected function createModel(string $type, string $ip) : ImportedFaturaFile
+    protected function createModel(string $type, string $extension, string $ip) : ImportedFaturaFile
     {
         $importedFaturaFile = new ImportedFaturaFile();
 
         $importedFaturaFile->{ImportedFaturaFile::COLUMN_TYPE}          = $type;
+        $importedFaturaFile->{ImportedFaturaFile::COLUMN_EXTENSION}     = $extension;
         $importedFaturaFile->{ImportedFaturaFile::COLUMN_IP_ADDRESS}    = $ip;
 
         $importedFaturaFile->save();
@@ -54,7 +54,7 @@ class FaturaUploadService
     {
         return $file->storeAs(
             config('fatura.importPath'),
-            $importedFileModel->{ImportedFaturaFile::COLUMN_ID} . self::FILE_EXTENSION
+            $importedFileModel->getFileName()
         );
     }
 

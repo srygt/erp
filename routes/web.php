@@ -100,7 +100,7 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('import.fatura.upload.detay')
         ->where(['id' => '[0-9]+']);
 
-    Route::get('import/fatura/validation/{fatura_file}','Import\FaturaValidationController@show')
+    Route::post('import/fatura/validation/{fatura_file}','Import\FaturaValidationController@store')
         ->name('import.fatura.validation.detay')
         ->where(['id' => '[0-9]+']);
 

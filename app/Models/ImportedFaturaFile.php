@@ -9,6 +9,7 @@ class ImportedFaturaFile extends Model
     const COLUMN_ID             = 'id';
     const COLUMN_STATUS         = 'status';
     const COLUMN_TYPE           = 'type';
+    const COLUMN_EXTENSION      = 'extension';
     const COLUMN_IP_ADDRESS     = 'ip_address';
 
     const LIST_STATUS   = [
@@ -23,4 +24,19 @@ class ImportedFaturaFile extends Model
     const FIELD_STATUS_MALFORMED    = 'malformed';
     const FIELD_STATUS_APPROVED     = 'approved';
 
+    /**
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->{self::COLUMN_ID} . '.' . $this->{self::COLUMN_EXTENSION};
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return config('fatura.importPath') . '/' . $this->getFileName();
+    }
 }

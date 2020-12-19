@@ -148,4 +148,6 @@ return [
 
     'attributes' => [],
 
+    'activation' => ':attribute alanının aktivasyon durumu yanlış.',
+
 ];

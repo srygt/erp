@@ -16,7 +16,7 @@ class FaturaUploadController extends Controller
      */
     public function index()
     {
-        return view('import.fatura.uploadUpload');
+        return view('import.faturaUpload');
     }
 
     public function store(ImportFaturaRequest $request, FaturaUploadService $uploadService)
@@ -39,12 +39,13 @@ class FaturaUploadController extends Controller
 
         $data = [];
 
-        $data['ekKalemler'] = AyarEkKalem::where(
+        $data['importedFaturaFile'] = $faturaFile;
+        $data['ekKalemler']         = AyarEkKalem::where(
                 AyarEkKalem::COLUMN_TUR,
                 $faturaFile->{ImportedFaturaFile::COLUMN_TYPE}
             )
             ->get();
 
-        return view('import.fatura.uploadDetail', $data);
+        return view('import.faturaDetail', $data);
     }
 }

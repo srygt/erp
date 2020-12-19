@@ -27,7 +27,11 @@ class ImportFaturaRequest extends FormRequest
     {
         return [
             'tur'   => ['required', Rule::in(array_keys(Abone::TUR_LIST))],
-            'dosya' => 'required|mimetypes:text/csv,text/plain|mimes:txt,text,csv',
+            'dosya' => [
+                'required',
+                'mimetypes:text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel',
+                'mimes:txt,text,csv,xlsx,xls'
+            ],
         ];
     }
 

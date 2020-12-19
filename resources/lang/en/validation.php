@@ -148,4 +148,5 @@ return [
 
     'attributes' => [],
 
+    'activation' => 'The :attribute activation status isn\'t correct.',
 ];

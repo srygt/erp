@@ -18,9 +18,14 @@ class CreateImportedFaturaFilesTable extends Migration
         Schema::create('imported_fatura_files', function (Blueprint $table) {
             $table->id();
             $table->enum(ImportedFaturaFile::COLUMN_STATUS, ImportedFaturaFile::LIST_STATUS)
-                ->default(ImportedFaturaFile::FIELD_STATUS_UPLOADING);
-            $table->enum(ImportedFaturaFile::COLUMN_TYPE, array_keys(Abone::TUR_LIST));
-            $table->string(ImportedFaturaFile::COLUMN_IP_ADDRESS);
+                ->default(ImportedFaturaFile::FIELD_STATUS_UPLOADING)
+                ->index();
+            $table->enum(ImportedFaturaFile::COLUMN_TYPE, array_keys(Abone::TUR_LIST))
+                ->index();
+            $table->string(ImportedFaturaFile::COLUMN_EXTENSION, '100')
+                ->index();
+            $table->string(ImportedFaturaFile::COLUMN_IP_ADDRESS, '100')
+                ->index();
             $table->timestamps();
         });
     }
