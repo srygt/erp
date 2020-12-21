@@ -148,6 +148,6 @@ return [
 
     'attributes' => [],
 
-    'activation' => ':attribute alanının aktivasyon durumu yanlış.',
+    'abone_activation' => ':attribute alanının aktivasyon durumu yanlış.',
 
 ];
