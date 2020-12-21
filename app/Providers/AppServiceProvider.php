@@ -28,6 +28,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('abone_exists', function ($attribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
+            list($type)  = $parameters;
+
+            return Abone::where(Abone::COLUMN_TUR, $type)
+                ->where(Abone::COLUMN_ABONE_NO, $value)
+                ->exists();
+        });
+
         Validator::extend('abone_activation', function ($sourceAttribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
             list($primaryAttribute, $aboneType, $enableColumn)   = $parameters;
 

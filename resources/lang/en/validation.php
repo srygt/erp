@@ -149,4 +149,5 @@ return [
     'attributes' => [],
 
     'abone_activation' => 'The :attribute activation status isn\'t correct.',
+    'abone_exists' => 'The :attribute field doesn\'t refer a record.',
 ];

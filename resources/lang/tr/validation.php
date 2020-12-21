@@ -149,5 +149,6 @@ return [
     'attributes' => [],
 
     'abone_activation' => ':attribute alanının aktivasyon durumu yanlış.',
+    'abone_exists' => ':attribute alanındaki değere sahip abone bulunamadı.',
 
 ];
