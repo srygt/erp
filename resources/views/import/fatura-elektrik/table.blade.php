@@ -26,7 +26,7 @@
             <tbody>
             @foreach($faturaList as $index => $fatura)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $index + \App\Imports\ElektrikFaturasImport::START_ROW }}</td>
                     <td>{{$fatura[0]}}</td>
                     <td>{{$fatura[1]}}</td>
                     <td class="text-right">{{$fatura[2]}}</td>

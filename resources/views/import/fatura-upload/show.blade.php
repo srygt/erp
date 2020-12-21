@@ -25,13 +25,12 @@
             <div class="card text-white bg-info">
                 <div class="card-header">CSV Fatura İçeri Aktarma</div>
                 <div class="card-body">
-                    <form action="{{route("import.fatura.validation.detay", $importedFaturaFile)}}" enctype="multipart/form-data" method="post">
-                        @csrf
+                    <form action="{{route("import.fatura.validation", $importedFaturaFile)}}" enctype="multipart/form-data" method="get">
                         <div class="row">
                             <div class="col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label>Devreden Borç Alanını Seçiniz<span class="text-danger">*</span></label>
-                                    <select id="gecikme_kalemi_id" name="gecikme_kalemi_id" class="form-control">
+                                    <select id="gecikme_kalemi_id" name="params[gecikme_kalemi_id]" class="form-control">
                                         <option value="">Seçin</option>
                                         @foreach($ekKalemler as $ekKalem)
                                             <option value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_ID} }}">

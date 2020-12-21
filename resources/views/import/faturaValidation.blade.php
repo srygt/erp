@@ -25,21 +25,24 @@
             <div class="card text-white bg-info">
                 <div class="card-header">CSV Fatura İçeri Aktarma</div>
                 <div class="card-body">
-                    <form action="{{route("import.fatura.validation.detay", $importedFaturaFile)}}" enctype="multipart/form-data" method="post">
-                        @csrf
-                        @includeWhen(
-                            \App\Models\Abone::COLUMN_TUR_ELEKTRIK === $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE},
-                            'import.tables.tableElektrik',
-                            [
-                                'faturaList' => $faturaList,
-                            ]
-                        )
-                        <div class="row">
-                            <div class="col-sm-12 m-t-20 text-right">
+                    @includeWhen(
+                        \App\Models\Abone::COLUMN_TUR_ELEKTRIK === $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE},
+                        'import.fatura-elektrik.table',
+                        [
+                            'faturaList' => $faturaList,
+                        ]
+                    )
+                    <div class="row">
+                        <div class="col-sm-12 m-t-20 text-right">
+                            <form action="{{route("import.fatura.import.post", $importedFaturaFile)}}" enctype="multipart/form-data" method="post">
+                                @csrf
+                                @foreach ($params as $key => $value)
+                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                @endforeach
                                 <button type="submit" class="btn btn-primary btn-lg">Gönder</button>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

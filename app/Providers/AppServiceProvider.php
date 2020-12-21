@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Abone;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Model;
@@ -27,8 +28,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extend('activation', function ($sourceAttribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
-            list($primaryAttribute, $modelClass, $primaryColumn, $enableColumn)   = $parameters;
+        Validator::extend('abone_activation', function ($sourceAttribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
+            list($primaryAttribute, $aboneType, $enableColumn)   = $parameters;
+
+            $modelClass = Abone::class;
+            $primaryColumn = Abone::COLUMN_ABONE_NO;
 
             $explodedPrimaryAttribute = collect(explode('.', $primaryAttribute));
 
@@ -64,7 +68,10 @@ class AppServiceProvider extends ServiceProvider
             $model = app($modelClass);
 
             /** @var Model $record */
-            $record = $model->where($primaryColumn, $targetValue)->first();
+            $record = $model
+                ->where(Abone::COLUMN_TUR, $aboneType)
+                ->where($primaryColumn, $targetValue)
+                ->first();
 
             if (is_null($record)) {
                 return true;

@@ -10,9 +10,11 @@ use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class FaturasImport implements ToCollection, WithCustomCsvSettings, WithValidation, WithStartRow
+class ElektrikFaturasImport implements ToCollection, WithCustomCsvSettings, WithValidation, WithStartRow
 {
     use Importable;
+
+    const START_ROW = 2;
 
     /**
      * @param Collection $collection
@@ -37,12 +39,13 @@ class FaturasImport implements ToCollection, WithCustomCsvSettings, WithValidati
 
     public function startRow(): int
     {
-        return 2;
+        return self::START_ROW;
     }
 
     public function rules(): array
     {
         return [
+            // TODO: elektrik exists
             '*.0' => ['required', 'exists:' . Abone::class . ',' . Abone::COLUMN_ABONE_NO],
             '*.1' => ['string'],
             '*.2' => ['required', 'numeric'],
@@ -51,11 +54,11 @@ class FaturasImport implements ToCollection, WithCustomCsvSettings, WithValidati
             '*.5' => ['required', 'numeric'],
             '*.6' => ['required', 'numeric'],
             '*.7' => ['required', 'numeric'],
-            '*.8' => ['numeric', 'activation:*.0,' . Abone::class . ',' . Abone::COLUMN_ABONE_NO . ',' . Abone::COLUMN_ENDUKTIF_BEDEL],
-            '*.9' => ['numeric', 'activation:*.0,' . Abone::class . ',' . Abone::COLUMN_ABONE_NO . ',' . Abone::COLUMN_KAPASITIF_BEDEL],
+            '*.8' => ['numeric', 'abone_activation:*.0,' . Abone::COLUMN_TUR_ELEKTRIK . ',' . Abone::COLUMN_ENDUKTIF_BEDEL],
+            '*.9' => ['numeric', 'abone_activation:*.0,' . Abone::COLUMN_TUR_ELEKTRIK . ',' . Abone::COLUMN_KAPASITIF_BEDEL],
             '*.10' => ['numeric'],
             '*.11' => ['numeric'],
-            '*.12' => ['numeric', 'activation:*.0,' . Abone::class . ',' . Abone::COLUMN_ABONE_NO . ',' . Abone::COLUMN_TRT_PAYI],
+            '*.12' => ['numeric', 'abone_activation:*.0,' . Abone::COLUMN_TUR_ELEKTRIK . ',' . Abone::COLUMN_TRT_PAYI],
             '*.13' => ['numeric'],
             '*.14' => ['numeric'],
             '*.15' => ['numeric'],
@@ -65,7 +68,7 @@ class FaturasImport implements ToCollection, WithCustomCsvSettings, WithValidati
 
     public function prepareForValidation($data, $index)
     {
-        $data[0]    = substr($data[0], -3);
+        $data[0]    = substr(trim($data[0]), -3);
 
         return $data;
     }

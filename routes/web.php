@@ -100,8 +100,12 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
         ->name('import.fatura.upload.detay')
         ->where(['id' => '[0-9]+']);
 
-    Route::post('import/fatura/validation/{fatura_file}','Import\FaturaValidationController@store')
-        ->name('import.fatura.validation.detay')
+    Route::get('import/fatura/validation/{fatura_file}','Import\FaturaValidationController@show')
+        ->name('import.fatura.validation')
+        ->where(['id' => '[0-9]+']);
+
+    Route::post('import/fatura/import/{fatura_file}','Import\FaturaImportController@store')
+        ->name('import.fatura.import.post')
         ->where(['id' => '[0-9]+']);
 
     // Api

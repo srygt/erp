@@ -3,48 +3,34 @@
 namespace App\Http\Controllers\Import;
 
 use App\Http\Controllers\Controller;
-use App\Imports\FaturasImport;
+use App\Imports\ElektrikFaturasImport;
 use App\Models\ImportedFaturaFile;
-use App\Services\Import\Fatura\FaturaUploadService;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Validators\ValidationException;
 
 class FaturaValidationController extends Controller
 {
     /**
+     * @param Request $request
      * @param ImportedFaturaFile $faturaFile
+     * @return Application|Factory|View
      */
-    public function store(ImportedFaturaFile $faturaFile)
+    public function show(Request $request, ImportedFaturaFile $faturaFile)
     {
-        try {
+        $faturaList = (Excel::toCollection(
+            new ElektrikFaturasImport,
+            $faturaFile->getFilePath()
+        ))->flatten(1);
 
-            $faturaList = (Excel::toCollection(
-                new FaturasImport,
-                $faturaFile->getFilePath()
-            ))->flatten(1);
-        }
-        // @see https://github.com/Maatwebsite/Laravel-Excel/issues/2792
-        catch (ValidationException $e) {
-            collect(
-                scandir(config('excel.temporary_files.local_path'))
-            )
-            // fetch only imported files
-            ->filter(function($fileName){
-                return Str::startsWith($fileName, 'laravel-excel');
-            })
-            // delete imported temp files
-            ->each(function($fileName){
-                unlink(config('excel.temporary_files.local_path') . DIRECTORY_SEPARATOR . $fileName);
-            });
-
-            throw $e;
-        }
-
-        return view('import.faturaConfirmation', [
+        return view('import.faturaValidation', [
             'importedFaturaFile'  => $faturaFile,
             'faturaList'  => $faturaList,
+            'params' => [
+                'gecikme_kalemi_id' => $request->input('params[gecikme_kalemi_id]'),
+            ],
         ]);
     }
 }
