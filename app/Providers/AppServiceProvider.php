@@ -31,8 +31,8 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('abone_exists', function ($attribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
             list($type)  = $parameters;
 
-            return Abone::where(Abone::COLUMN_TUR, $type)
-                ->where(Abone::COLUMN_ABONE_NO, $value)
+            return Abone::where(Abone::COLUMN_ABONE_NO, $value)
+                ->where(Abone::COLUMN_TUR, $type)
                 ->exists();
         });
 

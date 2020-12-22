@@ -85,6 +85,14 @@ class Abone extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function importedFaturalar()
+    {
+        return $this->hasMany(ImportedFatura::class);
+    }
+
+    /**
      * @return string
      * @throws Exception
      */
