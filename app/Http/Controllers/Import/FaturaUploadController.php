@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Import;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ImportFaturaRequest;
+use App\Http\Requests\Import\FaturaUploadRequest;
 use App\Models\AyarEkKalem;
 use App\Models\ImportedFaturaFile;
 use App\Services\Import\Fatura\FaturaUploadService;
@@ -19,7 +19,7 @@ class FaturaUploadController extends Controller
         return view('import.fatura-upload.index');
     }
 
-    public function store(ImportFaturaRequest $request, FaturaUploadService $uploadService)
+    public function store(FaturaUploadRequest $request, FaturaUploadService $uploadService)
     {
         $uploadedFileModel = $uploadService->uploadFile(
             $request->input('tur'),

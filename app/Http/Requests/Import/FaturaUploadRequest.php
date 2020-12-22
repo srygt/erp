@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Import;
 
 use App\Models\Abone;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ImportFaturaRequest extends FormRequest
+class FaturaUploadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
