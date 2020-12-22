@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Import;
 use App\Http\Controllers\Controller;
 use App\Imports\ElektrikFaturasImport;
 use App\Models\ImportedFaturaFile;
+use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
@@ -23,12 +25,14 @@ class FaturaImportController extends Controller
      */
     public function store(ImportedFaturaFile $faturaFile)
     {
+        DB::beginTransaction();
+
         try {
 
             $faturaList = (Excel::import(
                 new ElektrikFaturasImport,
                 $faturaFile->getFilePath()
-            ))->flatten(1);
+            ));
         }
         // @see https://github.com/Maatwebsite/Laravel-Excel/issues/2792
         catch (ValidationException $e) {
@@ -46,5 +50,12 @@ class FaturaImportController extends Controller
 
             throw $e;
         }
+        catch (Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+
+        DB::commit();
     }
 }
