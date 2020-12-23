@@ -26,21 +26,14 @@
                 <div class="card-header">CSV Fatura İçeri Aktarma</div>
                 <div class="card-body">
                     <form action="{{route("import.fatura.validation", $importedFaturaFile)}}" enctype="multipart/form-data" method="get">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-12">
-                                <div class="form-group">
-                                    <label>Devreden Borç Alanını Seçiniz<span class="text-danger">*</span></label>
-                                    <select id="gecikme_kalemi_id" name="params[gecikme_kalemi_id]" class="form-control">
-                                        <option value="">Seçin</option>
-                                        @foreach($ekKalemler as $ekKalem)
-                                            <option value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_ID} }}">
-                                                {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_BASLIK} }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        @include(
+                            \App\Services\Import\Fatura\Factories\FaturaFactory::getTemplateEkKalemSelect(
+                                $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE}
+                            ),
+                            [
+                                'ekKalemler' => $ekKalemler,
+                            ]
+                        )
                         <div class="row">
                             <div class="col-sm-12 m-t-20 text-right">
                                 <button type="submit" class="btn btn-primary btn-lg">Gönder</button>

@@ -21,13 +21,24 @@
                 @endif
             </div>
         @endif
+        <div class="col-sm-12">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <i class="fa fa-info-circle"></i>
+                <p>
+                    Mavi arkaplana sahip sütunlar veritabanına kaydedilecektir.
+                    <br>
+                    Gri arkaplana sahip sütunlar veritabanına kaydedil<u>meyecektir</u> (Sadece bilgilendirme amacıyla gösterilmektedir).
+                </p>
+            </div>
+        </div>
         <div class="col-md-12">
             <div class="card text-white bg-info">
                 <div class="card-header">CSV Fatura İçeri Aktarma</div>
                 <div class="card-body">
-                    @includeWhen(
-                        \App\Models\Abone::COLUMN_TUR_ELEKTRIK === $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE},
-                        'import.fatura-elektrik.table',
+                    @include(
+                        \App\Services\Import\Fatura\Factories\FaturaFactory::getTemplateTable(
+                            $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE}
+                        ),
                         [
                             'faturaList' => $faturaList,
                         ]
@@ -50,9 +61,14 @@
 @stop
 
 @section('page-styles')
-
     <link rel="stylesheet" href="{{ asset('assets/vendor/dropify/css/dropify.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
+    <style type="text/css">
+        .dataTable th {
+            position: sticky;
+            top: 0;
+        }
+    </style>
 @append
 
 @section('page-script')

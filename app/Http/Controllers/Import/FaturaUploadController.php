@@ -16,7 +16,7 @@ class FaturaUploadController extends Controller
      */
     public function index()
     {
-        return view('import.fatura-upload.index');
+        return view('import.fatura.upload.index');
     }
 
     public function store(FaturaUploadRequest $request, FaturaUploadService $uploadService)
@@ -46,6 +46,6 @@ class FaturaUploadController extends Controller
             )
             ->get();
 
-        return view('import.fatura-upload.show', $data);
+        return view('import.fatura.upload.show', $data);
     }
 }

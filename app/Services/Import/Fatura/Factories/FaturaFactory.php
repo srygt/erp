@@ -11,7 +11,33 @@ use Illuminate\Support\Str;
 
 class FaturaFactory
 {
-    const VALIDATION_CLASS_NAMESPACE = 'App\Services\Import\Fatura\%s\Validation';
+    const VALIDATION_CLASS_NAMESPACE            = 'App\Services\Import\Fatura\%s\Validation';
+    const VALIDATION_TEMPLATE_TABLE             = 'import.fatura.%s.table';
+    const VALIDATION_TEMPLATE_EK_KALEM_SELECT   = 'import.fatura.%s.ekKalemSelect';
+
+    /**
+     * @param string $type
+     * @return string
+     * @throws Exception
+     */
+    public static function getTemplateTable(string $type) : string
+    {
+        self::checkType($type);
+
+        return sprintf(self::VALIDATION_TEMPLATE_TABLE, Str::slug($type));
+    }
+
+    /**
+     * @param string $type
+     * @return string
+     * @throws Exception
+     */
+    public static function getTemplateEkKalemSelect(string $type) : string
+    {
+        self::checkType($type);
+
+        return sprintf(self::VALIDATION_TEMPLATE_EK_KALEM_SELECT, Str::slug($type));
+    }
 
     /**
      * @param string $type

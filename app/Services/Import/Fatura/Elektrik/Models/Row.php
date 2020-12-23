@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Services\Import\Fatura\Models;
+namespace App\Services\Import\Fatura\Elektrik\Models;
 
 
 use Illuminate\Contracts\Support\Arrayable;
 
-class FaturaElektrikRow implements Arrayable
+class Row implements Arrayable
 {
     /** @var string $aboneNo */
     protected $aboneNo;
@@ -60,7 +60,7 @@ class FaturaElektrikRow implements Arrayable
     protected $faturaToplami;
 
     /**
-     * FaturaElektrikRow constructor.
+     * Row constructor.
      * @param array $array
      */
     public function __construct(array $array)

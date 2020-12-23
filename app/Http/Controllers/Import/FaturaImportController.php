@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Import;
 use App\Http\Controllers\Controller;
 use App\Imports\ElektrikFaturasImport;
 use App\Models\ImportedFaturaFile;
-use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
@@ -28,11 +28,13 @@ class FaturaImportController extends Controller
         DB::beginTransaction();
 
         try {
-
             $faturaList = (Excel::import(
                 new ElektrikFaturasImport,
                 $faturaFile->getFilePath()
             ));
+
+            $faturaFile->{ImportedFaturaFile::COLUMN_STATUS} = ImportedFaturaFile::FIELD_STATUS_IMPORTED;
+            $faturaFile->save();
         }
         // @see https://github.com/Maatwebsite/Laravel-Excel/issues/2792
         catch (ValidationException $e) {
