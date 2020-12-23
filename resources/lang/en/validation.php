@@ -150,4 +150,5 @@ return [
 
     'abone_activation' => 'The :attribute activation status isn\'t correct.',
     'abone_exists' => 'The :attribute field doesn\'t refer a record.',
+    'ek_kalem_exists' => 'The :attribute field has wrong ucret_type.',
 ];

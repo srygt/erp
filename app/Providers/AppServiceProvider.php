@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Abone;
+use App\Models\AyarEkKalem;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('ek_kalem_exists', function ($attribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
+            list($type) = $parameters;
+
+            $ekKalem    = AyarEkKalem::where(AyarEkKalem::COLUMN_ID, $value);
+
+            if ($type) {
+                $ekKalem = $ekKalem->where(AyarEkKalem::COLUMN_UCRET_TUR, $type);
+            }
+
+            return $ekKalem->exists();
+        });
+
         Validator::extend('abone_exists', function ($attribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
             list($type)  = $parameters;
 

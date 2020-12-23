@@ -150,5 +150,6 @@ return [
 
     'abone_activation' => ':attribute alanının aktivasyon durumu yanlış.',
     'abone_exists' => ':attribute alanındaki değere sahip abone bulunamadı.',
+    'ek_kalem_exists' => ':attribute alanındaki değerin ücret türü uyuşmuyor.',
 
 ];
