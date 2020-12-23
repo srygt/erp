@@ -15,6 +15,8 @@ class AddIndexOnAboneNoAndTurFieldInAboneliklerTable extends Migration
     public function up()
     {
         Schema::table('abonelikler', function (Blueprint $table) {
+            $table->string(Abone::COLUMN_ABONE_NO, 175)
+                ->change();
             $table->index(Abone::COLUMN_ABONE_NO);
             $table->index(Abone::COLUMN_TUR);
         });

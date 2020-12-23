@@ -3,8 +3,11 @@
 namespace App\Imports;
 
 use App\Models\Abone;
+use App\Models\AyarEkKalem;
 use App\Models\ImportedFatura;
+use App\Models\ImportedFaturaEkKalem;
 use App\Models\ImportedFaturaElektrik;
+use App\Services\Import\Fatura\Elektrik\EkKalem;
 use App\Services\Import\Fatura\Elektrik\Models\Row;
 use Illuminate\Support\Facades\Request;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -18,6 +21,20 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
     use Importable;
 
     const START_ROW = 2;
+
+    /**
+     * @var array
+     */
+    protected $params = [];
+
+    /**
+     * ElektrikFaturasImport constructor.
+     * @param array $params
+     */
+    public function __construct(array $params)
+    {
+        $this->params = $params;
+    }
 
     public function model(array $array)
     {
@@ -54,6 +71,85 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
 
         $importedFaturaElektrik->save();
 
+        $importedFatura = $this->saveEkKalemGecikmeZammi($importedFatura, $faturaElektrikRow);
+        $importedFatura = $this->saveEkKalemSistemKullanim($importedFatura, $faturaElektrikRow);
+        $importedFatura = $this->saveEkKalemDagitimBedeli($importedFatura, $faturaElektrikRow);
+
+        return $importedFatura;
+    }
+
+    /**
+     * @param ImportedFatura $importedFatura
+     * @param Row $faturaElektrikRow
+     *
+     * @return ImportedFatura
+     */
+    protected function saveEkKalemGecikmeZammi(ImportedFatura $importedFatura, Row $faturaElektrikRow) : ImportedFatura
+    {
+        if ($faturaElektrikRow->getGecikmeZammi() === 0.0) {
+            return $importedFatura;
+        }
+
+        /** @var ImportedFaturaEkKalem $importedFaturaEkKalemGecikme */
+        $importedFaturaEkKalemGecikme = $importedFatura->ekKalemler()->make();
+
+        $gecikmeKalemi = AyarEkKalem::find($this->params[EkKalem::ID_DEVREDEN_BORC]);
+
+        $importedFaturaEkKalemGecikme->{ImportedFaturaEkKalem::RELATION_EK_KALEM}()
+            ->associate($gecikmeKalemi);
+        $importedFaturaEkKalemGecikme->{ImportedFaturaEkKalem::COLUMN_DEGER}    = $faturaElektrikRow->getGecikmeZammi();
+        $importedFaturaEkKalemGecikme->save();
+
+        return $importedFatura;
+    }
+
+    /**+
+     * @param ImportedFatura $importedFatura
+     * @param Row $faturaElektrikRow
+     *
+     * @return ImportedFatura
+     */
+    protected function saveEkKalemSistemKullanim(ImportedFatura $importedFatura, Row $faturaElektrikRow) : ImportedFatura
+    {
+        if ($faturaElektrikRow->getSistemKullanimBedel() === 0.0) {
+            return $importedFatura;
+        }
+
+        /** @var ImportedFaturaEkKalem $importedFaturaEkKalemSistem */
+        $importedFaturaEkKalemSistem = $importedFatura->ekKalemler()->make();
+
+        $sistemKullanimKalem = AyarEkKalem::find($this->params[EkKalem::ID_SISTEM_KULLANIM]);
+
+        $importedFaturaEkKalemSistem->{ImportedFaturaEkKalem::RELATION_EK_KALEM}()
+            ->associate($sistemKullanimKalem);
+        $importedFaturaEkKalemSistem->{ImportedFaturaEkKalem::COLUMN_DEGER}    = $faturaElektrikRow->getCalcBirimSistemKullanimUcreti();
+        $importedFaturaEkKalemSistem->save();
+
+        return $importedFatura;
+    }
+
+    /**
+     * @param ImportedFatura $importedFatura
+     * @param Row $faturaElektrikRow
+     *
+     * @return ImportedFatura
+     */
+    protected function saveEkKalemDagitimBedeli(ImportedFatura $importedFatura, Row $faturaElektrikRow) : ImportedFatura
+    {
+        if ($faturaElektrikRow->getDagitimBedel() === 0.0) {
+            return $importedFatura;
+        }
+
+        /** @var ImportedFaturaEkKalem $importedFaturaEkKalemDagitim */
+        $importedFaturaEkKalemDagitim = $importedFatura->ekKalemler()->make();
+
+        $dagitimKalem = AyarEkKalem::find($this->params[EkKalem::ID_DAGITIM_BEDELI]);
+
+        $importedFaturaEkKalemDagitim->{ImportedFaturaEkKalem::RELATION_EK_KALEM}()
+            ->associate($dagitimKalem);
+        $importedFaturaEkKalemDagitim->{ImportedFaturaEkKalem::COLUMN_DEGER}    = $faturaElektrikRow->getCalcBirimDagitimUcreti();
+        $importedFaturaEkKalemDagitim->save();
+
         return $importedFatura;
     }
 
@@ -72,7 +168,6 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
     public function rules(): array
     {
         return [
-            // TODO: elektrik exists
             '*.0' => ['required', 'abone_exists:' . Abone::COLUMN_TUR_ELEKTRIK],
             '*.1' => ['string'],
             '*.2' => ['required', 'numeric'],

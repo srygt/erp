@@ -12,20 +12,18 @@ class Validation implements IFaturaValidation
     public function rules() : array
     {
         return [
-            'params'                    => 'required|array',
-            'params.gecikme_kalemi_id'  => 'required|numeric|ek_kalem_exists:' . AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR,
-            'params.sistem_kullanim_id' => 'required|numeric|ek_kalem_exists:' . AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT,
-            'params.dagitim_id'         => 'required|numeric|ek_kalem_exists:' . AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT,
+            'params.' . EkKalem::ID_DEVREDEN_BORC   => 'required|numeric|ek_kalem_exists:' . AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR,
+            'params.' . EkKalem::ID_SISTEM_KULLANIM => 'required|numeric|ek_kalem_exists:' . AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT,
+            'params.' . EkKalem::ID_DAGITIM_BEDELI  => 'required|numeric|ek_kalem_exists:' . AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT,
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'params'                    => 'Parametreler',
-            'params.gecikme_kalemi_id'  => 'Devreden Borç',
-            'params.sistem_kullanim_id' => 'Sistem Kullanım Bedeli',
-            'params.dagitim_id'         => 'Dağıtım Bedeli',
+            'params.' . EkKalem::ID_DEVREDEN_BORC   => 'Devreden Borç',
+            'params.' . EkKalem::ID_SISTEM_KULLANIM => 'Sistem Kullanım Bedeli',
+            'params.' . EkKalem::ID_DAGITIM_BEDELI  => 'Dağıtım Bedeli',
         ];
     }
 }

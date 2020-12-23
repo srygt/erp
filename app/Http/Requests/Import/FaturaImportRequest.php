@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Request;
 
-class FaturaValidationRequest extends FormRequest
+class FaturaImportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

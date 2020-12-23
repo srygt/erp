@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <form action="{{route("import.fatura.validation", $importedFaturaFile)}}" enctype="multipart/form-data" method="get">
                         @include(
-                            \App\Services\Import\Fatura\Factories\FaturaFactory::getTemplateEkKalemSelect(
+                            \App\Services\Import\Fatura\Factories\FaturaImportFactory::getTemplateEkKalemSelect(
                                 $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE}
                             ),
                             [

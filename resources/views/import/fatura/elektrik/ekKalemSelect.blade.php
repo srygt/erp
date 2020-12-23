@@ -11,7 +11,11 @@
     <div class="col-md-4 col-sm-12">
         <div class="form-group">
             <label>Devreden Borç Alanını Seçiniz<span class="text-danger">*</span></label>
-            <select id="gecikme_kalemi_id" name="params[gecikme_kalemi_id]" class="form-control">
+            <select
+                id="{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_DEVREDEN_BORC }}"
+                name="params[{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_DEVREDEN_BORC }}]"
+                class="form-control"
+            >
                 <option value="">Seçin</option>
                 @foreach($ekKalemSabitFiyatlar as $ekKalem)
                     <option value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_ID} }}">
@@ -24,7 +28,11 @@
     <div class="col-md-4 col-sm-12">
         <div class="form-group">
             <label>Sistem Kullanım Bedeli Alanını Seçiniz<span class="text-danger">*</span></label>
-            <select id="gecikme_kalemi_id" name="params[sistem_kullanim_id]" class="form-control">
+            <select
+                id="{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_SISTEM_KULLANIM }}"
+                name="params[{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_SISTEM_KULLANIM }}]"
+                class="form-control"
+            >
                 <option value="">Seçin</option>
                 @foreach($ekKalemBirimFiyatlar as $ekKalem)
                     <option value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_ID} }}">
@@ -37,7 +45,11 @@
     <div class="col-md-4 col-sm-12">
         <div class="form-group">
             <label>Dağıtım Bedeli Alanını Seçiniz<span class="text-danger">*</span></label>
-            <select id="gecikme_kalemi_id" name="params[dagitim_id]" class="form-control">
+            <select
+                id="{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_DAGITIM_BEDELI }}"
+                name="params[{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_DAGITIM_BEDELI }}]"
+                class="form-control"
+            >
                 <option value="">Seçin</option>
                 @foreach($ekKalemBirimFiyatlar as $ekKalem)
                     <option value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_ID} }}">

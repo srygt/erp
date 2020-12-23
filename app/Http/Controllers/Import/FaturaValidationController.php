@@ -22,7 +22,7 @@ class FaturaValidationController extends Controller
     public function show(FaturaValidationRequest $request, ImportedFaturaFile $faturaFile)
     {
         $faturaList = (Excel::toCollection(
-                new ElektrikFaturasImport,
+                new ElektrikFaturasImport([]),
                 $faturaFile->getFilePath()
             ))
             ->flatten(1)
@@ -33,9 +33,7 @@ class FaturaValidationController extends Controller
         return view('import.fatura.validation', [
             'importedFaturaFile'  => $faturaFile,
             'faturaList'  => $faturaList,
-            'params' => [
-                'gecikme_kalemi_id' => $request->input('params[gecikme_kalemi_id]'),
-            ],
+            'params' => $request->validated()['params']
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Import;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Import\FaturaImportRequest;
 use App\Imports\ElektrikFaturasImport;
 use App\Models\ImportedFaturaFile;
 use Exception;
@@ -20,16 +21,18 @@ class FaturaImportController extends Controller
     }
 
     /**
+     * @param FaturaImportRequest $request
      * @param ImportedFaturaFile $faturaFile
      * @throws ValidationException
+     * @throws \Throwable
      */
-    public function store(ImportedFaturaFile $faturaFile)
+    public function store(FaturaImportRequest $request, ImportedFaturaFile $faturaFile)
     {
         DB::beginTransaction();
 
         try {
             $faturaList = (Excel::import(
-                new ElektrikFaturasImport,
+                new ElektrikFaturasImport($request->validated()['params']),
                 $faturaFile->getFilePath()
             ));
 

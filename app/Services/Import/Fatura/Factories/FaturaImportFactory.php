@@ -9,11 +9,12 @@ use App\Services\Import\Fatura\Contracts\IFaturaValidation;
 use Exception;
 use Illuminate\Support\Str;
 
-class FaturaFactory
+class FaturaImportFactory
 {
-    const VALIDATION_CLASS_NAMESPACE            = 'App\Services\Import\Fatura\%s\Validation';
-    const VALIDATION_TEMPLATE_TABLE             = 'import.fatura.%s.table';
-    const VALIDATION_TEMPLATE_EK_KALEM_SELECT   = 'import.fatura.%s.ekKalemSelect';
+    const VALIDATION_CLASS_NAMESPACE    = 'App\Services\Import\Fatura\%s\Validation';
+
+    const TEMPLATE_VALIDATION_TABLE     = 'import.fatura.%s.table';
+    const TEMPLATE_EK_KALEM_SELECT      = 'import.fatura.%s.ekKalemSelect';
 
     /**
      * @param string $type
@@ -24,7 +25,7 @@ class FaturaFactory
     {
         self::checkType($type);
 
-        return sprintf(self::VALIDATION_TEMPLATE_TABLE, Str::slug($type));
+        return sprintf(self::TEMPLATE_VALIDATION_TABLE, Str::slug($type));
     }
 
     /**
@@ -36,7 +37,7 @@ class FaturaFactory
     {
         self::checkType($type);
 
-        return sprintf(self::VALIDATION_TEMPLATE_EK_KALEM_SELECT, Str::slug($type));
+        return sprintf(self::TEMPLATE_EK_KALEM_SELECT, Str::slug($type));
     }
 
     /**

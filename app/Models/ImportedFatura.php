@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ImportedFatura extends Model
@@ -24,5 +25,13 @@ class ImportedFatura extends Model
     public function elektrik()
     {
         return $this->hasOne(ImportedFaturaElektrik::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function ekKalemler()
+    {
+        return $this->hasMany(ImportedFaturaEkKalem::class);
     }
 }

@@ -36,7 +36,7 @@
                 <div class="card-header">CSV Fatura İçeri Aktarma</div>
                 <div class="card-body">
                     @include(
-                        \App\Services\Import\Fatura\Factories\FaturaFactory::getTemplateTable(
+                        \App\Services\Import\Fatura\Factories\FaturaImportFactory::getTemplateTable(
                             $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE}
                         ),
                         [
@@ -48,7 +48,7 @@
                             <form action="{{route("import.fatura.import.post", $importedFaturaFile)}}" enctype="multipart/form-data" method="post">
                                 @csrf
                                 @foreach ($params as $key => $value)
-                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                    <input type="hidden" name="params[{{ $key }}]" value="{{ $value }}">
                                 @endforeach
                                 <button type="submit" class="btn btn-primary btn-lg">Gönder</button>
                             </form>
