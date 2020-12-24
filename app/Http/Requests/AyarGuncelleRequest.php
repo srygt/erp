@@ -29,7 +29,7 @@ class AyarGuncelleRequest extends FormRequest
             'banka_hesap_adi'   => 'required',
             'iban'              => 'required',
             'birim_fiyat'       => 'required|numeric|min:0.000000001',
-            'fatura_tarih'      => 'nullable|date_format:d.m.Y H:i',
+            'fatura_tarih'      => 'nullable|date_format:' . config('common.time.format'),
             'son_odeme_gun'     => 'required|digits_between:1,31',
             'fatura_aciklama'   => 'nullable',
         ];

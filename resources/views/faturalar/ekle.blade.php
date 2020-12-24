@@ -359,11 +359,11 @@
 
             $('.date').datetimepicker({
                 timepicker: false,
-                format: 'd.m.Y',
+                format: '{{ config('common.date.format') }}',
             });
 
             $('.datetime').datetimepicker({
-                format: 'd.m.Y H:i',
+                format: '{{ config('common.time.format') }}',
             });
 
             $('#mainForm').on('submit', function(){
