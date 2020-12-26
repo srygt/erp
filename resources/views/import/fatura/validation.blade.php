@@ -37,7 +37,7 @@
                 <div class="card-body">
                     @include(
                         \App\Services\Import\Fatura\Factories\FaturaImportFactory::getTemplateTable(
-                            $importedFaturaFile->{\App\Models\ImportedFaturaFile::COLUMN_TYPE}
+                            $importedFaturaFile->{\App\Models\FileImportedFatura::COLUMN_TYPE}
                         ),
                         [
                             'faturaList' => $faturaList,

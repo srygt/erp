@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Import;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Import\FaturaValidationRequest;
 use App\Imports\ElektrikFaturasImport;
-use App\Models\ImportedFaturaFile;
+use App\Models\FileImportedFatura;
 use App\Services\Import\Fatura\Elektrik\Models\Row;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -16,10 +16,10 @@ class FaturaValidationController extends Controller
 {
     /**
      * @param FaturaValidationRequest $request
-     * @param ImportedFaturaFile $faturaFile
+     * @param FileImportedFatura $faturaFile
      * @return Application|Factory|View
      */
-    public function show(FaturaValidationRequest $request, ImportedFaturaFile $faturaFile)
+    public function show(FaturaValidationRequest $request, FileImportedFatura $faturaFile)
     {
         $faturaList = (Excel::toCollection(
                 new ElektrikFaturasImport([]),

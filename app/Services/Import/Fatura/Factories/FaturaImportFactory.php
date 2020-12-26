@@ -5,6 +5,8 @@ namespace App\Services\Import\Fatura\Factories;
 
 
 use App\Models\Abone;
+use App\Models\ImportedFatura;
+use App\Services\Import\Fatura\Adapters\AbstractImportedFaturaAdapter;
 use App\Services\Import\Fatura\Contracts\IFaturaValidation;
 use Exception;
 use Illuminate\Support\Str;
@@ -16,8 +18,29 @@ class FaturaImportFactory
     const TEMPLATE_VALIDATION_TABLE     = 'import.fatura.%s.table';
     const TEMPLATE_EK_KALEM_SELECT      = 'import.fatura.%s.ekKalemSelect';
 
+    const ADAPTER_IMPORTED_FATURA       = 'App\Services\Import\Fatura\%s\Adapters\ImportedFaturaAdapter';
+
+    /**
+     * @param ImportedFatura $importedFatura
+     *
+     * @return AbstractImportedFaturaAdapter
+     * @throws Exception
+     */
+    public static function createFaturaAdapter(ImportedFatura $importedFatura)
+    : AbstractImportedFaturaAdapter
+    {
+        $tur = $importedFatura->{ImportedFatura::COLUMN_TUR};
+
+        self::checkType($tur);
+
+        $className = sprintf(self::ADAPTER_IMPORTED_FATURA, Str::slug($tur));
+
+        return app($className, ['importedFatura' => $importedFatura]);
+    }
+
     /**
      * @param string $type
+     *
      * @return string
      * @throws Exception
      */
@@ -30,6 +53,7 @@ class FaturaImportFactory
 
     /**
      * @param string $type
+     *
      * @return string
      * @throws Exception
      */
@@ -42,6 +66,7 @@ class FaturaImportFactory
 
     /**
      * @param string $type
+     *
      * @return IFaturaValidation
      * @throws Exception
      */

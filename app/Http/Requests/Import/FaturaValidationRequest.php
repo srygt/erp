@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Import;
 
-use App\Models\ImportedFaturaFile;
+use App\Models\FileImportedFatura;
 use App\Services\Import\Fatura\Factories\FaturaImportFactory;
 use Exception;
 use Illuminate\Foundation\Http\FormRequest;
@@ -31,7 +31,7 @@ class FaturaValidationRequest extends FormRequest
         $validationClass = FaturaImportFactory::createValidation(
             Request::route()
                 ->parameter('fatura_file')
-                ->{ImportedFaturaFile::COLUMN_TYPE}
+                ->{FileImportedFatura::COLUMN_TYPE}
         );
 
         return $validationClass->rules();
@@ -46,7 +46,7 @@ class FaturaValidationRequest extends FormRequest
         $validationClass = FaturaImportFactory::createValidation(
             Request::route()
                 ->parameter('fatura_file')
-                ->{ImportedFaturaFile::COLUMN_TYPE}
+                ->{FileImportedFatura::COLUMN_TYPE}
         );
 
         return $validationClass->attributes();

@@ -32,7 +32,10 @@ class CreateImportedFaturaElektriksTable extends Migration
                 ->unsigned()
                 ->nullable();
             $table->boolean(ImportedFaturaElektrik::COLUMN_IS_TRT_PAYI);
-            $table->foreignId(ImportedFaturaElektrik::COLUMN_IMPORTED_FATURA_ID)->constrained();
+            $table->foreignId(ImportedFaturaElektrik::COLUMN_IMPORTED_FATURA_ID)
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -90,8 +90,8 @@ class AppServiceProvider extends ServiceProvider
 
             /** @var Model $record */
             $record = $model
-                ->where(Abone::COLUMN_TUR, $aboneType)
                 ->where($primaryColumn, $targetValue)
+                ->where(Abone::COLUMN_TUR, $aboneType)
                 ->first();
 
             if (is_null($record)) {

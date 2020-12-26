@@ -19,7 +19,9 @@ class CreateImportedFaturaEkKalemsTable extends Migration
             $table->foreignId(ImportedFaturaEkKalem::COLUMN_EK_KALEM_ID)
                 ->constrained('ayarlar_ek_kalemler');
             $table->foreignId(ImportedFaturaEkKalem::COLUMN_IMPORTED_FATURA_ID)
-                ->constrained();
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->decimal(
                     ImportedFaturaEkKalem::COLUMN_DEGER,
                     24,

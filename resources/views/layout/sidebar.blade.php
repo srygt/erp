@@ -74,9 +74,14 @@
                     <a href="#myPage" class="has-arrow"><i class="fa fa-upload"></i><span>İçeri Aktarma</span></a>
                     <ul>
                         <li
+                            class="{{ Request::segment(2) === 'fatura' && Request::segment(3) == 'upload' ? 'active' : null }}"
+                        >
+                            <a href="{{route('import.fatura.upload.get')}}">Fatura İçeri Aktar</a>
+                        </li>
+                        <li
                             class="{{ Request::segment(2) === 'fatura' && Request::segment(3) == '' ? 'active' : null }}"
                         >
-                            <a href="{{route('import.fatura.upload.get')}}">Fatura İçeri Aktarma</a>
+                            <a href="{{route('import.fatura.liste')}}">Fatura Taslağı Listesi</a>
                         </li>
                     </ul>
                 </li>

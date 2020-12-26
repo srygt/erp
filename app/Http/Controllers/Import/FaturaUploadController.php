@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Import;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Import\FaturaUploadRequest;
 use App\Models\AyarEkKalem;
-use App\Models\ImportedFaturaFile;
+use App\Models\FileImportedFatura;
 use App\Services\Import\Fatura\FaturaUploadService;
 use Illuminate\View\View;
 
@@ -30,10 +30,10 @@ class FaturaUploadController extends Controller
         return response()->redirectToRoute('import.fatura.upload.detay', $uploadedFileModel);
     }
 
-    public function show(ImportedFaturaFile $faturaFile)
+    public function show(FileImportedFatura $faturaFile)
     {
         abort_if(
-            ImportedFaturaFile::FIELD_STATUS_UPLOADED !== $faturaFile->{ImportedFaturaFile::COLUMN_STATUS},
+            FileImportedFatura::FIELD_STATUS_UPLOADED !== $faturaFile->{FileImportedFatura::COLUMN_STATUS},
             404
         );
 
@@ -42,7 +42,7 @@ class FaturaUploadController extends Controller
         $data['importedFaturaFile'] = $faturaFile;
         $data['ekKalemler']         = AyarEkKalem::where(
                 AyarEkKalem::COLUMN_TUR,
-                $faturaFile->{ImportedFaturaFile::COLUMN_TYPE}
+                $faturaFile->{FileImportedFatura::COLUMN_TYPE}
             )
             ->get();
 

@@ -5,28 +5,61 @@ namespace App\Http\Controllers\Import;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Import\FaturaImportRequest;
 use App\Imports\ElektrikFaturasImport;
-use App\Models\ImportedFaturaFile;
+use App\Models\ImportedFatura;
+use App\Models\FileImportedFatura;
+use App\Services\Import\Fatura\Factories\FaturaImportFactory;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
+use Throwable;
 
 class FaturaImportController extends Controller
 {
     public function index(Request $request)
     {
+        return view(
+            'import.fatura.liste',
+            [
+                'faturalar' => ImportedFatura::with('abone.mukellef')->get(),
+            ]
+        );
+    }
 
+    /**
+     * @param ImportedFatura $importedFatura
+     *
+     * @return Application|Factory|View
+     * @throws Exception
+     */
+    public function show(ImportedFatura $importedFatura)
+    {
+        $importedFaturaAdapter = FaturaImportFactory::createFaturaAdapter($importedFatura);
+
+        $params = $importedFaturaAdapter->toFormArray(
+            $importedFaturaAdapter->getInvoicableArray()
+        );
+
+        return view(
+            'import.fatura.redirectToPay',
+            [
+                'params' => $params,
+            ]
+        );
     }
 
     /**
      * @param FaturaImportRequest $request
-     * @param ImportedFaturaFile $faturaFile
+     * @param FileImportedFatura $faturaFile
      * @throws ValidationException
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function store(FaturaImportRequest $request, ImportedFaturaFile $faturaFile)
+    public function store(FaturaImportRequest $request, FileImportedFatura $faturaFile)
     {
         DB::beginTransaction();
 
@@ -36,7 +69,7 @@ class FaturaImportController extends Controller
                 $faturaFile->getFilePath()
             ));
 
-            $faturaFile->{ImportedFaturaFile::COLUMN_STATUS} = ImportedFaturaFile::FIELD_STATUS_IMPORTED;
+            $faturaFile->{FileImportedFatura::COLUMN_STATUS} = FileImportedFatura::FIELD_STATUS_IMPORTED;
             $faturaFile->save();
         }
         // @see https://github.com/Maatwebsite/Laravel-Excel/issues/2792
@@ -62,5 +95,11 @@ class FaturaImportController extends Controller
         }
 
         DB::commit();
+
+        return redirect()
+            ->route('import.fatura.liste')
+            ->with([
+                'message' => 'Fatura içe aktarma işlemi başarılı!',
+            ]);
     }
 }

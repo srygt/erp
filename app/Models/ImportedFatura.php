@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -18,6 +19,14 @@ class ImportedFatura extends Model
     const COLUMN_NOT                    = 'not';
     const COLUMN_OKUYAN_ID              = 'okuyan_id';
     const COLUMN_IP_NO                  = 'ip_no';
+
+    /**
+     * @return BelongsTo
+     */
+    public function abone()
+    {
+        return $this->belongsTo(Abone::class);
+    }
 
     /**
      * @return HasOne

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ImportedFaturaFile extends Model
+class FileImportedFatura extends Model
 {
     const COLUMN_ID             = 'id';
     const COLUMN_STATUS         = 'status';

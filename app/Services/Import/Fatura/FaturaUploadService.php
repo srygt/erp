@@ -4,7 +4,7 @@
 namespace App\Services\Import\Fatura;
 
 
-use App\Models\ImportedFaturaFile;
+use App\Models\FileImportedFatura;
 use Illuminate\Http\UploadedFile;
 
 class FaturaUploadService
@@ -13,9 +13,9 @@ class FaturaUploadService
      * @param string $type imported file type (Abone::TUR_LIST)
      * @param string $ip
      * @param UploadedFile $file
-     * @return ImportedFaturaFile
+     * @return FileImportedFatura
      */
-    public function uploadFile(string $type, string $ip, UploadedFile $file) : ImportedFaturaFile
+    public function uploadFile(string $type, string $ip, UploadedFile $file) : FileImportedFatura
     {
         $importedFileModel  = $this->createModel($type, $file->extension(), $ip);
 
@@ -30,15 +30,15 @@ class FaturaUploadService
      * @param string $type
      * @param string $extension
      * @param string $ip
-     * @return ImportedFaturaFile
+     * @return FileImportedFatura
      */
-    protected function createModel(string $type, string $extension, string $ip) : ImportedFaturaFile
+    protected function createModel(string $type, string $extension, string $ip) : FileImportedFatura
     {
-        $importedFaturaFile = new ImportedFaturaFile();
+        $importedFaturaFile = new FileImportedFatura();
 
-        $importedFaturaFile->{ImportedFaturaFile::COLUMN_TYPE}          = $type;
-        $importedFaturaFile->{ImportedFaturaFile::COLUMN_EXTENSION}     = $extension;
-        $importedFaturaFile->{ImportedFaturaFile::COLUMN_IP_ADDRESS}    = $ip;
+        $importedFaturaFile->{FileImportedFatura::COLUMN_TYPE}          = $type;
+        $importedFaturaFile->{FileImportedFatura::COLUMN_EXTENSION}     = $extension;
+        $importedFaturaFile->{FileImportedFatura::COLUMN_IP_ADDRESS}    = $ip;
 
         $importedFaturaFile->save();
 
@@ -47,10 +47,10 @@ class FaturaUploadService
 
     /**
      * @param UploadedFile $file
-     * @param ImportedFaturaFile $importedFileModel
+     * @param FileImportedFatura $importedFileModel
      * @return false|string
      */
-    protected function copyFile(UploadedFile $file, ImportedFaturaFile $importedFileModel)
+    protected function copyFile(UploadedFile $file, FileImportedFatura $importedFileModel)
     {
         return $file->storeAs(
             config('fatura.importPath'),
@@ -59,12 +59,12 @@ class FaturaUploadService
     }
 
     /**
-     * @param ImportedFaturaFile $importedFileModel
-     * @return ImportedFaturaFile
+     * @param FileImportedFatura $importedFileModel
+     * @return FileImportedFatura
      */
-    protected function makeStatusUploaded(ImportedFaturaFile $importedFileModel) : ImportedFaturaFile
+    protected function makeStatusUploaded(FileImportedFatura $importedFileModel) : FileImportedFatura
     {
-        $importedFileModel->{ImportedFaturaFile::COLUMN_STATUS}         = ImportedFaturaFile::FIELD_STATUS_UPLOADED;
+        $importedFileModel->{FileImportedFatura::COLUMN_STATUS}         = FileImportedFatura::FIELD_STATUS_UPLOADED;
         $importedFileModel->save();
 
         return $importedFileModel;

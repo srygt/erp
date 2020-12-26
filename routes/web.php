@@ -107,6 +107,10 @@ Route::prefix('panel')->middleware('AuthControl')->group(function (){
     Route::post('import/fatura/import/{fatura_file}','Import\FaturaImportController@store')
         ->name('import.fatura.import.post')
         ->where(['id' => '[0-9]+']);
+    Route::get('import/fatura','Import\FaturaImportController@index')
+        ->name('import.fatura.liste');
+    Route::get('import/fatura/{imported_fatura}','Import\FaturaImportController@show')
+        ->name('import.fatura.detay');
 
     // Api
     Route::get('mukellefler/api/{id}','MukellefController@detayApi')
