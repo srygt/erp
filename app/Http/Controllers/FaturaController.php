@@ -204,13 +204,17 @@ class FaturaController extends Controller
             return self::showErrorMessage($e, $fatura);
         }
 
+        $dataSource = FaturaFactory::createDataSource(
+            $faturaTaslagi->{Fatura::COLUMN_DATA_SOURCE}
+        );
+
+        $dataSource->runPostFaturaOperations($request->validated(), $fatura);
+
         return view(
             'faturalar.fatura',
             [
-                'response' => $response,
-                'dataSource'    => FaturaFactory::createDataSource(
-                    $fatura->{Fatura::COLUMN_DATA_SOURCE}
-                )
+                'response'      => $response,
+                'dataSource'    => $dataSource
             ]
         );
     }

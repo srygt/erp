@@ -52,7 +52,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
     {
         $tur    = Abone::find($this->{Fatura::COLUMN_ABONE_ID} ?? '')->{Fatura::COLUMN_TUR} ?? '';
 
-        return [
+        $rules  = [
             'id'                                    => 'nullable|numeric|exists:App\Models\FaturaTaslagi,id',
             'abone_id'                              => [
                                                             'required',
@@ -82,6 +82,16 @@ class FaturaTaslagiEkleRequest extends FormRequest
             self::ENDUKTIF_STATUS                   => 'required|boolean',
             self::KAPASITIF_STATUS                  => 'required|boolean',
         ];
+
+        $dataSource = FaturaFactory::createDataSource(
+                $this->{Fatura::COLUMN_DATA_SOURCE}
+            );
+
+        return array_merge(
+            $rules,
+            $dataSource->getValidation()
+        );
+
     }
 
     public function attributes()

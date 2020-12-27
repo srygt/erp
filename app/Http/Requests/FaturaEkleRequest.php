@@ -6,6 +6,7 @@ use App\Helpers\Utils;
 use App\Models\AyarEkKalem;
 use App\Models\Fatura;
 use App\Models\FaturaTaslagi;
+use App\Services\Fatura\FaturaFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +29,7 @@ class FaturaEkleRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             Fatura::COLUMN_UUID                 => 'required|uuid|exists:App\Models\FaturaTaslagi,uuid|unique:App\Models\Fatura,uuid',
             'ek_kalemler'                       => 'nullable|array',
             'ek_kalemler.*'                     => 'nullable|array',
@@ -36,8 +37,23 @@ class FaturaEkleRequest extends FormRequest
             'ek_kalemler.*.*.ucret_tur'         => ['required', Rule::in(array_keys(AyarEkKalem::LIST_UCRET_TUR))],
             'ek_kalemler.*.*.deger'             => 'required_if:ek_kalemler.*.ucret_tur,'
                 . AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR
-                . '|numeric'
+                . '|numeric',
         ];
+
+        $dataSourceString = FaturaTaslagi::where(
+                    Fatura::COLUMN_UUID,
+                    $this->{Fatura::COLUMN_UUID}
+                )
+                ->value(Fatura::COLUMN_DATA_SOURCE);
+
+        $dataSource = FaturaFactory::createDataSource(
+            $dataSourceString
+        );
+
+        return array_merge(
+            $rules,
+            $dataSource->getValidation()
+        );
     }
 
     public function attributes()

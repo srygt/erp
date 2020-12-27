@@ -11,6 +11,8 @@ use Illuminate\Support\Carbon;
 
 abstract class AbstractImportedFaturaAdapter
 {
+    const FIELD_IMPORTED_ID = 'imported_id';
+
     /**
      * @var ImportedFatura $importedFatura Model
      */
@@ -89,6 +91,7 @@ abstract class AbstractImportedFaturaAdapter
                 ->{ImportedFatura::COLUMN_BIRIM_FIYAT_TUKETIM},
             'not' => null,
             Fatura::COLUMN_DATA_SOURCE => Fatura::COLUMN_DATA_SOURCE_IMPORTED,
+            self::FIELD_IMPORTED_ID => $this->importedFatura->id,
         ];
 
         $now = Carbon::now();

@@ -80,17 +80,25 @@ class FaturaTaslakController extends Controller
             return self::showErrorMessage($e, $faturaTaslagi);
         }
 
+        $dataSource = FaturaFactory::createDataSource(
+            $faturaTaslagi->{Fatura::COLUMN_DATA_SOURCE}
+        );
+
+        $hiddenFields = $dataSource->getTemplateHiddenFields([
+            'request' => $request->validated()
+        ]);
+
         return view(
             'faturalar.taslak',
             [
+                'request'       => $request->validated(),
                 'response'      => $response,
                 'taslakUuid'    => $faturaTaslagi->uuid,
                 'ekKalemTurleri'=> [
                     $faturaTaslagi->{Fatura::COLUMN_TUR} => $request->ek_kalemler[$faturaTaslagi->{Fatura::COLUMN_TUR}] ?? []
                 ],
-                'dataSource'    => FaturaFactory::createDataSource(
-                    $faturaTaslagi->{Fatura::COLUMN_DATA_SOURCE}
-                )
+                'dataSource'    => $dataSource,
+                'hiddenFields'  => $hiddenFields,
             ]
         );
     }

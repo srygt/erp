@@ -4,6 +4,8 @@
 namespace App\Services\Fatura\DataSources;
 
 
+use App\Models\Fatura;
+
 class DataSourceManual extends AbstractDataSource
 {
 
@@ -29,5 +31,29 @@ class DataSourceManual extends AbstractDataSource
     public function getHrefNewInvoiceButton(): string
     {
         return route('faturataslak.ekle.get');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTemplateHiddenFields(array $params): array
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getValidation(): array
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function runPostFaturaOperations(array $request, Fatura $fatura): void
+    {
+
     }
 }

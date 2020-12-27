@@ -4,7 +4,13 @@
 @section('content')
     <form action="{{route('fatura.ekle.post')}}" method="post">
         @csrf
+
         <input type="hidden" name="uuid" value="{{ $taslakUuid }}">
+
+        @foreach($hiddenFields as $key => $value)
+            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+        @endforeach
+
         @foreach($ekKalemTurleri as $tur => $ekKalemler)
             @foreach($ekKalemler as $key => $ekKalem)
                 <input type="hidden" name="ek_kalemler[{{ $tur }}][{{ $key }}][id]" value="{{ $ekKalem['id'] }}">
