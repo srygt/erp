@@ -188,9 +188,10 @@ class FaturaController extends Controller
                 Fatura::COLUMN_KAPASITIF_TUKETIM    => $faturaTaslagi->{Fatura::COLUMN_KAPASITIF_TUKETIM},
                 Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT=> $faturaTaslagi->{Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT},
                 Fatura::COLUMN_NOT                  => $faturaTaslagi->{Fatura::COLUMN_NOT},
+                Fatura::COLUMN_DATA_SOURCE          => $faturaTaslagi->{Fatura::COLUMN_DATA_SOURCE},
             ]);
 
-        $faturaService = FaturaFactory::getService($faturaTaslagi->abone->{Abone::COLUMN_TUR});
+        $faturaService = FaturaFactory::createService($faturaTaslagi->abone->{Abone::COLUMN_TUR});
 
         try {
             $response = $faturaService->getBill(
@@ -198,20 +199,31 @@ class FaturaController extends Controller
                 $request->ek_kalemler[$faturaTaslagi->{Fatura::COLUMN_TUR}] ?? []
             );
         } catch (GuzzleException $e) {
-            return self::showErrorMessage($e);
+            return self::showErrorMessage($e, $fatura);
         } catch (HizliTeknolojiIsSuccessException $e) {
-            return self::showErrorMessage($e);
+            return self::showErrorMessage($e, $fatura);
         }
 
-        return view('faturalar.fatura', ['response' => $response]);
+        return view(
+            'faturalar.fatura',
+            [
+                'response' => $response,
+                'dataSource'    => FaturaFactory::createDataSource(
+                    $fatura->{Fatura::COLUMN_DATA_SOURCE}
+                )
+            ]
+        );
     }
 
-    protected static function showErrorMessage(Exception $e)
+    protected static function showErrorMessage(Exception $e, Fatura $fatura)
     {
         return view(
             'faturalar.fatura',
             [
                 'error'         => $e->getMessage(),
+                'dataSource'    => FaturaFactory::createDataSource(
+                    $fatura->{Fatura::COLUMN_DATA_SOURCE}
+                )
             ]
         );
     }

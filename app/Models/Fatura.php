@@ -32,6 +32,7 @@ class Fatura extends Model implements FaturaInterface
         self::COLUMN_NOT,
         self::COLUMN_TOPLAM_ODENECEK_UCRET,
         self::COLUMN_ABONE_ID,
+        self::COLUMN_DATA_SOURCE,
     ];
 
     protected $casts = [
@@ -60,11 +61,19 @@ class Fatura extends Model implements FaturaInterface
     const COLUMN_NOT                    = 'not';
     const COLUMN_TOPLAM_ODENECEK_UCRET  = 'toplam_odenecek_ucret';
     const COLUMN_ABONE_ID               = 'abone_id';
+    const COLUMN_DATA_SOURCE            = 'data_source';
+    const COLUMN_DATA_SOURCE_MANUAL     = 'manual';
+    const COLUMN_DATA_SOURCE_IMPORTED   = 'imported';
 
     const LIST_DURUM = [
         self::COLUMN_DURUM_BEKLEMEDE,
         self::COLUMN_DURUM_HATA,
         self::COLUMN_DURUM_BASARILI,
+    ];
+
+    const LIST_DATA_SOURCES = [
+        self::COLUMN_DATA_SOURCE_MANUAL,
+        self::COLUMN_DATA_SOURCE_IMPORTED,
     ];
 
     const COLUMN_FATURA_TASLAGI_ID  = 'fatura_taslagi_id';

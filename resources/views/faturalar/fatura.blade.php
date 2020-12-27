@@ -45,8 +45,8 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="text-lg-right">
-                            <a href="{{ route('faturataslak.ekle.get') }}" class="btn btn-lg btn-primary">
-                                Yeni Fatura Oluştur
+                            <a href="{{ $dataSource->getHrefNewInvoiceButton() }}" class="btn btn-lg btn-primary">
+                                {{ $dataSource->getTextNewInvoiceButton() }}
                             </a>
                         </div>
                     </div>
@@ -68,10 +68,6 @@
     </style>
 @stop
 @section('page-script')
-    <script>
-        $(function () {
-            $('#main-menu > li:not(.active) > ul').css('display', 'none');
-            $('.page-loader-wrapper').fadeOut();
-        });
-    </script>
+    <script src="{{ asset('assets/bundles/c3.bundle.js') }}"></script>
+    <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
 @stop

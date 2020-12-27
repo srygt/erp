@@ -48,7 +48,7 @@
                                 <button
                                     type="button"
                                     class="btn btn-lg btn-default"
-                                    onclick="window.history.back()"
+                                    onclick="{{ $dataSource->getHrefBackButton() }}"
                                 >
                                     Geri Dön
                                 </button>
@@ -91,10 +91,6 @@
     </style>
 @stop
 @section('page-script')
-    <script>
-        $(function () {
-            $('#main-menu > li:not(.active) > ul').css('display', 'none');
-            $('.page-loader-wrapper').fadeOut();
-        });
-    </script>
+    <script src="{{ asset('assets/bundles/c3.bundle.js') }}"></script>
+    <script src="{{ asset('assets/bundles/mainscripts.bundle.js') }}"></script>
 @stop

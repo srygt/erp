@@ -5,6 +5,7 @@ namespace App\Services\Import\Fatura\Adapters;
 
 
 use App\Models\Ayar;
+use App\Models\Fatura;
 use App\Models\ImportedFatura;
 use Illuminate\Support\Carbon;
 
@@ -87,6 +88,7 @@ abstract class AbstractImportedFaturaAdapter
             'birim_fiyat' => $this->importedFatura
                 ->{ImportedFatura::COLUMN_BIRIM_FIYAT_TUKETIM},
             'not' => null,
+            Fatura::COLUMN_DATA_SOURCE => Fatura::COLUMN_DATA_SOURCE_IMPORTED,
         ];
 
         $now = Carbon::now();

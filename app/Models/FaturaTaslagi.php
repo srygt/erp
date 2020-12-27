@@ -37,6 +37,7 @@ class FaturaTaslagi extends Model implements FaturaInterface
         Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT,
         Fatura::COLUMN_TOPLAM_ODENECEK_UCRET,
         Fatura::COLUMN_NOT,
+        Fatura::COLUMN_DATA_SOURCE,
     ];
 
     protected $casts = [

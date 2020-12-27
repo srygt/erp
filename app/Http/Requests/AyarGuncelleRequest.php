@@ -30,7 +30,7 @@ class AyarGuncelleRequest extends FormRequest
             'iban'              => 'required',
             'birim_fiyat'       => 'required|numeric|min:0.000000001',
             'fatura_tarih'      => 'nullable|date_format:' . config('common.time.format'),
-            'son_odeme_gun'     => 'required|digits_between:1,31',
+            'son_odeme_gun'     => 'required|digits_between:1,28',
             'fatura_aciklama'   => 'nullable',
         ];
 

@@ -6,6 +6,7 @@ use App\Helpers\Utils;
 use App\Models\Abone;
 use App\Models\AyarEkKalem;
 use App\Models\Fatura;
+use App\Services\Fatura\FaturaFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -69,6 +70,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_KAPASITIF_TUKETIM        => 'nullable|required_if:tur,' . self::KAPASITIF_STATUS . '|numeric|min:0',
             Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT    => 'nullable|required_if:tur,' . self::KAPASITIF_STATUS . '|numeric|min:0.000000001',
             Fatura::COLUMN_NOT                      => 'nullable',
+            Fatura::COLUMN_DATA_SOURCE              => ['required', Rule::in(array_keys(FaturaFactory::DATA_SOURCES))],
             'ek_kalemler'                           => 'required|array',
             'ek_kalemler.' . $tur                   => 'nullable|array',
             'ek_kalemler.' . $tur . '.*.id'         => 'required|numeric|exists:App\Models\AyarEkKalem,id',

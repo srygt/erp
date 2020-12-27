@@ -13,6 +13,7 @@
     <form id="mainForm" action="{{ route("faturataslak.ekle.post") }}" method="post">
         @csrf
         <input type="hidden" id="tur" name="tur" value="">
+        <input type="hidden" id="data_source" name="data_source" value="manual">
         <div class="col-lg-8 col-md-12">
             <div class="card">
                 <div class="body">

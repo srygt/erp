@@ -64,9 +64,10 @@ class FaturaTaslakController extends Controller
                 Fatura::COLUMN_KAPASITIF_TUKETIM    => $request->{Fatura::COLUMN_KAPASITIF_TUKETIM},
                 Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT=> $request->{Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT},
                 Fatura::COLUMN_NOT                  => $request->{Fatura::COLUMN_NOT},
+                Fatura::COLUMN_DATA_SOURCE          => $request->{Fatura::COLUMN_DATA_SOURCE},
             ]);
 
-        $faturaService = FaturaFactory::getService($abone->{Abone::COLUMN_TUR});
+        $faturaService = FaturaFactory::createService($abone->{Abone::COLUMN_TUR});
 
         try {
             $response = $faturaService->getPreview(
@@ -74,9 +75,9 @@ class FaturaTaslakController extends Controller
                 $request->ek_kalemler[$faturaTaslagi->{Fatura::COLUMN_TUR}] ?? []
             );
         } catch (GuzzleException $e) {
-            return self::showErrorMessage($e);
+            return self::showErrorMessage($e, $faturaTaslagi);
         } catch (HizliTeknolojiIsSuccessException $e) {
-            return self::showErrorMessage($e);
+            return self::showErrorMessage($e, $faturaTaslagi);
         }
 
         return view(
@@ -87,11 +88,14 @@ class FaturaTaslakController extends Controller
                 'ekKalemTurleri'=> [
                     $faturaTaslagi->{Fatura::COLUMN_TUR} => $request->ek_kalemler[$faturaTaslagi->{Fatura::COLUMN_TUR}] ?? []
                 ],
+                'dataSource'    => FaturaFactory::createDataSource(
+                    $faturaTaslagi->{Fatura::COLUMN_DATA_SOURCE}
+                )
             ]
         );
     }
 
-    static protected function showErrorMessage(Exception $e)
+    static protected function showErrorMessage(Exception $e, FaturaTaslagi $faturaTaslagi)
     {
         return view(
             'faturalar.taslak',
@@ -99,6 +103,9 @@ class FaturaTaslakController extends Controller
                 'taslakUuid'    => null,
                 'ekKalemTurleri'=> [],
                 'error'         => $e->getMessage(),
+                'dataSource'    => FaturaFactory::createDataSource(
+                    $faturaTaslagi->{Fatura::COLUMN_DATA_SOURCE}
+                ),
             ]
         );
     }
