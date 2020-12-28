@@ -33,7 +33,7 @@ class FaturaImportFactory
 
         self::checkType($tur);
 
-        $className = sprintf(self::ADAPTER_IMPORTED_FATURA, Str::slug($tur));
+        $className = sprintf(self::ADAPTER_IMPORTED_FATURA, Str::studly($tur));
 
         return app($className, ['importedFatura' => $importedFatura]);
     }
