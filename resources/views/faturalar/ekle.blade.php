@@ -240,18 +240,20 @@
                                                     >
                                                 </td>
                                                 <td>
-                                                    @if ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
-                                                        <input
-                                                            type="number"
-                                                            class="form-control"
-                                                            name="ek_kalemler[{{ $tur }}][{{ $key }}][deger]"
+                                                    <input
+                                                        type="number"
+                                                        class="form-control"
+                                                        name="ek_kalemler[{{ $tur }}][{{ $key }}][deger]"
+
+                                                        @if ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
                                                             value="{{ old('ek_kalemler[' . $tur . '][' . $key . '][deger]') }}"
-                                                            min="0.000000000"
-                                                            step="0.01"
-                                                        >
-                                                    @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT)
-                                                        {{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}
-                                                    @endif
+                                                        @elseif ($ekKalem->{\App\Models\AyarEkKalem::COLUMN_UCRET_TUR} === \App\Models\AyarEkKalem::FIELD_UCRET_BIRIM_FIYAT)
+                                                            value="{{ $ekKalem->{\App\Models\AyarEkKalem::COLUMN_DEGER} }}"
+                                                        @endif
+
+                                                        min="0.000000000"
+                                                        step="0.000000001"
+                                                    >
                                                 </td>
                                             </tr>
                                         @endforeach

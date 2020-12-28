@@ -75,9 +75,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
             'ek_kalemler.' . $tur                   => 'nullable|array',
             'ek_kalemler.' . $tur . '.*.id'         => 'required|numeric|exists:App\Models\AyarEkKalem,id',
             'ek_kalemler.' . $tur . '.*.ucret_tur'  => ['required', Rule::in(array_keys(AyarEkKalem::LIST_UCRET_TUR))],
-            'ek_kalemler.' . $tur . '.*.deger'      => 'required_if:ek_kalemler.*.ucret_tur,'
-                                                    . AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR
-                                                    . '|numeric',
+            'ek_kalemler.' . $tur . '.*.deger'      => 'required|numeric',
 
             self::ENDUKTIF_STATUS                   => 'required|boolean',
             self::KAPASITIF_STATUS                  => 'required|boolean',

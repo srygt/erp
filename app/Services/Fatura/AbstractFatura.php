@@ -336,7 +336,7 @@ abstract class AbstractFatura
             $ekKalemAdapter = new AyarEkKalemAdapter(
                                     $ekKalem,
                                     $tuketimMiktari,
-                                    $selectedEkKalemler[$no]['deger'] ?? null,
+                                    $selectedEkKalemler[$no]['deger'],
                                     $quantityType
                                 );
 

@@ -35,9 +35,7 @@ class FaturaEkleRequest extends FormRequest
             'ek_kalemler.*'                     => 'nullable|array',
             'ek_kalemler.*.*.id'                => 'required|numeric|exists:App\Models\AyarEkKalem,id',
             'ek_kalemler.*.*.ucret_tur'         => ['required', Rule::in(array_keys(AyarEkKalem::LIST_UCRET_TUR))],
-            'ek_kalemler.*.*.deger'             => 'required_if:ek_kalemler.*.ucret_tur,'
-                . AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR
-                . '|numeric',
+            'ek_kalemler.*.*.deger'             => 'required|numeric',
         ];
 
         $dataSourceString = FaturaTaslagi::where(

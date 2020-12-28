@@ -58,12 +58,7 @@ class AyarEkKalemAdapter
      */
     public function getUcret() : float
     {
-        if ($this->ayarEkKalem->{AyarEkKalem::COLUMN_UCRET_TUR} === AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
-        {
-            return $this->birimUcret;
-        }
-
-        return $this->ayarEkKalem->{AyarEkKalem::COLUMN_DEGER};
+        return $this->birimUcret;
     }
 
     /**

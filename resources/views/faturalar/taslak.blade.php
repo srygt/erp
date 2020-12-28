@@ -15,9 +15,7 @@
             @foreach($ekKalemler as $key => $ekKalem)
                 <input type="hidden" name="ek_kalemler[{{ $tur }}][{{ $key }}][id]" value="{{ $ekKalem['id'] }}">
                 <input type="hidden" name="ek_kalemler[{{ $tur }}][{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_UCRET_TUR }}]" value="{{ $ekKalem[\App\Models\AyarEkKalem::COLUMN_UCRET_TUR] }}">
-                @if ($ekKalem[\App\Models\AyarEkKalem::COLUMN_UCRET_TUR] === \App\Models\AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR)
-                    <input type="hidden" name="ek_kalemler[{{ $tur }}][{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_DEGER }}]" value="{{ $ekKalem[\App\Models\AyarEkKalem::COLUMN_DEGER] }}">
-                @endif
+                <input type="hidden" name="ek_kalemler[{{ $tur }}][{{ $key }}][{{ \App\Models\AyarEkKalem::COLUMN_DEGER }}]" value="{{ $ekKalem[\App\Models\AyarEkKalem::COLUMN_DEGER] }}">
             @endforeach
         @endforeach
         <div class="col-sm-12">
