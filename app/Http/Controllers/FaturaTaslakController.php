@@ -94,7 +94,6 @@ class FaturaTaslakController extends Controller
         return view(
             'faturalar.taslak',
             [
-                'request'       => $request->validated(),
                 'response'      => $response,
                 'taslakUuid'    => $faturaTaslagi->uuid,
                 'ekKalemTurleri'=> [
@@ -111,12 +110,14 @@ class FaturaTaslakController extends Controller
         return view(
             'faturalar.taslak',
             [
+                'response'      => null,
                 'taslakUuid'    => null,
                 'ekKalemTurleri'=> [],
                 'error'         => $e->getMessage(),
                 'dataSource'    => FaturaFactory::createDataSource(
                     $faturaTaslagi->{Fatura::COLUMN_DATA_SOURCE}
                 ),
+                'hiddenFields'  => [],
             ]
         );
     }
