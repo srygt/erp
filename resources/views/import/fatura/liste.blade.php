@@ -28,18 +28,19 @@
         <div class="card">
             <div class="body">
                 <div class="col-sm-12">
-                    <form action="{{ route('fatura.liste') }}">
+                    <form action="{{ route('import.fatura.liste') }}">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="app_type">
                                         Fatura Türü
                                     </label>
-                                    <select class="form-control" name="app_type" id="app_type">
-                                        @foreach(\App\Http\Requests\GidenFaturaRequest::APP_TYPE_LIST as $value => $text)
+                                    <select class="form-control" name="tur" id="tur">
+                                        <option value="">Seçiniz</option>
+                                        @foreach(\App\Models\Abone::TUR_LIST as $value => $text)
                                             <option
                                                 value="{{ $value }}"
-                                                @if (request('app_type', \App\Http\Requests\GidenFaturaRequest::APP_TYPE_DEFAULT) == $value)
+                                                @if (request('tur') == $value)
                                                 selected
                                                 @endif
                                             >

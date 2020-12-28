@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Import;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Import\FaturaImportRequest;
+use App\Http\Requests\Import\FaturaListRequest;
 use App\Imports\ElektrikFaturasImport;
 use App\Models\ImportedFatura;
 use App\Models\FileImportedFatura;
@@ -21,12 +22,18 @@ use Throwable;
 
 class FaturaImportController extends Controller
 {
-    public function index(Request $request)
+    public function index(FaturaListRequest $request)
     {
+        $model = ImportedFatura::with('abone.mukellef');
+
+        if ($request->input('tur')) {
+            $model = $model->where(ImportedFatura::COLUMN_TUR, $request->input('tur'));
+        }
+
         return view(
             'import.fatura.liste',
             [
-                'faturalar' => ImportedFatura::with('abone.mukellef')->get(),
+                'faturalar' => $model->get(),
             ]
         );
     }
