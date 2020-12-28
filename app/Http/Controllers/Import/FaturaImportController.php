@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Import;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Import\FaturaDeleteRequest;
 use App\Http\Requests\Import\FaturaImportRequest;
 use App\Http\Requests\Import\FaturaListRequest;
 use App\Imports\ElektrikFaturasImport;
@@ -108,5 +109,14 @@ class FaturaImportController extends Controller
             ->with([
                 'message' => 'Fatura içe aktarma işlemi başarılı!',
             ]);
+    }
+
+    public function delete(FaturaDeleteRequest $request)
+    {
+        $importedFatura = ImportedFatura::findOrFail($request->id);
+
+        $importedFatura->delete();
+
+        return redirect()->back()->with('message', 'Fatura Taslağı Başarıyla Silindi');
     }
 }

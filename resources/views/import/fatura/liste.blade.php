@@ -84,7 +84,11 @@
                     <td class="text-right">{{ $fatura->birim_fiyat }}TL</td>
                     <td>
                         <a href="{{ route('import.fatura.detay', [$fatura]) }}" class="btn btn-sm btn-default" ><i class="fa fa-shopping-cart text-blue"></i></a>
-                        <!-- <button type="button" class="btn btn-sm btn-default js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button> -->
+                        <form action="{{route('import.fatura.sil')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $fatura->id }}">
+                            <button type="button" class="btn btn-sm btn-default sil"><i class="fa fa-trash-o text-danger"></i></button>
+                        </form>
                     </td>
                 </tr>
              @endforeach
@@ -99,6 +103,9 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-datatable/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/sweetalert/sweetalert.css') }}">
     <style>
+        .table-responsive form {
+            display: inline;
+        }
         .dataTables_filter input {
             background-color: white;
         }
@@ -121,5 +128,27 @@
             "pageLength": 25,
             "order": [[ 4, "desc" ]],
         } );
+
+        $(document).ready(function(){
+            $(document).on("click", ".sil", function(e) {
+                var form = $(this).parents('form');
+
+                swal({
+                    title: "Silmek istediğinize emin misiniz?",
+                    text: "Silinen verileri geri getiremezsiniz!",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: 'İptal',
+                    confirmButtonColor: "#dc3545",
+                    confirmButtonText: "Evet, sil!",
+                    closeOnConfirm: false
+                }, (confirmed) => {
+                    if( confirmed ){
+                        form.submit();
+                    }
+                });
+
+            });
+        })
     </script>
 @stop
