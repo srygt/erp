@@ -7,7 +7,7 @@ return [
     'adres'                 => 'Elazığ Karayolu 22.KM OSB İdari Bina YENİŞEHİR/DİYARBAKIR OSB ',
     'email'                 => 'info@diyarbakirosb.org.tr',
     'unvan'                 => 'Diyarbakır Organize Sanayi Bölgesi Teşebbüs Teşvik Başkanlığı',
-    'vergiNo'               => '3010074708',
+    'vergiNo'               => env('FATURA_VERGI_NO', '3010074708'),
     'vergiDairesi'          => 'Gökalp',
     'telefon'               => \App\Helpers\Utils::getFormattedTelephoneNumber('904123450021'),
 
