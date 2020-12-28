@@ -37,6 +37,6 @@ class CreateFileImportedFaturasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('imported_fatura_files');
+        Schema::dropIfExists('file_imported_faturas');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Fatura;
+use App\Models\FaturaTaslagi;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,6 @@ class AddDataSourceFieldToFaturalarTable extends Migration
                 Fatura::COLUMN_DATA_SOURCE,
                 Fatura::LIST_DATA_SOURCES
             )
-                ->default(Fatura::COLUMN_DATA_SOURCE_MANUAL)
                 ->index();
         });
 
@@ -28,26 +28,23 @@ class AddDataSourceFieldToFaturalarTable extends Migration
                 Fatura::COLUMN_DATA_SOURCE,
                 Fatura::LIST_DATA_SOURCES
             )
-                ->default(Fatura::COLUMN_DATA_SOURCE_MANUAL)
                 ->index();
         });
 
-        Schema::table('fatura_taslaklari', function (Blueprint $table) {
-            $table->enum(
-                Fatura::COLUMN_DATA_SOURCE,
-                Fatura::LIST_DATA_SOURCES
-            )
-                ->default(null)
-                ->change();
+        Fatura::chunk(100, function ($faturalar) {
+            foreach ($faturalar as &$fatura) {
+                $fatura->update([
+                    Fatura::COLUMN_DATA_SOURCE => Fatura::COLUMN_DATA_SOURCE_MANUAL,
+                ]);
+            }
         });
 
-        Schema::table('faturalar', function (Blueprint $table) {
-            $table->enum(
-                Fatura::COLUMN_DATA_SOURCE,
-                Fatura::LIST_DATA_SOURCES
-            )
-                ->default(null)
-                ->change();
+        FaturaTaslagi::chunk(100, function ($faturalar) {
+            foreach ($faturalar as &$fatura) {
+                $fatura->update([
+                    Fatura::COLUMN_DATA_SOURCE => Fatura::COLUMN_DATA_SOURCE_MANUAL,
+                ]);
+            }
         });
     }
 
