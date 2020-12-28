@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AboneEkleRequest;
 use App\Models\Abone;
 use App\Models\Mukellef;
+use App\Services\AboneService;
 
 class AboneController extends Controller
 {
@@ -43,6 +44,11 @@ class AboneController extends Controller
 
         if ($request->id) {
             $abone = Abone::where('id', $request->id)->first();
+
+            if (AboneService::isLocked($abone)) {
+                return AboneService::showLockedMessage();
+            }
+
             $abone->update($payload);
 
             return redirect()->back()->with('message', 'Başarıyla Güncellendi');
@@ -57,6 +63,10 @@ class AboneController extends Controller
     public function guncelleGet(int $id)
     {
         $abone = Abone::find($id);
+
+        if (AboneService::isLocked($abone)) {
+            return AboneService::showLockedMessage();
+        }
 
         return view('abone.ekle', [
             'abone' => $abone,

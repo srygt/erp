@@ -6,6 +6,7 @@ use App\Http\Requests\MukellefEkleRequest;
 use App\Http\Requests\MukellefPasiflestirRequest;
 use App\Models\Abone;
 use App\Models\Mukellef;
+use App\Services\MukellefService;
 
 class MukellefController extends Controller
 {
@@ -46,16 +47,21 @@ class MukellefController extends Controller
         ]);
 
         if ($request->id) {
-            Mukellef::where('id', $request->id)
-                ->update(
-                    array_merge(    // kullanıcının hem vergi no hem de tc kimlik no ya sahip olmasını istemeyiz
-                        [
-                            Mukellef::COLUMN_VERGI_NO       => null,
-                            Mukellef::COLUMN_TC_KIMLIK_NO   => null,
-                        ],
-                        $payload
-                    )
-                );
+            $mukellef = Mukellef::findOrFail($request->id);
+
+            if (MukellefService::isLocked($mukellef)) {
+                return MukellefService::showLockedMessage();
+            }
+
+            $mukellef->update(
+                array_merge(    // kullanıcının hem vergi no hem de tc kimlik no ya sahip olmasını istemeyiz
+                    [
+                        Mukellef::COLUMN_VERGI_NO       => null,
+                        Mukellef::COLUMN_TC_KIMLIK_NO   => null,
+                    ],
+                    $payload
+                )
+            );
 
             return redirect()->back()->with('message', 'Başarıyla Güncellendi');
         }
@@ -70,6 +76,10 @@ class MukellefController extends Controller
     {
         $mukellef = Mukellef::find($id);
 
+        if (MukellefService::isLocked($mukellef)) {
+            return MukellefService::showLockedMessage();
+        }
+
         return view('mukellef.ekle', [
             'mukellef' => $mukellef,
         ]);
@@ -83,6 +93,10 @@ class MukellefController extends Controller
     public function pasiflestir(MukellefPasiflestirRequest $request)
     {
         $mukellef = Mukellef::findOrFail($request->id);
+
+        if (MukellefService::isLocked($mukellef)) {
+            return MukellefService::showLockedMessage();
+        }
 
         $mukellef->update([
             Mukellef::COLUMN_AKTIF_MI => false,
