@@ -323,9 +323,14 @@ abstract class AbstractFatura
     protected function getEkKalemler(float $tuketimMiktari, string $tur,
                                      array $selectedEkKalemler, QuantityUnitUser $quantityType) : array
     {
-        $invoiceLines   = [];
+        $invoiceLines       = [];
+        $selectedEkKalemler = collect($selectedEkKalemler)
+            ->sortBy('id')
+            ->values();
+
         $ekKalemler = AyarEkKalem::where(AyarEkKalem::COLUMN_TUR, $tur)
-            ->whereIn('id', collect($selectedEkKalemler)->pluck('id'))
+            ->whereIn('id', $selectedEkKalemler->pluck('id'))
+            ->orderBy('id')
             ->get();
 
         if ($ekKalemler->count() < 1) {
