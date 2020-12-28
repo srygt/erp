@@ -25,43 +25,43 @@
     @endif
     <div class="col-lg-12">
 
-                    <div class="table-responsive">
-                        <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>VKN / TCKN</th>
-                                <th>Unvan</th>
-                                <th>Telefon</th>
-                                <th>ePosta</th>
-                                <th>İl</th>
-                                <th>İşlemler</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                         @foreach($mukellefler as $mukellef)
-                            <tr>
-                                <td>{{$mukellef->id}}</td>
-                                <td><div class="font-15">{{ $mukellef->getIdentificationId() }}</div></td>
-                                <td>{{ $mukellef->unvan }}</td>
-                                <td>{{ $mukellef->telefon }}</td>
-                                <td>{{ $mukellef->email }}</td>
-                                <td>{{ $mukellef->il }}</td>
-                                <td>
-                                    <a href="{{ route('mukellef.guncelle.get', $mukellef->id) }}" class="btn btn-sm btn-default" ><i class="fa fa-edit text-blue"></i></a>
-                                    <form action="{{route('mukellef.pasiflestir')}}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $mukellef->id }}">
-                                        <button type="button" class="btn btn-sm btn-default pasiflestir"><i class="fa fa-trash-o text-danger"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                         @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="table-responsive">
+            <table class="table table-hover js-basic-example dataTable table-custom spacing5 mb-0">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>VKN / TCKN</th>
+                    <th>Unvan</th>
+                    <th>Telefon</th>
+                    <th>ePosta</th>
+                    <th>İl</th>
+                    <th>İşlemler</th>
+                </tr>
+                </thead>
+                <tbody>
+                 @foreach($mukellefler as $mukellef)
+                    <tr>
+                        <td>{{$mukellef->id}}</td>
+                        <td><div class="font-15">{{ $mukellef->getIdentificationId() }}</div></td>
+                        <td>{{ $mukellef->unvan }}</td>
+                        <td>{{ $mukellef->telefon }}</td>
+                        <td>{{ $mukellef->email }}</td>
+                        <td>{{ $mukellef->il }}</td>
+                        <td>
+                            <a href="{{ route('mukellef.guncelle.get', $mukellef->id) }}" class="btn btn-sm btn-default" ><i class="fa fa-edit text-blue"></i></a>
+                            <form action="{{route('mukellef.pasiflestir')}}" method="post">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $mukellef->id }}">
+                                <button type="button" class="btn btn-sm btn-default pasiflestir"><i class="fa fa-trash-o text-danger"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                 @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 @stop
 
 @section('page-styles')
@@ -94,7 +94,7 @@
         } );
 
         $(document).ready(function(){
-            $(".pasiflestir").on("click", function(e) {
+            $(document).on("click", ".pasiflestir", function(e) {
                 var form = $(this).parents('form');
 
                 swal({
