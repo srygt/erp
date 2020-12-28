@@ -25,6 +25,9 @@ class Fatura extends Model implements FaturaInterface
         self::COLUMN_ENDEKS_ILK,
         self::COLUMN_ENDEKS_SON,
         self::COLUMN_BIRIM_FIYAT_TUKETIM,
+        self::COLUMN_GUNDUZ_TUKETIM,
+        self::COLUMN_PUAND_TUKETIM,
+        self::COLUMN_GECE_TUKETIM,
         self::COLUMN_ENDUKTIF_TUKETIM,
         self::COLUMN_ENDUKTIF_BIRIM_FIYAT,
         self::COLUMN_KAPASITIF_TUKETIM,
@@ -54,6 +57,9 @@ class Fatura extends Model implements FaturaInterface
     const COLUMN_ENDEKS_ILK             = 'ilk_endeks';
     const COLUMN_ENDEKS_SON             = 'son_endeks';
     const COLUMN_BIRIM_FIYAT_TUKETIM    = 'birim_fiyat';
+    const COLUMN_GUNDUZ_TUKETIM         = 'gunduz_tuketim';
+    const COLUMN_PUAND_TUKETIM          = 'puand_tuketim';
+    const COLUMN_GECE_TUKETIM           = 'gece_tuketim';
     const COLUMN_ENDUKTIF_TUKETIM       = 'enduktif_tuketim';
     const COLUMN_ENDUKTIF_BIRIM_FIYAT   = 'enduktif_birim_fiyat';
     const COLUMN_KAPASITIF_TUKETIM      = 'kapasitif_tuketim';

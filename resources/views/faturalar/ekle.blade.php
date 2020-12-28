@@ -146,6 +146,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="gunduzPuandGeceContainer" class="col-sm-12" style="display: none;">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label><span>Gündüz Tüketim</span><span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="gunduz_tuketim" value="{{old("gunduz_tuketim")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label><span>Puand Tüketim</span><span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="puand_tuketim" value="{{old("puand_tuketim")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label><span>Gece Tüketim</span><span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="gece_tuketim" value="{{old("gece_tuketim")}}" min="0.000000" step="0.001">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div id="enduktifContainer" class="col-sm-12" style="display: none;">
                             <div class="row">
                                 <div class="col-lg-6 col-md-12">
@@ -394,10 +416,11 @@
 
                     $('#tur').val(tur);
 
-                    const elLabelSonEndeks      = $('#sonEndeksLabel');
-                    const elContainerIlkEndeks  = $('#ilkEndeksContainer');
-                    const elContainerEnduktif   = $('#enduktifContainer');
-                    const elContainerKapasitif  = $('#kapasitifContainer');
+                    const elLabelSonEndeks              = $('#sonEndeksLabel');
+                    const elContainerIlkEndeks          = $('#ilkEndeksContainer');
+                    const elContainerGunduzPuandGece    = $('#gunduzPuandGeceContainer');
+                    const elContainerEnduktif           = $('#enduktifContainer');
+                    const elContainerKapasitif          = $('#kapasitifContainer');
 
 
                     if (tur === "{{ \App\Models\Abone::COLUMN_TUR_SU }}")
@@ -412,10 +435,12 @@
 
                     if (tur === "{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}")
                     {
+                        elContainerGunduzPuandGece.show(250);
                         isEnduktif ? elContainerEnduktif.show(250) : elContainerEnduktif.hide(250);
                         isKapasitif ? elContainerKapasitif.show(250) : elContainerKapasitif.hide(250);
                     }
                     else {
+                        elContainerGunduzPuandGece.hide(250);
                         elContainerEnduktif.hide(250);
                         elContainerKapasitif.hide(250);
                     }

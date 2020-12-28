@@ -33,6 +33,8 @@ class ElektrikFaturasiService extends AbstractFatura
     {
         $values = [
             'tuketim'   => $fatura->{Fatura::COLUMN_ENDEKS_SON} - $fatura->{Fatura::COLUMN_ENDEKS_ILK}, // Kwh, m3
+            'gunduzPuandGeceTuketim' => $fatura->{Fatura::COLUMN_GUNDUZ_TUKETIM} + $fatura->{Fatura::COLUMN_PUAND_TUKETIM}
+                                        + $fatura->{Fatura::COLUMN_GECE_TUKETIM},
             'enduktifTuketim'   => $fatura->{Fatura::COLUMN_ENDUKTIF_TUKETIM},
             'kapasitifTuketim'  => $fatura->{Fatura::COLUMN_KAPASITIF_TUKETIM},
             'bedel'             => [
@@ -81,7 +83,7 @@ class ElektrikFaturasiService extends AbstractFatura
             ->setId(1)
             ->setItemName('Elektrik Tüketim Bedeli')
             ->setPriceAmount($values['bedel']['elektrikTuketim'])
-            ->setQuantityAmount($values['tuketim'])
+            ->setQuantityAmount($values['gunduzPuandGeceTuketim'])
             ->setQuantityUnitUser(new QuantityUnitUser('KWH'));
 
         $taxTrt = (new LineTax())
