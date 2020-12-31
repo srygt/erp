@@ -23,6 +23,15 @@
     @endif
     <!-- Custom Css -->
     <link rel="stylesheet" href="{{ asset('assets/css/site.min.css') }}">
+    <style type="text/css">
+        .hideOverflow {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 200px;
+        }
+    </style>
 </head>
 
 <body class="theme-blush font-montserrat light_version">

@@ -46,8 +46,8 @@
                     <td>{{ $abone->mukellef->getIdentificationId() }}</td>
                     <td>{{ $abone->abone_no }}</td>
                     <td>{{ $abone->sayac_no }}</td>
-                    <td><div class="font-15">{{ $abone->baslik }}</div></td>
-                    <td>{{ $abone->mukellef->unvan }}</td>
+                    <td><div class="font-15 "><a title="{{ $abone->baslik }}" class="hideOverflow">{{ $abone->baslik }}</a></div></td>
+                    <td><a title="{{ $abone->mukellef->unvan }}" class="hideOverflow">{{ $abone->mukellef->unvan }}</a></td>
                     <td>{{ \App\Models\Abone::TUR_LIST[$abone->tur] }}</td>
                     <td>
                         <a href="{{ route('abone.guncelle.get', $abone->id) }}" class="btn btn-sm btn-default" ><i class="fa fa-edit text-blue"></i></a>

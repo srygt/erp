@@ -62,7 +62,7 @@
                 @endif
                 >
                     <td><div class="font-15">{{ $fatura->DocumentId }}</div></td>
-                    <td>{{ $fatura->TargetTitle }}</td>
+                    <td><a title="{{ $fatura->TargetTitle }}" class="hideOverflow">{{ $fatura->TargetTitle }}</a></td>
                     <td>{{ $fatura->DocumentTypeCode }}</td>
                     <td>{{ $fatura->ProfileId }}</td>
                     <td>{{ $fatura->StatusExp }}</td>

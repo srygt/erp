@@ -73,9 +73,9 @@
                 <tbody>
              @foreach($faturalar as $fatura)
                 <tr>
-                    <td>{{$fatura->uuid}}</td>
-                    <td><div class="font-15">{{ $fatura->abone->baslik }}</div></td>
-                    <td>{{ $fatura->abone->mukellef->unvan }}</td>
+                    <td><a title="{{ $fatura->uuid }}" class="hideOverflow">{{$fatura->uuid}}</a></td>
+                    <td><div class="font-15"><a title="{{ $fatura->abone->baslik }}" class="hideOverflow">{{ $fatura->abone->baslik }}</a></div></td>
+                    <td><a title="{{ $fatura->abone->mukellef->unvan }}" class="hideOverflow">{{ $fatura->abone->mukellef->unvan }}</a></td>
                     <td>{{ \Illuminate\Support\Str::ucfirst($fatura->abone->tur) }}</td>
                     <td>{{ $fatura->created_at->toDateString() }}</td>
                     <td>{{ \Onrslu\HtEfatura\Factories\AppTypeFactory::getTitle($fatura->app_type) }}</td>
