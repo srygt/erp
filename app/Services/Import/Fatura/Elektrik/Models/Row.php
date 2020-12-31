@@ -8,6 +8,8 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class Row implements Arrayable
 {
+    const PRECISION = 9;
+
     /** @var string $aboneNo */
     protected $aboneNo;
 
@@ -129,7 +131,7 @@ class Row implements Arrayable
      */
     public function getToplamTuketim(): float
     {
-        return $this->toplamTuketim;
+        return round($this->toplamTuketim, self::PRECISION);
     }
 
     /**
@@ -173,7 +175,7 @@ class Row implements Arrayable
             return 0;
         }
 
-        return $this->getCalcToplamTuketimUcreti() / $toplamTuketimGunduzPuandGece;
+        return round($this->getCalcToplamTuketimUcreti() / $toplamTuketimGunduzPuandGece, self::PRECISION);
     }
 
     /**
@@ -307,7 +309,7 @@ class Row implements Arrayable
             return 0;
         }
 
-        return $this->getReaktifBedel() / $reaktifTuketim;
+        return round($this->getReaktifBedel() / $reaktifTuketim, self::PRECISION);
     }
 
     /**
@@ -321,7 +323,7 @@ class Row implements Arrayable
             return 0;
         }
 
-        return $this->getKapasitifBedel() / $kapasitifTuketim;
+        return round($this->getKapasitifBedel() / $kapasitifTuketim, self::PRECISION);
     }
 
     /**
@@ -351,7 +353,7 @@ class Row implements Arrayable
             return 0;
         }
 
-        return $this->getSistemKullanimBedel() / $toplamTuketim;
+        return round($this->getSistemKullanimBedel() / $toplamTuketim, self::PRECISION);
     }
 
     /**
@@ -381,7 +383,7 @@ class Row implements Arrayable
             return 0;
         }
 
-        return $this->getDagitimBedel() / $toplamTuketim;
+        return round($this->getDagitimBedel() / $toplamTuketim, self::PRECISION);
     }
 
     /**
