@@ -170,27 +170,40 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
         return [
             '*.0' => ['required', 'abone_exists:' . Abone::COLUMN_TUR_ELEKTRIK],
             '*.1' => ['string'],
-            '*.2' => ['required', 'numeric'],
-            '*.3' => ['required', 'numeric'],
-            '*.4' => ['required', 'numeric'],
-            '*.5' => ['required', 'numeric'],
-            '*.6' => ['required', 'numeric'],
-            '*.7' => ['required', 'numeric'],
-            '*.8' => ['numeric', 'abone_activation:*.0,' . Abone::COLUMN_TUR_ELEKTRIK . ',' . Abone::COLUMN_ENDUKTIF_BEDEL],
-            '*.9' => ['numeric', 'abone_activation:*.0,' . Abone::COLUMN_TUR_ELEKTRIK . ',' . Abone::COLUMN_KAPASITIF_BEDEL],
-            '*.10' => ['numeric'],
-            '*.11' => ['numeric'],
-            '*.12' => ['numeric', 'abone_activation:*.0,' . Abone::COLUMN_TUR_ELEKTRIK . ',' . Abone::COLUMN_TRT_PAYI],
-            '*.13' => ['numeric'],
-            '*.14' => ['numeric'],
-            '*.15' => ['numeric'],
-            '*.16' => ['numeric'],
+            '*.2' => ['required', 'numeric', 'gte:0'],
+            '*.3' => ['required', 'numeric', 'gte:0'],
+            '*.4' => ['required', 'numeric', 'gte:0'],
+            '*.5' => ['required', 'numeric', 'gte:0'],
+            '*.6' => ['required', 'numeric', 'gte:0'],
+            '*.7' => ['required', 'numeric', 'gte:0'],
+            '*.8' => ['numeric', 'gte:0'],
+            '*.9' => ['numeric', 'gte:0'],
+            '*.10' => ['numeric', 'gte:0'],
+            '*.11' => ['numeric', 'gte:0'],
+            '*.12' => ['numeric', 'gte:0'],
+            '*.13' => ['numeric', 'gte:0'],
+            '*.14' => ['numeric', 'gte:0'],
+            '*.15' => ['numeric', 'gte:0'],
+            '*.16' => ['numeric', 'gte:0'],
         ];
     }
 
     public function prepareForValidation($data, $index)
     {
         $data[0]    = substr(trim($data[0]), -3);
+
+        $abone = Abone::where(Abone::COLUMN_TUR, 'elektrik')
+            ->where(Abone::COLUMN_ABONE_NO, $data[0])
+            ->first();
+
+        if (is_null($abone)) {
+            return $data;
+        }
+
+        $abone->{Abone::COLUMN_ENDUKTIF_BEDEL} = $data[8] > 0;
+        $abone->{Abone::COLUMN_KAPASITIF_BEDEL} = $data[9] > 0;
+        $abone->{Abone::COLUMN_TRT_PAYI} = $data[12] > 0;
+        $abone->save();
 
         return $data;
     }
