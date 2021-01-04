@@ -80,7 +80,6 @@ abstract class AbstractFatura
             ->setCityName($fatura->abone->mukellef->{Mukellef::COLUMN_IL})
             ->setCitySubdivisionName($fatura->abone->mukellef->{Mukellef::COLUMN_ILCE})
             ->setStreetName($fatura->abone->mukellef->{Mukellef::COLUMN_ADRES})
-            ->setElectronicMail($fatura->abone->mukellef->{Mukellef::COLUMN_EMAIL})
             ->setPartyName($fatura->abone->mukellef->{Mukellef::COLUMN_UNVAN})
             ->setPersonFirstName($fatura->abone->mukellef->{Mukellef::COLUMN_AD})
             ->setPersonFamilyName($fatura->abone->mukellef->{Mukellef::COLUMN_SOYAD})
@@ -89,13 +88,16 @@ abstract class AbstractFatura
             ->setTelephone($fatura->abone->mukellef->{Mukellef::COLUMN_TELEFON})
             ->setCustomerIdentificationsOther($this->getCustomerIdentificationOthers($fatura->abone));
 
+        if (config('fatura.emailActive')) {
+            $customer->setElectronicMail($fatura->abone->mukellef->{Mukellef::COLUMN_EMAIL});
+        }
+
         $customerAgent = new Party();
         $customerAgent
             ->setCountryName($fatura->abone->{Mukellef::COLUMN_ULKE})
             ->setCityName($fatura->abone->{Mukellef::COLUMN_IL})
             ->setCitySubdivisionName($fatura->abone->{Mukellef::COLUMN_ILCE})
             ->setStreetName($fatura->abone->{Mukellef::COLUMN_ADRES})
-            ->setElectronicMail($fatura->abone->{Mukellef::COLUMN_EMAIL})
             ->setPartyName($fatura->abone->mukellef->{Mukellef::COLUMN_UNVAN})
             ->setPersonFirstName($fatura->abone->mukellef->{Mukellef::COLUMN_AD})
             ->setPersonFamilyName($fatura->abone->mukellef->{Mukellef::COLUMN_SOYAD})
@@ -103,6 +105,10 @@ abstract class AbstractFatura
             ->setTaxSchemeName($fatura->abone->mukellef->{Mukellef::COLUMN_VERGI_DAIRESI})
             ->setTelephone($fatura->abone->{Mukellef::COLUMN_TELEFON})
             ->setCustomerIdentificationsOther($this->getCustomerIdentificationOthers($fatura->abone));
+
+        if (config('fatura.emailActive')) {
+            $customerAgent->setElectronicMail($fatura->abone->{Mukellef::COLUMN_EMAIL});
+        }
 
         $seller = new Party();
         $seller

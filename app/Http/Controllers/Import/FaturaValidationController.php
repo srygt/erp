@@ -22,7 +22,7 @@ class FaturaValidationController extends Controller
     public function show(FaturaValidationRequest $request, FileImportedFatura $faturaFile)
     {
         $faturaList = (Excel::toCollection(
-                new ElektrikFaturasImport([]),
+                new ElektrikFaturasImport($request->validated()),
                 $faturaFile->getFilePath()
             ))
             ->flatten(1)

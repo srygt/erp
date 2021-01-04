@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Abone;
 use App\Models\AyarEkKalem;
+use App\Models\Fatura;
 use App\Models\ImportedFatura;
 use App\Models\ImportedFaturaEkKalem;
 use App\Models\ImportedFaturaElektrik;
@@ -52,7 +53,7 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
         $importedFatura->{ImportedFatura::COLUMN_TUR}                   = Abone::COLUMN_TUR_ELEKTRIK;
         $importedFatura->{ImportedFatura::COLUMN_ENDEKS_ILK}            = '0';
         $importedFatura->{ImportedFatura::COLUMN_ENDEKS_SON}            = $faturaElektrikRow->getToplamTuketim();
-        $importedFatura->{ImportedFatura::COLUMN_BIRIM_FIYAT_TUKETIM}   = $faturaElektrikRow->getCalcBirimTuketimUcreti();
+        $importedFatura->{ImportedFatura::COLUMN_BIRIM_FIYAT_TUKETIM}   = $this->params[Fatura::COLUMN_BIRIM_FIYAT_TUKETIM];
         $importedFatura->{ImportedFatura::COLUMN_IP_NO}                 = Request::ip();
 
         $importedFatura->save();
@@ -65,8 +66,8 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
         $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_GECE_TUKETIM}          = $faturaElektrikRow->getGeceTuketim();
         $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_KAPASITIF_TUKETIM}     = $faturaElektrikRow->getKapasitifTuketim();
         $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_ENDUKTIF_TUKETIM}      = $faturaElektrikRow->getReaktifTuketim();
-        $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_KAPASITIF_BIRIM_FIYAT} = $faturaElektrikRow->getCalcBirimKapasitifTuketimUcreti();
-        $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_ENDUKTIF_BIRIM_FIYAT}  = $faturaElektrikRow->getCalcBirimReaktifTuketimUcreti();
+        $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_KAPASITIF_BIRIM_FIYAT} = $this->params[Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT];
+        $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_ENDUKTIF_BIRIM_FIYAT}  = $this->params[Fatura::COLUMN_ENDUKTIF_BIRIM_FIYAT];
         $importedFaturaElektrik->{ImportedFaturaElektrik::COLUMN_IS_TRT_PAYI}           = $faturaElektrikRow->getTrtPayi() > 0;
 
         $importedFaturaElektrik->save();
@@ -122,7 +123,7 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
 
         $importedFaturaEkKalemSistem->{ImportedFaturaEkKalem::RELATION_EK_KALEM}()
             ->associate($sistemKullanimKalem);
-        $importedFaturaEkKalemSistem->{ImportedFaturaEkKalem::COLUMN_DEGER}    = $faturaElektrikRow->getCalcBirimSistemKullanimUcreti();
+        $importedFaturaEkKalemSistem->{ImportedFaturaEkKalem::COLUMN_DEGER}    = $this->params[EkKalem::BIRIM_FIYAT_SISTEM_KULLANIM];;
         $importedFaturaEkKalemSistem->save();
 
         return $importedFatura;
@@ -147,7 +148,7 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
 
         $importedFaturaEkKalemDagitim->{ImportedFaturaEkKalem::RELATION_EK_KALEM}()
             ->associate($dagitimKalem);
-        $importedFaturaEkKalemDagitim->{ImportedFaturaEkKalem::COLUMN_DEGER}    = $faturaElektrikRow->getCalcBirimDagitimUcreti();
+        $importedFaturaEkKalemDagitim->{ImportedFaturaEkKalem::COLUMN_DEGER}    = $this->params[EkKalem::BIRIM_FIYAT_DAGITIM_BEDELI];;
         $importedFaturaEkKalemDagitim->save();
 
         return $importedFatura;

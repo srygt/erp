@@ -18,6 +18,9 @@ return [
     'aboneNoPadString'      => '0',
     'aboneNoPadDirection'   => STR_PAD_LEFT,
 
+    // Fatura kesildikten sonra mail gönderilsin mi?
+    'emailActive'           => env('FATURA_EMAIL_ACTIVE', true),
+
     'importPath'            => 'import/fatura',
     'logPaths'              => [
         'error'                 => 'FaturaRRE/:yil/:ay/:gun/:id_:type_error.log',

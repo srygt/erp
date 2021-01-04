@@ -43,7 +43,7 @@
                     <tr>
                         <td>{{$mukellef->id}}</td>
                         <td><div class="font-15">{{ $mukellef->getIdentificationId() }}</div></td>
-                        <td>{{ $mukellef->unvan }}</td>
+                        <td><a title="{{ $mukellef->unvan }}" class="hideOverflow">{{ $mukellef->unvan }}</a></td>
                         <td>{{ $mukellef->telefon }}</td>
                         <td>{{ $mukellef->email }}</td>
                         <td>{{ $mukellef->il }}</td>
