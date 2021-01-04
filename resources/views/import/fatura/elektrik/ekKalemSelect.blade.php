@@ -10,10 +10,10 @@
 <div class="row">
     <div class="col-md-4 col-sm-12">
         <div class="form-group">
-            <label>Devreden Borç Alanını Seçiniz<span class="text-danger">*</span></label>
+            <label>Gecikme Bedeli Alanını Seçiniz<span class="text-danger">*</span></label>
             <select
-                id="{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_DEVREDEN_BORC }}"
-                name="params[{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_DEVREDEN_BORC }}]"
+                id="{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_GECIKME_BEDELI }}"
+                name="params[{{ \App\Services\Import\Fatura\Elektrik\EkKalem::ID_GECIKME_BEDELI }}]"
                 class="form-control"
             >
                 <option value="">Seçin</option>

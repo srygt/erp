@@ -94,7 +94,7 @@ class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValid
         /** @var ImportedFaturaEkKalem $importedFaturaEkKalemGecikme */
         $importedFaturaEkKalemGecikme = $importedFatura->ekKalemler()->make();
 
-        $gecikmeKalemi = AyarEkKalem::find($this->params[EkKalem::ID_DEVREDEN_BORC]);
+        $gecikmeKalemi = AyarEkKalem::find($this->params[EkKalem::ID_GECIKME_BEDELI]);
 
         $importedFaturaEkKalemGecikme->{ImportedFaturaEkKalem::RELATION_EK_KALEM}()
             ->associate($gecikmeKalemi);
