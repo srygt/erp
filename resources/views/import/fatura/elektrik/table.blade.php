@@ -49,11 +49,11 @@
                     <td class="text-right">{{$fatura[14]}}</td>
                     <td class="text-right">{{$fatura[15]}}</td>
                     <td class="text-right">{{$fatura[16]}}</td>
-                    <td class="text-right">{{$fatura[17]}}</td>
-                    <td class="text-right">{{$fatura[18]}}</td>
-                    <td class="text-right">{{$fatura[19]}}</td>
-                    <td class="text-right">{{$fatura[20]}}</td>
-                    <td class="text-right">{{$fatura[21]}}</td>
+                    <td class="text-right">{{$params[\App\Models\Fatura::COLUMN_BIRIM_FIYAT_TUKETIM]}}</td>
+                    <td class="text-right">{{$params[\App\Models\Fatura::COLUMN_ENDUKTIF_BIRIM_FIYAT]}}</td>
+                    <td class="text-right">{{$params[\App\Models\Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT]}}</td>
+                    <td class="text-right">{{$params[\App\Services\Import\Fatura\Elektrik\EkKalem::BIRIM_FIYAT_SISTEM_KULLANIM]}}</td>
+                    <td class="text-right">{{$params[\App\Services\Import\Fatura\Elektrik\EkKalem::BIRIM_FIYAT_DAGITIM_BEDELI]}}</td>
                 </tr>
             @endforeach
             </tbody>

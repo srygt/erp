@@ -152,33 +152,6 @@ class Row implements Arrayable
     }
 
     /**
-     * @return float
-     */
-    public function getCalcToplamTuketimUcreti(): float
-    {
-        $ekUcretler     = $this->getReaktifBedel() + $this->getKapasitifBedel()
-            + $this->getSistemKullanimBedel() + $this->getDagitimBedel() +
-            $this->getTrtPayi() + $this->getGecikmeZammi()
-            + $this->getKdvBedeli();
-
-        return $this->getFaturaToplami() - $ekUcretler;
-    }
-
-    /**
-     * @return float
-     */
-    public function getCalcBirimTuketimUcreti(): float
-    {
-        $toplamTuketimGunduzPuandGece = $this->getCalcToplamTuketimGunduzPuandGece();
-
-        if ($toplamTuketimGunduzPuandGece === 0.0) {
-            return 0;
-        }
-
-        return round($this->getCalcToplamTuketimUcreti() / $toplamTuketimGunduzPuandGece, self::PRECISION);
-    }
-
-    /**
      * @param float $toplamTuketim
      */
     public function setToplamTuketim(float $toplamTuketim): void
@@ -301,34 +274,6 @@ class Row implements Arrayable
     /**
      * @return float
      */
-    public function getCalcBirimReaktifTuketimUcreti(): float
-    {
-        $reaktifTuketim = $this->getReaktifTuketim();
-
-        if ($reaktifTuketim === 0.0) {
-            return 0;
-        }
-
-        return round($this->getReaktifBedel() / $reaktifTuketim, self::PRECISION);
-    }
-
-    /**
-     * @return float
-     */
-    public function getCalcBirimKapasitifTuketimUcreti(): float
-    {
-        $kapasitifTuketim = $this->getKapasitifTuketim();
-
-        if ($kapasitifTuketim === 0.0) {
-            return 0;
-        }
-
-        return round($this->getKapasitifBedel() / $kapasitifTuketim, self::PRECISION);
-    }
-
-    /**
-     * @return float
-     */
     public function getSistemKullanimBedel(): float
     {
         return $this->sistemKullanimBedel;
@@ -340,20 +285,6 @@ class Row implements Arrayable
     public function setSistemKullanimBedel(float $sistemKullanimBedel): void
     {
         $this->sistemKullanimBedel = $sistemKullanimBedel;
-    }
-
-    /**
-     * @return float
-     */
-    public function getCalcBirimSistemKullanimUcreti(): float
-    {
-        $toplamTuketim = $this->getToplamTuketim();
-
-        if ($toplamTuketim === 0.0) {
-            return 0;
-        }
-
-        return round($this->getSistemKullanimBedel() / $toplamTuketim, self::PRECISION);
     }
 
     /**
@@ -489,11 +420,6 @@ class Row implements Arrayable
             $this->getKdvMatrahi(),
             $this->getKdvBedeli(),
             $this->getFaturaToplami(),
-            $this->getCalcBirimTuketimUcreti(),
-            $this->getCalcBirimReaktifTuketimUcreti(),
-            $this->getCalcBirimKapasitifTuketimUcreti(),
-            $this->getCalcBirimSistemKullanimUcreti(),
-            $this->getCalcBirimDagitimUcreti(),
         ];
     }
 }
