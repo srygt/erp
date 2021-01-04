@@ -38,7 +38,7 @@ class AyarEkKalemSeeder extends Seeder
                 'attributes'    => [
                     AyarEkKalem::COLUMN_TUR         => Abone::COLUMN_TUR_ELEKTRIK,
                     AyarEkKalem::COLUMN_UCRET_TUR   => AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR,
-                    AyarEkKalem::COLUMN_BASLIK      => 'Devreden Borç',
+                    AyarEkKalem::COLUMN_BASLIK      => 'Gecikme Bedeli',
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => null,
@@ -48,7 +48,7 @@ class AyarEkKalemSeeder extends Seeder
                 'attributes'    => [
                     AyarEkKalem::COLUMN_TUR         => Abone::COLUMN_TUR_SU,
                     AyarEkKalem::COLUMN_UCRET_TUR   => AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR,
-                    AyarEkKalem::COLUMN_BASLIK      => 'Devreden Borç',
+                    AyarEkKalem::COLUMN_BASLIK      => 'Gecikme Bedeli',
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => null,
@@ -58,7 +58,7 @@ class AyarEkKalemSeeder extends Seeder
                 'attributes'    => [
                     AyarEkKalem::COLUMN_TUR         => Abone::COLUMN_TUR_DOGALGAZ,
                     AyarEkKalem::COLUMN_UCRET_TUR   => AyarEkKalem::FIELD_UCRET_DEGISKEN_TUTAR,
-                    AyarEkKalem::COLUMN_BASLIK      => 'Devreden Borç',
+                    AyarEkKalem::COLUMN_BASLIK      => 'Gecikme Bedeli',
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => null,

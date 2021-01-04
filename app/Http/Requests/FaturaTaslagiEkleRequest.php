@@ -75,7 +75,7 @@ class FaturaTaslagiEkleRequest extends FormRequest
             Fatura::COLUMN_KAPASITIF_BIRIM_FIYAT    => 'nullable|required_if:' . self::KAPASITIF_STATUS . ',true|numeric|min:0.000000001',
             Fatura::COLUMN_NOT                      => 'nullable',
             Fatura::COLUMN_DATA_SOURCE              => ['required', Rule::in(array_keys(FaturaFactory::DATA_SOURCES))],
-            'ek_kalemler'                           => 'required|array',
+            'ek_kalemler'                           => 'nullable|array',
             'ek_kalemler.' . $tur                   => 'nullable|array',
             'ek_kalemler.' . $tur . '.*.id'         => 'required|numeric|exists:App\Models\AyarEkKalem,id',
             'ek_kalemler.' . $tur . '.*.ucret_tur'  => ['required', Rule::in(array_keys(AyarEkKalem::LIST_UCRET_TUR))],
