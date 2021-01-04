@@ -16,24 +16,30 @@ class AddGunduzPuandGeceTuketimToFaturalarTable extends Migration
     {
         Schema::table('faturalar', function (Blueprint $table) {
             $table->string(Fatura::COLUMN_GECE_TUKETIM)
+                ->nullable()
                 ->after(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM);
 
             $table->string(Fatura::COLUMN_PUAND_TUKETIM)
+                ->nullable()
                 ->after(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM);
 
             $table->string(Fatura::COLUMN_GUNDUZ_TUKETIM)
+                ->nullable()
                 ->after(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM);
 
         });
 
         Schema::table('fatura_taslaklari', function (Blueprint $table) {
             $table->string(Fatura::COLUMN_GECE_TUKETIM)
+                ->nullable()
                 ->after(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM);
 
             $table->string(Fatura::COLUMN_PUAND_TUKETIM)
+                ->nullable()
                 ->after(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM);
 
             $table->string(Fatura::COLUMN_GUNDUZ_TUKETIM)
+                ->nullable()
                 ->after(Fatura::COLUMN_BIRIM_FIYAT_TUKETIM);
         });
     }
