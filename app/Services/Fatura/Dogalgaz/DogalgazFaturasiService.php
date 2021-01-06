@@ -44,7 +44,7 @@ class DogalgazFaturasiService extends AbstractFatura
                                             $values['tuketim'],
                                             Abone::COLUMN_TUR_DOGALGAZ,
                                             $selectedEkKalemler,
-                                            new QuantityUnitUser('MTQ')
+                                            new QuantityUnitUser('KWH')
                                         );
 
         $invoiceKalemler              = array_merge([$invoiceLineDogalgazTuketim], $invoiceEkKalemler);
@@ -70,7 +70,7 @@ class DogalgazFaturasiService extends AbstractFatura
             ->setItemName('Doğalgaz Tüketim Bedeli')
             ->setPriceAmount($values['bedel']['birimFiyat'])
             ->setQuantityAmount($values['tuketim'])
-            ->setQuantityUnitUser(new QuantityUnitUser('MTQ'));
+            ->setQuantityUnitUser(new QuantityUnitUser('KWH'));
 
         $taxOtv = (new LineTax())
             ->setTax(
