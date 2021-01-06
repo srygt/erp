@@ -61,7 +61,9 @@ class Utils
         $padLength  = 9;
         $padString  = '0';
 
-        return $prefix . date('Y') . str_pad($nextId, $padLength, $padString, STR_PAD_LEFT);
+        return $prefix
+            . config('fatura.eXNoDatePrefix')
+            . str_pad($nextId, $padLength, $padString, STR_PAD_LEFT);
     }
 
     /**

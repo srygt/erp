@@ -14,6 +14,7 @@ return [
     'urn'                   => 'urn:mail:defaultgb@diyarbakirosb.org.tr',
     'eFaturaNoPrefix'       => env('EFATURA_CODE_PREFIX'),
     'eArsivNoPrefix'        => env('EARSIV_CODE_PREFIX'),
+    'eXNoDatePrefix'        => env('EX_DATE_PREFIX'), // eFatura and eArsiv date prefix
     'aboneNoPadLength'      => 3,
     'aboneNoPadString'      => '0',
     'aboneNoPadDirection'   => STR_PAD_LEFT,

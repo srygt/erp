@@ -419,7 +419,7 @@ abstract class AbstractFatura
         $response   = (new RestRequest())
                         ->getLastInvoiceIdAndDate(
                             $appType,
-                            Utils::getFaturaConfig($appType)['prefix'] . date('Y')
+                            Utils::getFaturaConfig($appType)['prefix'] . config('fatura.eXNoDatePrefix')
                         )
                         ->getBody()
                         ->getContents();
