@@ -110,6 +110,14 @@ abstract class AbstractImportedFaturaAdapter
      */
     protected function getFaturaTarih(Carbon $now)
     {
+        // TODO: refactor
+        return Ayar::where(
+            Ayar::COLUMN_BASLIK,
+            $this->importedFatura->{ImportedFatura::COLUMN_TUR}
+            . '.fatura_tarih'
+        )
+            ->value(Ayar::COLUMN_DEGER);
+
         if (isset($this->importedFatura->{ImportedFatura::COLUMN_FATURA_TARIH})) {
             return $this->importedFatura->{ImportedFatura::COLUMN_FATURA_TARIH};
         }
