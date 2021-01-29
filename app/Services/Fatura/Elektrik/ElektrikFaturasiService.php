@@ -95,7 +95,7 @@ class ElektrikFaturasiService extends AbstractFatura
 
         $taxEnergy = (new LineTax())
             ->setTax(
-                new Percentage(0.01, $invoiceLineElektrikTuketim->getPriceTotalWithoutTaxes())
+                new Percentage(0.007, $invoiceLineElektrikTuketim->getPriceTotalWithoutTaxes())
             )
             ->setTaxCode(new TaxTypeCode(TaxTypeCode::ENERJI_FONU))
             ->setTaxName('Enerji Fonu');
