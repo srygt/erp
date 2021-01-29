@@ -16,7 +16,7 @@ class ImportedFatura extends Model
     const COLUMN_ENDEKS_ILK             = 'ilk_endeks';
     const COLUMN_ENDEKS_SON             = 'son_endeks';
     const COLUMN_BIRIM_FIYAT_TUKETIM    = 'birim_fiyat';
-    const COLUMN_NOT                    = 'not';
+    const COLUMN_NOT                    = 'notlar';
     const COLUMN_OKUYAN_ID              = 'okuyan_id';
     const COLUMN_IP_NO                  = 'ip_no';
 
