@@ -134,7 +134,7 @@ class ImportedFaturaAdapter extends AbstractImportedFaturaAdapter
             return $this->importedFatura->{ImportedFatura::COLUMN_NOT};
         }
 
-        return Ayar::wher(
+        return Ayar::where(
             Ayar::COLUMN_BASLIK,
             $this->importedFatura->{ImportedFatura::COLUMN_TUR}
             . '.fatura_aciklama'
