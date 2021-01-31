@@ -20,6 +20,10 @@ class ImportedFatura extends Model
     const COLUMN_OKUYAN_ID              = 'okuyan_id';
     const COLUMN_IP_NO                  = 'ip_no';
 
+    protected $casts = [
+        self::COLUMN_SON_ODEME_TARIHI => 'date',
+    ];
+
     /**
      * @return BelongsTo
      */

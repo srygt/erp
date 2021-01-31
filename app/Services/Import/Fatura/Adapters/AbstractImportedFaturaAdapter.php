@@ -133,7 +133,10 @@ abstract class AbstractImportedFaturaAdapter
     protected function getSonOdemeTarih(Carbon $now)
     {
         if (isset($this->importedFatura->{ImportedFatura::COLUMN_SON_ODEME_TARIHI})) {
-            return $this->importedFatura->{ImportedFatura::COLUMN_SON_ODEME_TARIHI};
+            return $this
+                ->importedFatura
+                ->{ImportedFatura::COLUMN_SON_ODEME_TARIHI}
+                ->format(config('common.date.format'));
         }
 
         /**
