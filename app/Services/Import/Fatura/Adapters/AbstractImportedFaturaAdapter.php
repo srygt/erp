@@ -1,12 +1,12 @@
 <?php
 
-
 namespace App\Services\Import\Fatura\Adapters;
 
-
 use App\Models\Ayar;
+use App\Models\AyarEkKalem;
 use App\Models\Fatura;
 use App\Models\ImportedFatura;
+use App\Models\ImportedFaturaEkKalem;
 use Illuminate\Support\Carbon;
 
 abstract class AbstractImportedFaturaAdapter
@@ -101,6 +101,33 @@ abstract class AbstractImportedFaturaAdapter
         $invoicableArray['son_odeme_tarihi'] = $this->getSonOdemeTarih($now);
 
         return $invoicableArray;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEkKalemFormArray()
+    {
+        $ekKalemler = $this->importedFatura
+            ->ekKalemler()
+            ->with(ImportedFaturaEkKalem::RELATION_EK_KALEM)
+            ->get();
+
+        $transformedEkKalemler = $ekKalemler->map(
+            function ($pivot) {
+                return [
+                    'id' => $pivot->{ImportedFaturaEkKalem::COLUMN_EK_KALEM_ID},
+                    'ucret_tur' => $pivot->{ImportedFaturaEkKalem::RELATION_EK_KALEM}
+                        ->{AyarEkKalem::COLUMN_UCRET_TUR},
+                    'deger' => $pivot->{ImportedFaturaEkKalem::COLUMN_DEGER},
+                ];
+            }
+        );
+
+        return [
+            $this->importedFatura->{ImportedFatura::COLUMN_TUR}
+            => $transformedEkKalemler->toArray(),
+        ];
     }
 
     /**

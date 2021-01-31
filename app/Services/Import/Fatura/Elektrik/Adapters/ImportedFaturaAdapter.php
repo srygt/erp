@@ -1,14 +1,10 @@
 <?php
 
-
 namespace App\Services\Import\Fatura\Elektrik\Adapters;
 
-
 use App\Models\Ayar;
-use App\Models\AyarEkKalem;
 use App\Models\Fatura;
 use App\Models\ImportedFatura;
-use App\Models\ImportedFaturaEkKalem;
 use App\Models\ImportedFaturaElektrik;
 use App\Services\Import\Fatura\Adapters\AbstractImportedFaturaAdapter;
 
@@ -28,33 +24,6 @@ class ImportedFaturaAdapter extends AbstractImportedFaturaAdapter
         $invoicableArray['ek_kalemler'] = $this->getEkKalemFormArray();
 
         return $invoicableArray;
-    }
-
-    /**
-     * @return array
-     */
-    public function getEkKalemFormArray()
-    {
-        $ekKalemler = $this->importedFatura
-            ->ekKalemler()
-            ->with(ImportedFaturaEkKalem::RELATION_EK_KALEM)
-            ->get();
-
-        $transformedEkKalemler = $ekKalemler->map(
-            function ($pivot) {
-                return [
-                    'id' => $pivot->{ImportedFaturaEkKalem::COLUMN_EK_KALEM_ID},
-                    'ucret_tur' => $pivot->{ImportedFaturaEkKalem::RELATION_EK_KALEM}
-                        ->{AyarEkKalem::COLUMN_UCRET_TUR},
-                    'deger' => $pivot->{ImportedFaturaEkKalem::COLUMN_DEGER},
-                ];
-            }
-        );
-
-        return [
-            $this->importedFatura->{ImportedFatura::COLUMN_TUR}
-                => $transformedEkKalemler->toArray(),
-        ];
     }
 
     /**
