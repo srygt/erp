@@ -71,7 +71,10 @@ class FaturaImportController extends Controller
 
         try {
             $faturaList = (Excel::import(
-                new ElektrikFaturasImport($request->validated()['params']),
+                FaturaImportFactory::createImportClass(
+                    $faturaFile->{FileImportedFatura::COLUMN_TYPE},
+                    $request->validated()['params']
+                ),
                 $faturaFile->getFilePath()
             ));
 

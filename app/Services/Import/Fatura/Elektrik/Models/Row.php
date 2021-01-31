@@ -4,9 +4,10 @@
 namespace App\Services\Import\Fatura\Elektrik\Models;
 
 
+use App\Contracts\ExcelImportRow;
 use Illuminate\Contracts\Support\Arrayable;
 
-class Row implements Arrayable
+class Row implements ExcelImportRow, Arrayable
 {
     const PRECISION = 9;
 

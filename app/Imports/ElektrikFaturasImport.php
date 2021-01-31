@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Contracts\ExcelImportInterface;
 use App\Models\Abone;
 use App\Models\AyarEkKalem;
 use App\Models\Fatura;
@@ -17,7 +18,8 @@ use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ElektrikFaturasImport implements toModel, WithCustomCsvSettings, WithValidation, WithStartRow
+class ElektrikFaturasImport implements ExcelImportInterface, toModel
+    , WithCustomCsvSettings, WithValidation, WithStartRow
 {
     use Importable;
 
