@@ -10,6 +10,7 @@ use App\Models\Ayar;
 use App\Models\Fatura;
 use App\Services\Fatura\AbstractFatura;
 use Illuminate\Support\Carbon;
+use Illuminate\View\View;
 use Onrslu\HtEfatura\Models\Invoice;
 use Onrslu\HtEfatura\Models\InvoiceLine;
 use Onrslu\HtEfatura\Models\InvoiceLines;
@@ -134,6 +135,19 @@ class DogalgazFaturasiService extends AbstractFatura
             $paymentDueDate,
             Ayar::where(Ayar::COLUMN_BASLIK, Ayar::FIELD_DOGALGAZ_BANKA_IBAN)
                 ->value(Ayar::COLUMN_DEGER)
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getRedirectToPayPage(array $params): View
+    {
+        return view(
+            'import.fatura.' . Abone::COLUMN_TUR_DOGALGAZ . '.redirectToPay',
+            [
+                'params' => $params,
+            ]
         );
     }
 }

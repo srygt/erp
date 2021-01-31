@@ -7,9 +7,11 @@ namespace App\Services\Fatura\Su;
 use App\Contracts\FaturaInterface;
 use App\Models\Abone;
 use App\Models\Ayar;
+use App\Models\AyarEkKalem;
 use App\Models\Fatura;
 use App\Services\Fatura\AbstractFatura;
 use Illuminate\Support\Carbon;
+use Illuminate\View\View;
 use Onrslu\HtEfatura\Models\Invoice;
 use Onrslu\HtEfatura\Models\InvoiceLine;
 use Onrslu\HtEfatura\Models\InvoiceLines;
@@ -130,6 +132,25 @@ class SuFaturasiService extends AbstractFatura
             $paymentDueDate,
             Ayar::where(Ayar::COLUMN_BASLIK, Ayar::FIELD_SU_BANKA_IBAN)
                 ->value(Ayar::COLUMN_DEGER)
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getRedirectToPayPage(array $params): View
+    {
+        return view(
+            'import.fatura.su.redirectToPay',
+            [
+                'params' => $params,
+                'ekKalemler' => [
+                    'su' => AyarEkKalem::where(
+                        AyarEkKalem::COLUMN_TUR,
+                        'su'
+                    )->get(),
+                ]
+            ]
         );
     }
 }

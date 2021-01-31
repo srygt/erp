@@ -9,6 +9,7 @@ use App\Http\Requests\Import\FaturaListRequest;
 use App\Imports\ElektrikFaturasImport;
 use App\Models\ImportedFatura;
 use App\Models\FileImportedFatura;
+use App\Services\Fatura\FaturaFactory;
 use App\Services\Import\Fatura\Factories\FaturaImportFactory;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -53,12 +54,9 @@ class FaturaImportController extends Controller
             $importedFaturaAdapter->getInvoicableArray()
         );
 
-        return view(
-            'import.fatura.redirectToPay',
-            [
-                'params' => $params,
-            ]
-        );
+        $faturaService = FaturaFactory::createService($importedFatura->{ImportedFatura::COLUMN_TUR});
+
+        return $faturaService::getRedirectToPayPage($params);
     }
 
     /**

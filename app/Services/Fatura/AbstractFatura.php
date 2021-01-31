@@ -18,6 +18,7 @@ use App\Models\Mukellef;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
+use Illuminate\View\View;
 use Onrslu\HtEfatura\Contracts\AppType;
 use Onrslu\HtEfatura\Models\CustomerIdentificationOther;
 use Onrslu\HtEfatura\Models\Invoice;
@@ -63,6 +64,12 @@ abstract class AbstractFatura
      * @return PaymentMeans
      */
     abstract protected function getPaymentMeans(Carbon $paymentDueDate) : PaymentMeans;
+
+    /**
+     * @param array $params
+     * @return View
+     */
+    abstract public static function getRedirectToPayPage(array $params): View;
 
     /**
      * @param FaturaInterface $fatura
