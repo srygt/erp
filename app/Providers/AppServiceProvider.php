@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Abone;
 use App\Models\AyarEkKalem;
+use App\Services\Sms\Contracts\SmsGatewayContract;
+use App\Services\Sms\Gateways\VizyonMesaj\VizyonMesajGatewayService;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(SmsGatewayContract::class, VizyonMesajGatewayService::class);
     }
 
     /**
