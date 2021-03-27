@@ -3,11 +3,13 @@
 namespace App\Services\Sms\Gateways\VizyonMesaj;
 
 use App\Services\Sms\Contracts\SmsGatewayContract;
-use App\Services\Sms\Middleware\GuzzleHttpLoggerMiddleware;
+use App\Services\Sms\Logger;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class VizyonMesajGatewayService implements SmsGatewayContract
@@ -84,10 +86,34 @@ class VizyonMesajGatewayService implements SmsGatewayContract
         $handler = HandlerStack::create();
 
         $this->logFileName = date('H-i-s') . '.log';
-        $fieldsToCensor = self::getFieldsToCensor();
-        $loggerMiddleware = new GuzzleHttpLoggerMiddleware($this->logFileName, $fieldsToCensor);
 
-        $handler->push($loggerMiddleware->getHandler());
+        $logFileName = $this->logFileName;
+        $fieldsToCensor = self::getFieldsToCensor();
+
+        $handler->push(Middleware::mapRequest(
+            function (RequestInterface $request) use ($logFileName, $fieldsToCensor) {
+                Logger::log(
+                    $logFileName,
+                    $fieldsToCensor,
+                    $request
+                );
+
+                return $request;
+            }
+        ));
+
+        $handler->push(Middleware::mapResponse(
+            function (ResponseInterface $response) use ($logFileName, $fieldsToCensor) {
+                Logger::log(
+                    $logFileName,
+                    $fieldsToCensor,
+                    $response
+                );
+
+                $response->getBody()->rewind();
+                return $response;
+            }
+        ));
 
         $client = new Client([
             'base_uri' => self::URL,
@@ -100,7 +126,7 @@ class VizyonMesajGatewayService implements SmsGatewayContract
             $path,
             [
                 'headers' => [
-                    'Content-Type' => 'text/xml',
+                    'Content-Type' => 'text/xml; charset=utf-8',
                     'ACCEPT' => 'application/json',
                 ],
                 'body' => $postBody,

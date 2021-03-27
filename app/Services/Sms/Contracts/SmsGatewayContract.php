@@ -4,6 +4,7 @@
 namespace App\Services\Sms\Contracts;
 
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 
 interface SmsGatewayContract

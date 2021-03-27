@@ -1,65 +1,18 @@
 <?php
 
-namespace App\Services\Sms\Middleware;
+namespace App\Services\Sms;
 
-use Closure;
 use Illuminate\Support\Facades\Storage;
 use Psr\Http\Message\MessageInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
-class GuzzleHttpLoggerMiddleware
+class Logger
 {
     /**
-     * @var string
+     * Logger constructor.
      */
-    protected $fileName;
-
-    /**
-     * @var array
-     */
-    protected $fieldsToCensor;
-
-    /**
-     * GuzzleHttpLoggerMiddleware constructor.
-     *
-     * @param string $fileName
-     * @param array $fieldsToCensor
-     */
-    public function __construct(string $fileName, array $fieldsToCensor)
+    private function __construct()
     {
-        $this->fileName = $fileName;
-        $this->fieldsToCensor = $fieldsToCensor;
-    }
 
-    /**
-     * @return Closure
-     */
-    public function getHandler(): Closure
-    {
-        $fileName = $this->fileName;
-        $fieldsToCensor = $this->fieldsToCensor;
-
-        return function (callable $handler) use ($fileName, $fieldsToCensor) {
-            return function (
-                RequestInterface $request,
-                array $options
-            ) use ($handler, $fileName, $fieldsToCensor) {
-
-                self::log($fileName, $fieldsToCensor, $request);
-
-                $promise = $handler($request, $options);
-
-                return $promise->then(
-                    function (ResponseInterface $response) use ($fileName, $fieldsToCensor) {
-
-                        self::log($fileName, $fieldsToCensor, $response);
-
-                        return $response;
-                    }
-                );
-            };
-        };
     }
 
     /**
@@ -69,7 +22,7 @@ class GuzzleHttpLoggerMiddleware
      *
      * @return bool
      */
-    protected static function log(string $fileName, array $fieldsToCensor, MessageInterface $message): bool {
+    public static function log(string $fileName, array $fieldsToCensor, $message): bool {
         $header = $message->getHeaders();
         $header = self::getRawHeader($header);
 

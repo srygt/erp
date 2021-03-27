@@ -9,6 +9,7 @@ use App\Services\Sms\Gateways\VizyonMesaj\VizyonMesajGatewayService;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         Validator::extend('ek_kalem_exists', function ($attribute, $value, $parameters, \Illuminate\Validation\Validator $validator) {
             list($type) = $parameters;
 

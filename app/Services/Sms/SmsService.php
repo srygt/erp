@@ -4,7 +4,9 @@
 namespace App\Services\Sms;
 
 
+use App\Helpers\Utils;
 use App\Services\Sms\Contracts\SmsGatewayContract;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 
 class SmsService
@@ -32,6 +34,8 @@ class SmsService
      */
     public function sendMessageToPhone(string $phone, string $message): bool
     {
+        $phone = Utils::getNormalizedTelephoneNumber($phone);
+
         return $this->smsService
             ->sendMessageToPhone($phone, $message);
     }

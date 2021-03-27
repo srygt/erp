@@ -12,13 +12,15 @@ use Onrslu\HtEfatura\Types\Enums\AppType\EFatura;
 
 class Utils
 {
+
     /**
      * @param string $rawPhoneNumber E.g. 905554443322
      *
      * @return string
+     *
      * @throws Exception
      */
-    static public function getFormattedTelephoneNumber(string $rawPhoneNumber)
+    static public function getNormalizedTelephoneNumber(string $rawPhoneNumber)
     {
         $rawPhoneNumber = preg_replace('~\D~', '', $rawPhoneNumber);
 
@@ -33,6 +35,20 @@ class Utils
         if (mb_strlen($rawPhoneNumber) !== 12) {
             throw new Exception('Phone number must be consist of 12 digits!');
         }
+
+        return $rawPhoneNumber;
+    }
+
+    /**
+     * @param string $rawPhoneNumber E.g. 905554443322
+     *
+     * @return string
+     *
+     * @throws Exception
+     */
+    static public function getFormattedTelephoneNumber(string $rawPhoneNumber)
+    {
+        $rawPhoneNumber = self::getNormalizedTelephoneNumber($rawPhoneNumber);
 
         return (
             mb_substr($rawPhoneNumber, 0, 2)
