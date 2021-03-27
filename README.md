@@ -13,6 +13,14 @@
     
     EFATURA_CODE_PREFIX="XXX"
     EARSIV_CODE_PREFIX="YYY"
+    EX_DATE_PREFIX="2020" // eFatura and eArsiv date prefix
+    
+    FATURA_VERGI_NO="4620553774" // Hizliteknoloji for test operations
+    FATURA_EMAIL_ACTIVE=false
+
+    VIZYONMESAJ_USERNAME=""
+    VIZYONMESAJ_PASSWORD=""
+    VIZYONMESAJ_ORIGIN=""
     ```
 *   `composer install`
 *   `php artisan migrate --seed`
