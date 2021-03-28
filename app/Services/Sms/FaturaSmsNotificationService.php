@@ -50,7 +50,7 @@ class FaturaSmsNotificationService
 
         $phone = $fatura->abone->mukellef->{Mukellef::COLUMN_TELEFON};
 
-        if (12 > $phone) {
+        if (10 > strlen($phone)) {
             return true;
         }
 
