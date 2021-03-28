@@ -49,6 +49,7 @@ class FaturaSmsNotificationService
         );
 
         $phone = $fatura->abone->mukellef->{Mukellef::COLUMN_TELEFON};
+        $phone = preg_replace('~\D~', '', $phone);
 
         if (10 > strlen($phone)) {
             return true;
