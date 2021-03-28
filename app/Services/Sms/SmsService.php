@@ -11,16 +11,16 @@ use GuzzleHttp\Exception\GuzzleException;
 
 class SmsService
 {
-    /** @var SmsGatewayContract $smsService */
-    protected $smsService;
+    /** @var SmsGatewayContract $smsGateway */
+    protected $smsGateway;
 
     /**
      * SmsService constructor.
      *
-     * @param SmsGatewayContract $smsService
+     * @param SmsGatewayContract $smsGateway
      */
-    public function __construct(SmsGatewayContract $smsService) {
-        $this->smsService = $smsService;
+    public function __construct(SmsGatewayContract $smsGateway) {
+        $this->smsGateway = $smsGateway;
     }
 
     /**
@@ -36,7 +36,7 @@ class SmsService
     {
         $phone = Utils::getNormalizedTelephoneNumber($phone);
 
-        return $this->smsService
+        return $this->smsGateway
             ->sendMessageToPhone($phone, $message);
     }
 }
