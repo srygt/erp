@@ -243,12 +243,23 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label>Varsayılan Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
+                                                <label>Varsayılan Şebeke Hattı Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
                                                 <input
                                                     type="text"
                                                     class="ucret form-control"
-                                                    name="su[tuketim_birim_fiyat]"
-                                                    value="{{ old("su.tuketim_birim_fiyat", $ayarlar['su.tuketim_birim_fiyat'] ?? '') }}"
+                                                    name="su[sebeke_tuketim_birim_fiyat]"
+                                                    value="{{ old("su.sebeke_tuketim_birim_fiyat", $ayarlar['su.sebeke_tuketim_birim_fiyat'] ?? '') }}"
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Varsayılan Sondaj Hattı Birim Tüketim Fiyatı<span class="text-danger">*</span></label>
+                                                <input
+                                                    type="text"
+                                                    class="ucret form-control"
+                                                    name="su[sondaj_tuketim_birim_fiyat]"
+                                                    value="{{ old("su.sondaj_tuketim_birim_fiyat", $ayarlar['su.sondaj_tuketim_birim_fiyat'] ?? '') }}"
                                                 >
                                             </div>
                                         </div>

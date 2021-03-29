@@ -47,6 +47,7 @@
                                                 <option
                                                     value="{{ $abone->id }}"
                                                     data-tur="{{ $abone->tur }}"
+                                                    data-sondaj="{{ $abone->sondaj_mi }}"
                                                     data-enduktif="{{ $abone->{\App\Models\Abone::COLUMN_ENDUKTIF_BEDEL} ?? 0 }}"
                                                     data-kapasitif="{{ $abone->{\App\Models\Abone::COLUMN_KAPASITIF_BEDEL} ?? 0 }}"
                                                     @if(old('abone_id') == $abone->id)
@@ -293,6 +294,7 @@
         function fillDefaults() {
             let seciliAbone         = $('#abone_id').find(':selected');
             let tur                 = seciliAbone.data('tur');
+            let sondajMi            = seciliAbone.data('sondaj');
 
             $.get(
                 "{{ route('fatura.api.son-fatura') }}",
@@ -319,7 +321,8 @@
                         $('#ilk_endeks').val('0');
                     }
 
-                    let birim_fiyat_baslik  = tur + '.tuketim_birim_fiyat';
+                    let birim_fiyat_baslik = getBirimFiyat(tur, sondajMi);
+
                     $('#birim_fiyat').trigger( 'setAgain', [ayarlar[birim_fiyat_baslik]] );
 
                     if (tur === "{{ \App\Models\Abone::COLUMN_TUR_ELEKTRIK }}") {
@@ -330,6 +333,18 @@
                     $('#faturaAciklama').val( ayarlar[tur + '.fatura_aciklama'] );
                 }
             );
+        }
+
+        function getBirimFiyat(tur, sondajMi) {
+            if (tur !== 'su') {
+                return tur + '.tuketim_birim_fiyat';
+            }
+
+            if (!!sondajMi) {
+                return tur + '.sondaj_tuketim_birim_fiyat';
+            }
+
+            return tur + '.sebeke_tuketim_birim_fiyat';
         }
 
         $(function () {

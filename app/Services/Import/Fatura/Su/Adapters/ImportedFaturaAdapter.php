@@ -4,6 +4,7 @@ namespace App\Services\Import\Fatura\Su\Adapters;
 
 use App\Models\Ayar;
 use App\Services\Import\Fatura\Adapters\AbstractImportedFaturaAdapter;
+use Exception;
 
 class ImportedFaturaAdapter extends AbstractImportedFaturaAdapter
 {
@@ -12,7 +13,8 @@ class ImportedFaturaAdapter extends AbstractImportedFaturaAdapter
      */
     public function getInvoicableArray()
     {
-        $invoicableArray    = $this->getInvoicableArrayParent();
+        throw new Exception('TODO: handle sondaj and sebeke tuketim fields.');
+        /*$invoicableArray    = $this->getInvoicableArrayParent();
 
         if (!$invoicableArray['birim_fiyat']) {
             $invoicableArray['birim_fiyat'] = Ayar::where(
@@ -22,6 +24,6 @@ class ImportedFaturaAdapter extends AbstractImportedFaturaAdapter
                 ->value(Ayar::COLUMN_DEGER);
         }
 
-        return $invoicableArray;
+        return $invoicableArray;*/
     }
 }

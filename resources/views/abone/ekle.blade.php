@@ -103,6 +103,30 @@
                                     <input class="form-control" name="sayac_no" value="{{ old('sayac_no', $abone->sayac_no) }}" type="number">
                                 </div>
                             </div>
+                            <div id="sondajContainer" class="su-specific col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Sondaj Hattı Mı?<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="sondaj_mi" id="sondaj_mi">
+                                        <option value="">Seçin</option>
+                                        <option
+                                            value="1"
+                                            @if (old("sondaj_mi", $abone->sondaj_mi) == '1')
+                                            selected
+                                            @endif
+                                        >
+                                            Evet
+                                        </option>
+                                        <option
+                                            value="0"
+                                            @if (old("sondaj_mi", $abone->sondaj_mi) == '0')
+                                            selected
+                                            @endif
+                                        >
+                                            Hayır
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                             <div id="enduktifContainer" class="elektrik-specific col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label>Endüktif Bedel Uygulanacak<span class="text-danger">*</span></label>
@@ -328,6 +352,14 @@
                     }
                     else {
                         $('.elektrik-specific').hide(250);
+                    }
+
+                    if ( $(this).children('option:selected').val() === "{{ \App\Models\Abone::COLUMN_TUR_SU }}" )
+                    {
+                        $('.su-specific').show(250);
+                    }
+                    else {
+                        $('.su-specific').hide(250);
                     }
                 })
                 .trigger('change');

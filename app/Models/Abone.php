@@ -31,6 +31,7 @@ class Abone extends Model
         Abone::COLUMN_TRT_PAYI,
         Abone::COLUMN_ENDUKTIF_BEDEL,
         Abone::COLUMN_KAPASITIF_BEDEL,
+        Abone::COLUMN_SONDAJ_MI,
         Mukellef::COLUMN_EMAIL,
         Mukellef::COLUMN_WEBSITE,
         Mukellef::COLUMN_ULKE,
@@ -53,6 +54,7 @@ class Abone extends Model
     const COLUMN_TRT_PAYI       = 'trt_payi';
     const COLUMN_ENDUKTIF_BEDEL = 'enduktif_bedel';
     const COLUMN_KAPASITIF_BEDEL= 'kapasitif_bedel';
+    const COLUMN_SONDAJ_MI      = 'sondaj_mi';
 
     const TUR_LIST              = [
         self::COLUMN_TUR_ELEKTRIK   => 'Elektrik',

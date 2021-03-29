@@ -33,7 +33,8 @@ class Ayar extends Model
     const FIELD_SU_BANKA_IBAN                   = 'su.banka_iban';
     const FIELD_SU_FATURA_TARIH                 = 'su.fatura_tarih';
     const FIELD_SU_SON_ODEME_GUN                = 'su.son_odeme_gun';
-    const FIELD_SU_TUKETIM_BIRIM_FIYAT          = 'su.tuketim_birim_fiyat';
+    const FIELD_SU_SEBEKE_TUKETIM_BIRIM_FIYAT   = 'su.sebeke_tuketim_birim_fiyat';
+    const FIELD_SU_SONDAJ_TUKETIM_BIRIM_FIYAT   = 'su.sondaj_tuketim_birim_fiyat';
     const FIELD_SU_FATURA_ACIKLAMA              = 'su.fatura_aciklama';
     const FIELD_DOGALGAZ_BANKA_HESAP_ADI        = 'dogalgaz.banka_hesap_adi';
     const FIELD_DOGALGAZ_BANKA_IBAN             = 'dogalgaz.banka_iban';
@@ -55,7 +56,8 @@ class Ayar extends Model
         self::FIELD_SU_BANKA_IBAN,
         self::FIELD_SU_FATURA_TARIH,
         self::FIELD_SU_SON_ODEME_GUN,
-        self::FIELD_SU_TUKETIM_BIRIM_FIYAT,
+        self::FIELD_SU_SEBEKE_TUKETIM_BIRIM_FIYAT,
+        self::FIELD_SU_SONDAJ_TUKETIM_BIRIM_FIYAT,
         self::FIELD_SU_FATURA_ACIKLAMA,
         self::FIELD_DOGALGAZ_BANKA_HESAP_ADI,
         self::FIELD_DOGALGAZ_BANKA_IBAN,

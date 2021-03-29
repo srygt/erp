@@ -29,6 +29,7 @@ class AboneController extends Controller
             Abone::COLUMN_BASLIK,
             Abone::COLUMN_ABONE_NO,
             Abone::COLUMN_SAYAC_NO,
+            Abone::COLUMN_SONDAJ_MI,
             Abone::COLUMN_TRT_PAYI,
             Abone::COLUMN_ENDUKTIF_BEDEL,
             Abone::COLUMN_KAPASITIF_BEDEL,

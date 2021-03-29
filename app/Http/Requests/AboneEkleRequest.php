@@ -58,6 +58,7 @@ class AboneEkleRequest extends FormRequest
                                                     $this->{Abone::COLUMN_TUR}
                                                 )
                                             ],
+            Abone::COLUMN_SONDAJ_MI         => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_SU . '|boolean',
             'trt_payi'                      => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|boolean',
             Abone::COLUMN_ENDUKTIF_BEDEL    => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|boolean',
             Abone::COLUMN_KAPASITIF_BEDEL   => 'nullable|required_if:tur,' . Abone::COLUMN_TUR_ELEKTRIK . '|boolean',
@@ -80,6 +81,7 @@ class AboneEkleRequest extends FormRequest
             'baslik'                => 'Abonelik Adı',
             'abone_no'              => 'Abone No',
             'sayac_no'              => 'Sayaç No',
+            Abone::COLUMN_SONDAJ_MI => 'Sondaj Hattı Mı?',
             'trt_payi'              => 'TRT Payı Uygulanacak',
             'email'                 => 'E-Posta',
             'telefon'               => 'Telefon Numarası',
