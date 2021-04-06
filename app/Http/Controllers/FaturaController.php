@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\FaturaCreated;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Http\Requests\FaturaEkleRequest;
 use App\Http\Requests\GelenFaturaRequest;
@@ -212,6 +213,8 @@ class FaturaController extends Controller
         );
 
         $dataSource->runPostFaturaOperations($request->validated(), $fatura);
+
+        FaturaCreated::dispatch($fatura);
 
         return view(
             'faturalar.fatura',

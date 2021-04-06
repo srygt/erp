@@ -1,12 +1,9 @@
 <?php
 
-
 namespace App\Services\Fatura;
-
 
 use App\Adapters\AyarEkKalemAdapter;
 use App\Contracts\FaturaInterface;
-use App\Events\FaturaCreated;
 use App\Exceptions\HizliTeknolojiIsSuccessException;
 use App\Exceptions\UnsupportedAppTypeException;
 use App\Helpers\Utils;
@@ -278,8 +275,6 @@ abstract class AbstractFatura
 
         $fatura->{Fatura::COLUMN_DURUM} = Fatura::COLUMN_DURUM_BASARILI;
         $fatura->save();
-
-        FaturaCreated::dispatch($fatura);
 
         return $parsedResponse[0];
     }
