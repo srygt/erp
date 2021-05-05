@@ -24,6 +24,8 @@ use Throwable;
 
 class DogalgazFaturasiService extends AbstractFatura
 {
+    protected const KWH_TO_M3 = 10.64;
+
     /**
      * @param FaturaInterface $faturaTaslagi
      * @param int[] $selectedEkKalemler
@@ -75,7 +77,7 @@ class DogalgazFaturasiService extends AbstractFatura
 
         $taxOtv = (new LineTax())
             ->setTax(
-                new Percentage(0.023, $invoiceLine->getPriceTotalWithoutTaxes())
+                new Percentage(0.023, $values['tuketim'] / self::KWH_TO_M3)
             )
             ->setTaxCode(new TaxTypeCode(TaxTypeCode::OTV_1_LISTE))
             ->setTaxName('ÖTV 1. LİSTE');
