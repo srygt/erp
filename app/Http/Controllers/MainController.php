@@ -37,20 +37,20 @@ class MainController extends Controller
             throw_if(!$dlCevap->IsSucceeded, new HizliTeknolojiIsSuccessException($dlCevap->Message));
 
             // TODO: Hizliteknoloji, "KalanKontorSorgula" fonksiyonunu test ortamında çalışır hale getirdiğinde if bloğu kaldır
-//            if (Str::contains(config('ht-efatura.api.url'), 'econnecttest'))
-//            {
+            if (Str::contains(config('ht-efatura.api.url'), 'econnecttest'))
+            {
                 $kksCevap           = json_decode('{"kalanKontor": "99999","sonucVerisi": {"toplamFaturaAdedi":'
                                         . '99999,"toplamAlanBoyutu": 0,"harcananGelenFaturaMiktari": 9999,'
                                         . '"harcananGidenFaturaMiktari": 9999,"harcananEArsivFaturaMiktari": 9999,'
                                         . '"harcananAlanMiktari": 0},"IsSucceeded": true,"Message": "Başarılı"}');
-//            }
-//            else {
-//                $kksCevap           = json_decode(
-//                    (new RestRequest)->getKalanKontorSorgula(config('fatura.vergiNo'), '0')->getBody()->getContents()
-//                );
-//
-//                throw_if(!$kksCevap->IsSucceeded, new HizliTeknolojiIsSuccessException($kksCevap->Message));
-//            }
+            }
+            else {
+                $kksCevap           = json_decode(
+                    (new RestRequest)->getKalanKontorSorgula(config('fatura.vergiNo'), '0')->getBody()->getContents()
+                );
+
+                throw_if(!$kksCevap->IsSucceeded, new HizliTeknolojiIsSuccessException($kksCevap->Message));
+            }
 
             return [
                 'yeniFaturalar'                 => array_slice(
