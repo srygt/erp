@@ -29,7 +29,6 @@ class AboneController extends Controller
             Abone::COLUMN_BASLIK,
             Abone::COLUMN_ABONE_NO,
             Abone::COLUMN_SAYAC_NO,
-            Abone::COLUMN_SONDAJ_MI,
             Abone::COLUMN_TRT_PAYI,
             Abone::COLUMN_ENDUKTIF_BEDEL,
             Abone::COLUMN_KAPASITIF_BEDEL,
@@ -42,6 +41,8 @@ class AboneController extends Controller
             Mukellef::COLUMN_ADRES,
             Mukellef::COLUMN_URN,
         ]);
+
+        $payload[Abone::COLUMN_SONDAJ_MI] = $request->get(Abone::COLUMN_SONDAJ_MI) === '1';
 
         if ($request->id) {
             $abone = Abone::where('id', $request->id)->first();
