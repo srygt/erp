@@ -95,7 +95,7 @@
     </div>
 
     <div class="row clearfix">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="card">
                 <div class="body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -141,7 +141,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-7">
             <div class="table-responsive">
                 <table class="table table-hover table-custom spacing5">
                     <thead>
