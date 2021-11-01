@@ -21,7 +21,7 @@ class AyarEkKalemSeeder extends Seeder
                     AyarEkKalem::COLUMN_BASLIK      => 'Dağıtım Bedeli',
                 ],
                 'values'        => [
-                    AyarEkKalem::COLUMN_DEGER       => 0.0251
+                    AyarEkKalem::COLUMN_DEGER       => 0.0251,
                     AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => true,
                 ],
             ],
@@ -32,7 +32,7 @@ class AyarEkKalemSeeder extends Seeder
                     AyarEkKalem::COLUMN_BASLIK      => 'Sistem Kullanım Bedeli',
                 ],
                 'values'        => [
-                    AyarEkKalem::COLUMN_DEGER       => 0.0362
+                    AyarEkKalem::COLUMN_DEGER       => 0.0362,
                     AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => true,
                 ],
             ],
