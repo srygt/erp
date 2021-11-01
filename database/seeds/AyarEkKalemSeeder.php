@@ -22,6 +22,7 @@ class AyarEkKalemSeeder extends Seeder
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => 0.0251
+                    AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => true,
                 ],
             ],
             [
@@ -32,6 +33,7 @@ class AyarEkKalemSeeder extends Seeder
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => 0.0362
+                    AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => true,
                 ],
             ],
             [
@@ -42,6 +44,7 @@ class AyarEkKalemSeeder extends Seeder
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => null,
+                    AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => true,
                 ],
             ],
             [
@@ -52,6 +55,7 @@ class AyarEkKalemSeeder extends Seeder
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => null,
+                    AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => true,
                 ],
             ],
             [
@@ -62,6 +66,7 @@ class AyarEkKalemSeeder extends Seeder
                 ],
                 'values'        => [
                     AyarEkKalem::COLUMN_DEGER       => null,
+                    AyarEkKalem::COLUMN_VARSAYILAN_DURUM    => true,
                 ],
             ],
         ];
