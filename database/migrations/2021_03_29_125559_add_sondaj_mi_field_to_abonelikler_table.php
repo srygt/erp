@@ -23,6 +23,11 @@ class AddSondajMiFieldToAboneliklerTable extends Migration
         \Illuminate\Support\Facades\DB::transaction(function() {
             $birimFiyat = Ayar::where('baslik', 'su.tuketim_birim_fiyat')
                 ->first();
+            
+            if (is_null($birimFiyat)) {
+                return;
+            }
+            
             $birimFiyat->{Ayar::COLUMN_BASLIK} = Ayar::FIELD_SU_SEBEKE_TUKETIM_BIRIM_FIYAT;
             $birimFiyat->save();
 
@@ -47,6 +52,11 @@ class AddSondajMiFieldToAboneliklerTable extends Migration
         \Illuminate\Support\Facades\DB::transaction(function() {
             $birimFiyat = Ayar::where('baslik', Ayar::FIELD_SU_SEBEKE_TUKETIM_BIRIM_FIYAT)
                 ->first();
+            
+            if (is_null($birimFiyat)) {
+                return;
+            }
+            
             $birimFiyat->{Ayar::COLUMN_BASLIK} = 'su.tuketim_birim_fiyat';
             $birimFiyat->save();
 
