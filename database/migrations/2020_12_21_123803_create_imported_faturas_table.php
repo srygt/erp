@@ -24,7 +24,7 @@ class CreateImportedFaturasTable extends Migration
             $table->string(ImportedFatura::COLUMN_ENDEKS_ILK);
             $table->string(ImportedFatura::COLUMN_ENDEKS_SON);
             $table->decimal(ImportedFatura::COLUMN_BIRIM_FIYAT_TUKETIM, 12, 9)->unsigned();
-            $table->text(ImportedFatura::COLUMN_NOT)->nullable();
+            $table->text('not')->nullable();
             $table->unsignedBigInteger(ImportedFatura::COLUMN_OKUYAN_ID)->nullable()->index();
             $table->string(ImportedFatura::COLUMN_IP_NO, 100)->index();
             $table->timestamps();
